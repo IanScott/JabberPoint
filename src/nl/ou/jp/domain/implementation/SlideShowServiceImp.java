@@ -40,10 +40,6 @@ public class SlideShowServiceImp implements SlideShowService {
 		return this.iterator.getCurrentIndex();
 	}
 
-	/*
-	 * CURRENT SLIDE DATA. Methods for retrieving current slide data.
-	 */
-	
 	@Override
 	public Slide getCurrentSlide() {
 		if(this.iterator !=null) {
@@ -57,10 +53,6 @@ public class SlideShowServiceImp implements SlideShowService {
 		return null;
 	}
 	
-	/*
-	 * NAVIGATRION. Methods for navigating between Slides in a presentation.
-	 */
-		
 	@Override
 	public void gotoSlideIndex(int number) {
 		int index = number - 1; //convert from 1 starting index to 0 starting index.
@@ -71,7 +63,6 @@ public class SlideShowServiceImp implements SlideShowService {
 		this.iterator.setIndex(index);
 	}
 
-	// ga naar de vorige slide tenzij je aan het begin van de presentatie bent
 	@Override
 	public void previousSlide() {
 		if(this.iterator != null && this.iterator.hasPrevious()) {
@@ -79,21 +70,13 @@ public class SlideShowServiceImp implements SlideShowService {
 		}
 	}
 
-	// Ga naar de volgende slide tenzij je aan het einde van de presentatie bent.
 	@Override
 	public void nextSlide() {
 		if(this.iterator != null && this.iterator.hasNext()) {
 			this.iterator.gotoNext();
 		}
 	}
-
-	// Verwijder de presentatie, om klaar te zijn voor de volgende
-	void clear() {
-		this.slideshow = null;
-		this.iterator = null;
-	}
 	
-
 	@Override
 	public SlideShowBuilder getSlideShowBuilder() {
 		return this.slideShowBuilder;
@@ -107,4 +90,9 @@ public class SlideShowServiceImp implements SlideShowService {
 		this.nextSlide(); //load first availible slide.
 	}
 
+	@Override
+	public void resetSlideShow() {
+		this.slideshow = null;
+		this.iterator = null;
+	}
 }

@@ -22,11 +22,9 @@ public interface ProjectorController extends EventDispatcher {
 	
 	void nextSlide();
 	
-	// Persistence Methods
 	InputStream fetchFileAsStream(Path path);
 	
 	void openPresentation(Path path);
 	
 	void reset();
-
 }

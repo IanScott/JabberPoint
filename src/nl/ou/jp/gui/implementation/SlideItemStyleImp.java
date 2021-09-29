@@ -1,22 +1,23 @@
 package nl.ou.jp.gui.implementation;
 
-import java.awt.Color;
 import java.awt.Font;
 
+import nl.ou.jp.gui.model.SlideItemColor;
+import nl.ou.jp.gui.model.SlideItemFont;
 import nl.ou.jp.gui.model.SlideItemStyle;
 
 public class SlideItemStyleImp implements SlideItemStyle {
 	private int indent;
-	private Color color;
-	private Font font;
+	private SlideItemColor color;
+	private String fontname;
 	private int fontSize;
 	private int leading;
 
-	public SlideItemStyleImp(String fontname, int indent, Color color, int points, int leading) {
+	public SlideItemStyleImp(String fontname, int indent, SlideItemColor color, int points, int leading) {
 		this.indent = indent;
 		this.color = color;
 		this.fontSize = points;
-		font = new Font(fontname, Font.BOLD, fontSize);
+		this.fontname = fontname;
 		this.leading = leading;
 	}
 
@@ -26,7 +27,7 @@ public class SlideItemStyleImp implements SlideItemStyle {
 	}
 	
 	@Override
-	public Color getColor() {
+	public SlideItemColor getColor() {
 		return this.color;
 	}
 	
@@ -36,8 +37,9 @@ public class SlideItemStyleImp implements SlideItemStyle {
 	}
 	
 	@Override
-	public Font getFont(float scale) {
-		return font.deriveFont(fontSize * scale);
+	public SlideItemFont getFont(float scale) {
+		return new SlideItemFontImp(this.fontname, Font.BOLD, (int) (this.fontSize * scale));
+
 	}
 	
 	public String toString() {

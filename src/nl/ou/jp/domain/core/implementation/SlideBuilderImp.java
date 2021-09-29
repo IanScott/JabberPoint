@@ -4,7 +4,7 @@ import java.util.*;
 
 import nl.ou.jp.domain.core.model.*;
 
-public class SlideBuilderImp extends ComponantBuilderTemplate implements ComponantBuilder, SlideBuilder {
+public class SlideBuilderImp extends ComponantBuilderTemplate implements SlideBuilder {
 	
 	public SlideBuilderImp() {
 		super();

@@ -7,12 +7,7 @@ import nl.ou.jp.infra.*;
 
 public class JibberJabberPoint {
 	
-	/**
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
+	public void start(String path) {
 		SlideShowService slideShowService = SlideShowServiceFactory.getInstance().create(); // Load Domain Service layer
 		
 		ProjectorInfra projectorInfra = ProjectorInfraFactory.getInstance().create(slideShowService.getSlideShowBuilder()); // Load Infra
@@ -21,6 +16,14 @@ public class JibberJabberPoint {
 		
 		ProjectorGUI gui = ProjectorGUIFactory.getInstance().create(projectorController); // load View (GUI)
 		
-		gui.start((args != null && args.length>0)?args[0]:null);
+		gui.start(path);
+	}
+	
+	/**
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		new JibberJabberPoint().start((args != null && args.length>0)?args[0]:null);
 	}
 }

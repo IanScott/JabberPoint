@@ -1,6 +1,6 @@
 package nl.ou.jp.domain.core.model;
 
-public interface SlideBuilder {
+public interface SlideBuilder extends ComponantBuilder {
 
 	ComponantBuilder clone();
 

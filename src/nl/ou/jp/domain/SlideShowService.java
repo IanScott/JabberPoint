@@ -21,4 +21,6 @@ public interface SlideShowService {
 	SlideShowBuilder getSlideShowBuilder();
 	
 	void loadSlideShow(SlideShow slideshow);
+	
+	void resetSlideShow();
 }

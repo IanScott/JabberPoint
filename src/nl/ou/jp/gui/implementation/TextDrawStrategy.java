@@ -12,6 +12,7 @@ import nl.ou.jp.domain.core.model.TextItem;
 import nl.ou.jp.gui.ProjectorGUIException;
 import nl.ou.jp.gui.model.SlideItemStyle;
 import nl.ou.jp.gui.model.Rectangle;
+import nl.ou.jp.gui.model.SlideItemFont;
 import nl.ou.jp.logging.*;
 
 
@@ -60,7 +61,9 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 		Point pen = new Point(x + (int)(myStyle.getIndent() * getScale()), 
 				y + (int) (myStyle.getLeading() * getScale()));
 		Graphics2D g2d = (Graphics2D)getGraphics();
-		g2d.setColor(myStyle.getColor());
+		
+		Color color = new Color(myStyle.getColor().getRGBValue());
+		g2d.setColor(color);
 		Iterator<TextLayout> it = layouts.iterator();
 		while (it.hasNext()) {
 			TextLayout layout = it.next();
@@ -100,7 +103,9 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 	
 	private AttributedString getAttributedString(SlideItemStyle slideItemStyle, float scale, String text) {
 		AttributedString attrStr = new AttributedString(text);
-		attrStr.addAttribute(TextAttribute.FONT, slideItemStyle.getFont(scale), 0, text.length());			
+		SlideItemFont s = slideItemStyle.getFont(scale);
+		Font font = new Font(s.getName(),s.getStyle(),s.getSize());
+		attrStr.addAttribute(TextAttribute.FONT, font, 0, text.length());			
 		return attrStr;
 	}
 

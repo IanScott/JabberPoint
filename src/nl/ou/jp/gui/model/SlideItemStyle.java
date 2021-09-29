@@ -1,16 +1,13 @@
 package nl.ou.jp.gui.model;
 
-import java.awt.Color;
-import java.awt.Font;
-
 public interface SlideItemStyle {
 
 	int getIndent();
 
-	Color getColor();
+	SlideItemColor getColor();
 
 	int getLeading();
 
-	Font getFont(float scale);
+	SlideItemFont getFont(float scale);
 
 }
