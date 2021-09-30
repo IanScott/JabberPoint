@@ -2,6 +2,8 @@ package nl.ou.jp.gui.implementation;
 
 import java.awt.*;
 
+import javax.swing.JFrame;
+
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.DrawStrategy;
 import nl.ou.jp.gui.model.SlideItemStyle;
@@ -36,16 +38,18 @@ public abstract class SwingDrawStrategy implements DrawStrategy {
 		return this.strategy.draw(data, mystyle, x, y);
 	}
 
-	//@Override
+	@Override
 	public void setContext(ProjectorContext projectorContext) {
 		this.projectorContext = projectorContext;
+		this.component = ((JFrame)projectorContext.getMainGUI()).getContentPane();
+		this.graphics = this.component.getGraphics();
 	}
 	
 	protected ProjectorContext getProjectorContext() {
 		return this.projectorContext;
 	}
 	
-	//@Override
+
 	public void setGraphics(Graphics graphics) {
 		this.graphics = graphics;
 	}
@@ -53,8 +57,7 @@ public abstract class SwingDrawStrategy implements DrawStrategy {
 	protected Graphics getGraphics() {
 		return this.graphics;
 	}
-	//
-	//@Override
+
 	public void setContentPane(Component component) {
 		this.component = component;
 	}
@@ -63,7 +66,6 @@ public abstract class SwingDrawStrategy implements DrawStrategy {
 		return this.component;
 	}
 	
-	//@Override
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
