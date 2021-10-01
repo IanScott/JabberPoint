@@ -1,4 +1,4 @@
-package nl.ou.jp.gui;
+package nl.ou.jp.gui.implementation;
 
 import java.awt.MenuBar;
 import java.awt.event.KeyListener;
@@ -7,10 +7,10 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.gui.implementation.*;
+import nl.ou.jp.gui.ProjectorVariant;
 import nl.ou.jp.gui.implementation.commands.*;
+import nl.ou.jp.gui.implementation.subfactories.*;
 import nl.ou.jp.gui.model.*;
-import nl.ou.jp.gui.subfactories.*;
 
 
 public class DefaultVariant implements ProjectorVariant {

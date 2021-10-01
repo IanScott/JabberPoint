@@ -1,4 +1,4 @@
-package nl.ou.jp.gui.subfactories;
+package nl.ou.jp.gui.implementation.subfactories;
 
 import java.awt.event.*;
 import java.util.*;
