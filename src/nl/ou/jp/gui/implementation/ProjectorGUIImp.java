@@ -100,12 +100,12 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 			@Override
 			public void paintComponent(Graphics g) {
 				validateParameters(g, projectorContext);
-				strategy.setContext(projectorContext);
-				strategy.setGraphics(g);
-				strategy.setContentPane(getContentPane());
-				if (currentSlide != null) {
-					strategy.draw(currentSlide, null, 0, 0);
-				}
+
+				Slide slide = projectorContext.getProjector().getCurrentSlide();
+				if(slide != null) {
+					strategy.setContext(projectorContext);
+					strategy.draw(g, slide, null, 0, 0);					
+				} 
 			}
 		});
 	}

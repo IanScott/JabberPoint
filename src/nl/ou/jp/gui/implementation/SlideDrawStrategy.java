@@ -2,6 +2,8 @@ package nl.ou.jp.gui.implementation;
 
 import java.awt.*;
 
+import javax.swing.JFrame;
+
 import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.ProjectorConfiguration;
@@ -21,22 +23,25 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 	}
 
 	@Override
-	public Rectangle draw(SlideShowComponant data, SlideItemStyle fontstyle, int x, int y) {
+	public Rectangle draw(Graphics graphics, SlideShowComponant data, SlideItemStyle fontstyle, int x, int y) {
 		if(!(data instanceof Slide)) {
-			return this.getNext(data, fontstyle, x, y);
+			return this.getNext(graphics, data, fontstyle, x, y);
 		}
-		return renderSlide((Slide)data, getGraphics(), getProjectorContext());
+
+		return renderSlide((Slide)data, graphics, getProjectorContext());
 	}
 	
-	private Rectangle renderSlide(Slide slide, Graphics g, ProjectorContext projectorContext) {		
-		Rectangle bounds = renderSlideBounds(g, projectorContext);
-		renderPosition(slide, g, projectorContext);
-		renderArea(slide, projectorContext);
+	private Rectangle renderSlide(Slide slide, Graphics graphics, ProjectorContext projectorContext) {		
+
+		
+		Rectangle bounds = renderSlideBounds(graphics, projectorContext);
+		renderPosition(slide, graphics, projectorContext);
+		renderArea(graphics, slide, projectorContext);
 		return bounds;
 	}
 		
 	private Rectangle renderSlideBounds(Graphics g, ProjectorContext projectorContext) {
-		Component component = getContentPane();
+		Component component = ((JFrame)this.getProjectorContext().getMainGUI()).getContentPane();
 		ProjectorConfiguration configuration = projectorContext.getConfiguration();
 		
 		Color backgroundColor = new Color(configuration.getSlideBackgroundRGBColor());	
@@ -63,9 +68,10 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		g.drawString(slideOf, innerArea.getWidth(), innerArea.getHeight());
 	}		
 		
-	private void renderArea(Slide slide, ProjectorContext projectorContext) {
+	private void renderArea(Graphics g, Slide slide, ProjectorContext projectorContext) {
 		ProjectorConfiguration config = projectorContext.getConfiguration();
-		Component component = getContentPane();
+		Component component = ((JFrame)this.getProjectorContext().getMainGUI()).getContentPane();
+		
 		Dimension innerArea = config.getDefaultInnerSlideDimensions();
 			
 		Rectangle area = new RectangleImp(0, innerArea.getHeight(), component.getWidth(), (component.getHeight() - innerArea.getHeight()));
@@ -73,30 +79,32 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		    
 		int x = area.getX();
 		int y = area.getY();
-		    
-		getStrategy().setContext(getProjectorContext());
-		getStrategy().setGraphics(getGraphics());
-		getStrategy().setScale(scale);
-		   
-		SlideShowItem item = getTitleItem(slide.getTitle());
 		
-		SlideShowComponantIterator iterator = null;
-		do{
-			if(iterator == null) {
-				iterator = slide.getIterator();
-			}else {
-				iterator.gotoNext();
-				item = (SlideShowItem) iterator.getCurrentItem();
-			}
-			y = renderTextItem(projectorContext, x, y, item);
-		}while(iterator.hasNext()); 
+		if(getStrategy() != null) {
+			getStrategy().setContext(getProjectorContext());
+			getStrategy().setScale(scale);
+			
+			SlideShowItem item = getTitleItem(slide.getTitle());
+			
+			SlideShowComponantIterator iterator = null;
+			do{
+				if(iterator == null) {
+					iterator = slide.getIterator();
+				}else {
+					iterator.gotoNext();
+					item = (SlideShowItem) iterator.getCurrentItem();
+				}
+				y = renderTextItem(g, projectorContext, x, y, item);
+			}while(iterator.hasNext()); 
+			
+		}
 		
 	}
 
-	private int renderTextItem(ProjectorContext projectorContext, int x, int y, SlideShowItem item) {
+	private int renderTextItem(Graphics g ,ProjectorContext projectorContext, int x, int y, SlideShowItem item) {
 		try {
 			SlideItemStyle style = projectorContext.getConfiguration().getStyle(item.getLevel().getRating());
-			y += getStrategy().draw(item, style, x, y).getHeight();			
+			y += getStrategy().draw(g, item, style, x, y).getHeight();			
 		}catch(Exception e) {
 			logger.logError(e.getMessage());
 		}
@@ -119,7 +127,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 				}
 				@Override
 				public void add(SlideShowComponant componant) {
-					
+					//ignore
 				}
 				@Override
 				public SlideShowComponantIterator getIterator() {

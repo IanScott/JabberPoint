@@ -47,20 +47,20 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 	}
 
 	@Override
-	public Rectangle draw(SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
+	public Rectangle draw(Graphics graphics, SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
 		if(!(data instanceof TextItem)) {
-			return this.getNext(data, myStyle, x, y);
+			return this.getNext(graphics, data, myStyle, x, y);
 		}
-		
+
 		TextItem textitem = (TextItem)data;
 		
 		String text = (textitem.getText() == null)?"":textitem.getText();
 	
-		List<TextLayout> layouts = getLayouts(getGraphics(), myStyle, getScale(), text);
+		List<TextLayout> layouts = getLayouts(graphics, myStyle, getScale(), text);
 		
 		Point pen = new Point(x + (int)(myStyle.getIndent() * getScale()), 
 				y + (int) (myStyle.getLeading() * getScale()));
-		Graphics2D g2d = (Graphics2D)getGraphics();
+		Graphics2D g2d = (Graphics2D)graphics;
 		
 		Color color = new Color(myStyle.getColor().getRGBValue());
 		g2d.setColor(color);
@@ -72,7 +72,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 			pen.y += layout.getDescent();
 		}
 		
-		return getBoundingBox(getGraphics(), text, myStyle, getScale());
+		return getBoundingBox(graphics, text, myStyle, getScale());
 	  }
 
 	
@@ -108,5 +108,4 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 		attrStr.addAttribute(TextAttribute.FONT, font, 0, text.length());			
 		return attrStr;
 	}
-
 }
