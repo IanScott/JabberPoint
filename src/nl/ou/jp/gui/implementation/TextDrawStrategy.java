@@ -7,14 +7,10 @@ import java.text.AttributedString;
 import java.util.*;
 import java.util.List;
 
-import nl.ou.jp.domain.core.model.SlideShowComponant;
-import nl.ou.jp.domain.core.model.TextItem;
+import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.ProjectorGUIException;
-import nl.ou.jp.gui.model.SlideItemStyle;
-import nl.ou.jp.gui.model.Rectangle;
-import nl.ou.jp.gui.model.SlideItemFont;
+import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
-
 
 /** <p>Een tekst item.</p>
  */
@@ -22,7 +18,7 @@ import nl.ou.jp.logging.*;
 public class TextDrawStrategy extends SwingDrawStrategy {
 	private Logger logger = LoggerManager.getLogger();
 	
-	public TextDrawStrategy(SwingDrawStrategy next) {
+	public TextDrawStrategy(DrawStrategy next) {
 		super(next);
 	}
 	
@@ -43,13 +39,13 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 			}
 			ysize += layout.getLeading() + layout.getDescent();
 		}
-		return new RectangleImp((int) (myStyle.getIndent()*scale), 0, xsize, ysize );
+		return new Rectangle((int) (myStyle.getIndent()*scale), 0, xsize, ysize );
 	}
 
 	@Override
-	public Rectangle draw(Graphics graphics, SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
+	public Rectangle draw(Graphics graphics, Component component, SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
 		if(!(data instanceof TextItem)) {
-			return this.getNext(graphics, data, myStyle, x, y);
+			return this.getNext(graphics, component, data, myStyle, x, y);
 		}
 
 		TextItem textitem = (TextItem)data;
@@ -62,8 +58,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 				y + (int) (myStyle.getLeading() * getScale()));
 		Graphics2D g2d = (Graphics2D)graphics;
 		
-		Color color = new Color(myStyle.getColor().getRGBValue());
-		g2d.setColor(color);
+		g2d.setColor(myStyle.getColor());
 		Iterator<TextLayout> it = layouts.iterator();
 		while (it.hasNext()) {
 			TextLayout layout = it.next();
@@ -94,7 +89,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 
 	private int getDefaultSlideWidth() {
 		try {
-			return getProjectorContext().getConfiguration().getDefaultSlideDimensions().getWidth();			
+			return (int)getProjectorContext().getConfiguration().getDefaultSlideDimensions().getWidth();			
 		}catch(Exception e) {
 			logger.logError("Failed to fetch default slide dimensions.");
 			throw new ProjectorGUIException(e.getMessage());
@@ -103,9 +98,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 	
 	private AttributedString getAttributedString(SlideItemStyle slideItemStyle, float scale, String text) {
 		AttributedString attrStr = new AttributedString(text);
-		SlideItemFont s = slideItemStyle.getFont(scale);
-		Font font = new Font(s.getName(),s.getStyle(),s.getSize());
-		attrStr.addAttribute(TextAttribute.FONT, font, 0, text.length());			
+		attrStr.addAttribute(TextAttribute.FONT, slideItemStyle.getFont(scale), 0, text.length());			
 		return attrStr;
 	}
 }

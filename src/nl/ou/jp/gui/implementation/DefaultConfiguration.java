@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.*;
 
 import nl.ou.jp.gui.model.*;
-import nl.ou.jp.gui.model.Dimension;
+
 import nl.ou.jp.logging.*;
 
 public class DefaultConfiguration implements ProjectorConfiguration {
@@ -54,12 +54,12 @@ public class DefaultConfiguration implements ProjectorConfiguration {
 	
 	@Override
 	public Dimension getDefaultSlideDimensions() {
-		return new DimensionImp(DEFAULT_FRAME_HEIGHT,DEFAULT_FRAME_WIDTH);
+		return new Dimension(DEFAULT_FRAME_WIDTH,DEFAULT_FRAME_HEIGHT);
 	}
 	
 	@Override
 	public Dimension getDefaultInnerSlideDimensions() {
-		return new DimensionImp(YPOS, XPOS);
+		return new Dimension(YPOS, XPOS);
 	}
 	
 	@Override
@@ -73,8 +73,8 @@ public class DefaultConfiguration implements ProjectorConfiguration {
 	}
 	
 	@Override
-	public SlideItemFont getDefaultLabelFont() {
-		return new SlideItemFontImp(FONTNAME, FONTSTYLE, FONTHEIGHT);
+	public Font getDefaultLabelFont() {
+		return new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
 	}
 	
 	@Override
@@ -103,11 +103,11 @@ public class DefaultConfiguration implements ProjectorConfiguration {
 	private void createStyles() {
 		slideItemStyles = new SlideItemStyle[5];    
 		// De styles zijn vast ingecodeerd.
-		slideItemStyles[0] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 0, new SlideItemColorImp(Color.red.getRGB()),   48, 20);	// style voor item-level 0
-		slideItemStyles[1] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 20, new SlideItemColorImp(Color.blue.getRGB()),  40, 10);	// style voor item-level 1
-		slideItemStyles[2] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 50, new SlideItemColorImp(Color.black.getRGB()), 36, 10);	// style voor item-level 2
-		slideItemStyles[3] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 70, new SlideItemColorImp(Color.black.getRGB()), 30, 10);	// style voor item-level 3
-		slideItemStyles[4] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 90, new SlideItemColorImp(Color.black.getRGB()), 24, 10);	// style voor item-level 4
+		slideItemStyles[0] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 0, Color.red,   48, 20);	// style voor item-level 0
+		slideItemStyles[1] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 20, Color.blue,  40, 10);	// style voor item-level 1
+		slideItemStyles[2] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 50, Color.black, 36, 10);	// style voor item-level 2
+		slideItemStyles[3] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 70, Color.black, 30, 10);	// style voor item-level 3
+		slideItemStyles[4] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 90, Color.black, 24, 10);	// style voor item-level 4
 	}
 
 }

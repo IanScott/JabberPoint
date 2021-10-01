@@ -14,11 +14,21 @@ public class ProjectorViewKeyListenerFactory {
 	private Map<CommandNames, ProjectorCommand> projectorCommands = null;
 	private Map<Integer, Consumer<KeyEvent>> actionmapping = null;
 	
-	public ProjectorViewKeyListenerFactory(Map<CommandNames, ProjectorCommand> projectorCommands) {
-		this.projectorCommands = projectorCommands;
+	private static ProjectorViewKeyListenerFactory instance = null;
+	
+	public static ProjectorViewKeyListenerFactory getInstance() {
+		if(instance == null) {
+			instance = new ProjectorViewKeyListenerFactory();
+		}
+		return instance;
 	}
 	
-	public KeyListener create() {
+	private ProjectorViewKeyListenerFactory() {
+		//singleton
+	}
+	
+	public KeyListener create(Map<CommandNames, ProjectorCommand> projectorCommands) {
+		this.projectorCommands = projectorCommands;
 		return new KeyAdapter(){
 			@Override
 			public void keyPressed(KeyEvent keyEvent) {

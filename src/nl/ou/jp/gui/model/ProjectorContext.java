@@ -4,8 +4,8 @@ import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.gui.ProjectorGUI;
 
 public interface ProjectorContext { 
-	public ProjectorController getProjector();
-	public void setProjector(ProjectorController projectorController);
+	public ProjectorController getController();
+	public void setController(ProjectorController projectorController);
 	
 	public ProjectorGUI getMainGUI();
 	public void setMainGUI(ProjectorGUI gui);

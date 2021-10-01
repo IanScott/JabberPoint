@@ -18,7 +18,7 @@ public class GotoSlideCommand implements ProjectorCommand {
 
 	@Override
 	public void execute() {
-		ProjectorController projectorController = this.projectorContext.getProjector();
+		ProjectorController projectorController = this.projectorContext.getController();
 		ProjectorConfiguration config = this.projectorContext.getConfiguration();
 		String message = config.getMessage(PAGENUMBERID);
 		

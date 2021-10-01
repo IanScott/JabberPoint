@@ -13,7 +13,7 @@ public class ResetCommand implements ProjectorCommand {
 	
 	@Override
 	public void execute() {
-		ProjectorController projectorController = this.projectorContext.getProjector();
+		ProjectorController projectorController = this.projectorContext.getController();
 		projectorController.reset();
 	}
 }

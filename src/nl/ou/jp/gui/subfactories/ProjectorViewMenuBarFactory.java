@@ -10,17 +10,25 @@ import nl.ou.jp.gui.model.*;
 
 /** <p>De controller voor het menu</p>
  */
-public class ProjectorViewMenuBarFactory{
+public class ProjectorViewMenuBarFactory {
 	private MenuBar mainMenuBar;
-	private Map<CommandNames, ProjectorCommand> projectorCommands;
 	private ProjectorConfiguration projectorConfiguration;
 	
-	public ProjectorViewMenuBarFactory(Map<CommandNames, ProjectorCommand> projectorCommands, ProjectorConfiguration projectorConfiguration) {
-		this.projectorCommands = projectorCommands;
-		this.projectorConfiguration = projectorConfiguration;
+	private static ProjectorViewMenuBarFactory instance = null;
+	
+	public static ProjectorViewMenuBarFactory getInstance() {
+		if(instance == null) {
+			instance = new ProjectorViewMenuBarFactory();
+		}
+		return instance;
 	}
 	
-	public MenuBar create() {
+	private ProjectorViewMenuBarFactory() {
+		//singleton
+	}
+	
+	public MenuBar create(Map<CommandNames, ProjectorCommand> projectorCommands, ProjectorConfiguration projectorConfiguration) {
+		this.projectorConfiguration = projectorConfiguration;
 		initializeFileMenu(projectorCommands);
 		initializaViewMenu(projectorCommands);
 		initializeHelpMenu(projectorCommands);

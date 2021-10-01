@@ -12,12 +12,12 @@ public class ProjectorContextImp implements ProjectorContext {
 	private ProjectorConfiguration configurationDefault = null;
 	
 	@Override
-	public ProjectorController getProjector() {
+	public ProjectorController getController() {
 		return this.projectorController;
 	}
 
 	@Override
-	public void setProjector(ProjectorController projectorController) {
+	public void setController(ProjectorController projectorController) {
 		this.projectorController = projectorController;
 	}
 

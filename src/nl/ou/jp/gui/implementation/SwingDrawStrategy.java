@@ -4,34 +4,32 @@ import java.awt.*;
 
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.*;
-import nl.ou.jp.gui.model.Rectangle;
 
-public abstract class SwingDrawStrategy {
+public abstract class SwingDrawStrategy implements DrawStrategy {
 	
-	private SwingDrawStrategy strategy;
+	private DrawStrategy strategy;
 	private float scale;
 	private ProjectorContext projectorContext;
 	
-	protected SwingDrawStrategy(SwingDrawStrategy next) {
+	protected SwingDrawStrategy(DrawStrategy next) {
 		this.strategy = next;
 	}
 	
-	public abstract Rectangle draw(Graphics graphics, SlideShowComponant data, SlideItemStyle fontstyle, int x, int y);
-	
-	protected SwingDrawStrategy getStrategy() {
+	protected DrawStrategy getStrategy() {
 		return this.strategy;
 	}
 	
-	protected Rectangle getNext(Graphics graphics, SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
-		return (this.strategy == null)?null:next(graphics, data, myStyle, x, y);
+	protected Rectangle getNext(Graphics graphics, Component component,SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
+		return (this.strategy == null)?null:next(graphics, component, data, myStyle, x, y);
 	}
 
-	protected Rectangle next(Graphics graphics, SlideShowComponant data, SlideItemStyle mystyle, int x, int y) {
+	protected Rectangle next(Graphics graphics, Component component, SlideShowComponant data, SlideItemStyle mystyle, int x, int y) {
 		this.strategy.setContext(this.projectorContext);
 		this.strategy.setScale(this.scale);
-		return this.strategy.draw(graphics, data, mystyle, x, y);
+		return this.strategy.draw(graphics, component, data, mystyle, x, y);
 	}
-
+	
+	@Override
 	public void setContext(ProjectorContext projectorContext) {
 		this.projectorContext = projectorContext;
 	}
@@ -39,7 +37,8 @@ public abstract class SwingDrawStrategy {
 	protected ProjectorContext getProjectorContext() {
 		return this.projectorContext;
 	}
-	
+
+	@Override
 	public void setScale(float scale) {
 		this.scale = scale;
 	}

@@ -10,14 +10,20 @@ import nl.ou.jp.gui.implementation.commands.CommandNames;
 import nl.ou.jp.gui.model.ProjectorCommand;
 
 public class ProjectorViewWindowListenerFactory {
+	private static ProjectorViewWindowListenerFactory instance = null;
 	
-	private Map<CommandNames, ProjectorCommand> projectorCommands;
-	
-	public ProjectorViewWindowListenerFactory(Map<CommandNames, ProjectorCommand> projectorCommands ) {
-		this.projectorCommands = projectorCommands;
+	public static ProjectorViewWindowListenerFactory getInstance() {
+		if(instance == null) {
+			instance = new ProjectorViewWindowListenerFactory();
+		}
+		return instance;
 	}
 	
-	public WindowListener create() {
+	public ProjectorViewWindowListenerFactory() {
+		//singleton
+	}
+	
+	public WindowListener create(Map<CommandNames, ProjectorCommand> projectorCommands) {
 		return new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

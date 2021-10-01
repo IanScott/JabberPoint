@@ -26,7 +26,7 @@ public class OpenCommand implements ProjectorCommand {
 			        
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = jfc.getSelectedFile();
-				this.projectorContext.getProjector().openPresentation(selectedFile.toPath());
+				this.projectorContext.getController().openPresentation(selectedFile.toPath());
 			}
 		} catch (RuntimeException exc) {
 			ProjectorConfiguration config = this.projectorContext.getConfiguration();

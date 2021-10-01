@@ -13,7 +13,7 @@ public class PreviousSlideCommand implements ProjectorCommand {
 	
 	@Override
 	public void execute() {
-		ProjectorController projectorController = projectorContext.getProjector();
+		ProjectorController projectorController = projectorContext.getController();
 		projectorController.previousSlide();
 	}
 }

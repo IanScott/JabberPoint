@@ -2,83 +2,72 @@ package nl.ou.jp.gui.implementation;
 
 import java.awt.*;
 
-import javax.swing.JFrame;
-
 import nl.ou.jp.controller.ProjectorController;
+import nl.ou.jp.domain.core.SlideShowItemFactory;
 import nl.ou.jp.domain.core.model.*;
-import nl.ou.jp.gui.model.ProjectorConfiguration;
-import nl.ou.jp.gui.model.ProjectorContext;
-import nl.ou.jp.gui.model.Dimension;
-import nl.ou.jp.gui.model.SlideItemStyle;
+import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
-import nl.ou.jp.gui.model.Rectangle;
-import nl.ou.jp.gui.model.SlideItemFont;
 
 public class SlideDrawStrategy extends SwingDrawStrategy {
+	private static final String TEXTITEM_TYPE = "TEXT";
 	private static final String SLIDEOFID = "SLIDEOF";
 	private Logger logger = LoggerManager.getLogger();
 
-	public SlideDrawStrategy(SwingDrawStrategy strategy) {
+	public SlideDrawStrategy(DrawStrategy strategy) {
 		super(strategy);
 	}
 
 	@Override
-	public Rectangle draw(Graphics graphics, SlideShowComponant data, SlideItemStyle fontstyle, int x, int y) {
+	public Rectangle draw(Graphics graphics, Component component, SlideShowComponant data, SlideItemStyle fontstyle, int x, int y) {
 		if(!(data instanceof Slide)) {
-			return this.getNext(graphics, data, fontstyle, x, y);
+			return this.getNext(graphics, component, data, fontstyle, x, y);
 		}
-
-		return renderSlide((Slide)data, graphics, getProjectorContext());
+		return renderSlide(graphics, component, (Slide)data);
 	}
 	
-	private Rectangle renderSlide(Slide slide, Graphics graphics, ProjectorContext projectorContext) {		
-
-		
-		Rectangle bounds = renderSlideBounds(graphics, projectorContext);
-		renderPosition(slide, graphics, projectorContext);
-		renderArea(graphics, slide, projectorContext);
+	private Rectangle renderSlide(Graphics graphics, Component component, Slide slide) {		
+		Rectangle bounds = renderSlideBounds(graphics, component);
+		renderPosition(graphics, slide);
+		renderArea(graphics, component, slide);
 		return bounds;
 	}
 		
-	private Rectangle renderSlideBounds(Graphics g, ProjectorContext projectorContext) {
-		Component component = ((JFrame)this.getProjectorContext().getMainGUI()).getContentPane();
-		ProjectorConfiguration configuration = projectorContext.getConfiguration();
+	private Rectangle renderSlideBounds(Graphics g, Component component) {
+		ProjectorConfiguration configuration = getProjectorContext().getConfiguration();
 		
 		Color backgroundColor = new Color(configuration.getSlideBackgroundRGBColor());	
 		g.setColor(backgroundColor);
 		g.fillRect(0, 0, component.getSize().width, component.getSize().height);
-		return new RectangleImp(0, 0, component.getSize().width, component.getSize().height);
+		return new Rectangle(0, 0, component.getSize().width, component.getSize().height);
 	}
 		
-	private void renderPosition(Slide slide, Graphics g, ProjectorContext projectorContext) {
-		ProjectorController projectorController = projectorContext.getProjector();
-		ProjectorConfiguration configuration = projectorContext.getConfiguration();
+	private void renderPosition(Graphics g, Slide slide) {
+		ProjectorController projectorController = getProjectorContext().getController();
+		ProjectorConfiguration configuration = getProjectorContext().getConfiguration();
 		Dimension innerArea = configuration.getDefaultInnerSlideDimensions();
 		
-		SlideItemFont sfont = configuration.getDefaultLabelFont();
-		Font font = new Font(sfont.getName(), sfont.getStyle(), sfont.getSize());
+		Font font = configuration.getDefaultLabelFont();
 		g.setFont(font);
 		
 		Color fontColor = new Color(configuration.getDefaultFontRGBColor());
 		g.setColor(fontColor);
 			
-		String template = projectorContext.getConfiguration().getMessage(SLIDEOFID);
+		String template = getProjectorContext().getConfiguration().getMessage(SLIDEOFID);
 		String slideOf = String.format(template,(1 + slide.getSequenceNumber()),projectorController.getSlideShowSize());
-			
-		g.drawString(slideOf, innerArea.getWidth(), innerArea.getHeight());
+		
+		g.drawString(slideOf, (int)innerArea.getHeight(), (int)innerArea.getWidth());
 	}		
 		
-	private void renderArea(Graphics g, Slide slide, ProjectorContext projectorContext) {
-		ProjectorConfiguration config = projectorContext.getConfiguration();
-		Component component = ((JFrame)this.getProjectorContext().getMainGUI()).getContentPane();
-		
+	private void renderArea(Graphics g, Component component, Slide slide) {
+		ProjectorConfiguration config = getProjectorContext().getConfiguration();
+
 		Dimension innerArea = config.getDefaultInnerSlideDimensions();
-			
-		Rectangle area = new RectangleImp(0, innerArea.getHeight(), component.getWidth(), (component.getHeight() - innerArea.getHeight()));
+		
+		Rectangle area = new Rectangle(0, innerArea.width, component.getWidth(), (component.getHeight() - innerArea.width));
 		float scale = getScale(area, config);
 		    
-		int x = area.getX();
-		int y = area.getY();
+		int x = area.x;
+		int y = area.y;
 		
 		if(getStrategy() != null) {
 			getStrategy().setContext(getProjectorContext());
@@ -94,52 +83,31 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 					iterator.gotoNext();
 					item = (SlideShowItem) iterator.getCurrentItem();
 				}
-				y = renderTextItem(g, projectorContext, x, y, item);
+				y = renderSlideShowItem(g, component, item, x, y);
 			}while(iterator.hasNext()); 
 			
-		}
-		
+		}		
 	}
 
-	private int renderTextItem(Graphics g ,ProjectorContext projectorContext, int x, int y, SlideShowItem item) {
+	private int renderSlideShowItem(Graphics g , Component component, SlideShowItem item, int x, int y) {
 		try {
-			SlideItemStyle style = projectorContext.getConfiguration().getStyle(item.getLevel().getRating());
-			y += getStrategy().draw(g, item, style, x, y).getHeight();			
+			SlideItemStyle style = getProjectorContext().getConfiguration().getStyle(item.getLevel().getRating());
+			y += getStrategy().draw(g, component, item, style, x, y).getHeight();			
 		}catch(Exception e) {
+			logger.logError("Error Rendering Item "+ x+" "+y+ " item: "+item.getLevel());
 			logger.logError(e.getMessage());
 		}
 		return y;
 	}
 		
-	private TextItem getTitleItem(String title) {
-		return new TextItem() {
-				@Override
-				public SlideShowComponant copy() {
-					return this;
-				}
-				@Override
-				public Level getLevel() {
-					return () -> 0;
-				}
-				@Override
-				public String getText() {
-					return title;
-				}
-				@Override
-				public void add(SlideShowComponant componant) {
-					//ignore
-				}
-				@Override
-				public SlideShowComponantIterator getIterator() {
-					return null;
-				}	
-		};
+	private SlideShowItem getTitleItem(String title) {
+		return SlideShowItemFactory.getInstance().createSlideShowItem(TEXTITEM_TYPE, title, 0);
 	}
 		
 	// geef de schaal om de slide te kunnen tekenen
 	private float getScale(Rectangle area, ProjectorConfiguration config) {
 			var dimension = config.getDefaultSlideDimensions();
-			return Math.min(((float)area.getWidth()) / (dimension.getWidth()), ((float)area.getHeight()) / (dimension.getHeight()));
+			return Math.min(((float)area.width) / (dimension.width), ((float)area.height / (dimension.height)));
 	}
 	
 }

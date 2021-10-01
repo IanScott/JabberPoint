@@ -1,5 +1,8 @@
 package nl.ou.jp.gui.model;
 
+import java.awt.Dimension;
+import java.awt.Font;
+
 //Kind of Factory
 public interface ProjectorConfiguration {
 
@@ -15,7 +18,7 @@ public interface ProjectorConfiguration {
 
 	int getDefaultFontRGBColor();
 
-	SlideItemFont getDefaultLabelFont();
+	Font getDefaultLabelFont();
 
 	String getMenuName(String menuId);
 
