@@ -56,6 +56,7 @@ public class SlideShowBuilderImp extends ComponantBuilderTemplate implements Sli
 		//reset values
 		this.componants = null;
 		this.title = null;
+		this.componantBuilders = null;
 		
 		return slideshow;
 	}
