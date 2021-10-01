@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import nl.ou.jp.domain.core.model.Slide;
 import nl.ou.jp.util.*;
 
-public interface ProjectorController extends EventDispatcher {
+public interface ProjectorController {
 	
 	String getSlideShowTitle();
 	
@@ -27,4 +27,5 @@ public interface ProjectorController extends EventDispatcher {
 	void openPresentation(Path path);
 	
 	void reset();
+	void registerSlideShowListeners(EventListener listener);
 }

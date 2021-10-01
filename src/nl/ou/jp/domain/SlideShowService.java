@@ -23,4 +23,7 @@ public interface SlideShowService {
 	void loadSlideShow(SlideShow slideshow);
 	
 	void resetSlideShow();
+	
+	SlideShowEventDispatcher getSlideShowEventDispatcher();
+	SlideEventDispatcher getSlideEventDispatcher();
 }

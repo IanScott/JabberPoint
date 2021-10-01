@@ -12,8 +12,13 @@ public class SlideShowServiceImp implements SlideShowService {
 	
 	private SlideShowBuilder slideShowBuilder = null;
 	
-	public SlideShowServiceImp(SlideShowBuilder slideShowBuilder) {
+	private SlideShowEventDispatcher slideShowEventDispatcher = null;
+	private SlideEventDispatcher slideEventDispatcher = null;
+	
+	public SlideShowServiceImp(SlideShowBuilder slideShowBuilder, SlideShowEventDispatcher slideShowDispatcher, SlideEventDispatcher slideDispatcher) {
 		this.slideShowBuilder= slideShowBuilder;
+		this.slideShowEventDispatcher = slideShowDispatcher;
+		this.slideEventDispatcher = slideDispatcher;
 	}
 	
 	@Override
@@ -61,12 +66,14 @@ public class SlideShowServiceImp implements SlideShowService {
 		}
 		
 		this.iterator.setIndex(index);
+		this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 	}
 
 	@Override
 	public void previousSlide() {
 		if(this.iterator != null && this.iterator.hasPrevious()) {
 			this.iterator.gotoPrevious();
+			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}
 
@@ -74,6 +81,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	public void nextSlide() {
 		if(this.iterator != null && this.iterator.hasNext()) {
 			this.iterator.gotoNext();
+			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}
 	
@@ -86,13 +94,24 @@ public class SlideShowServiceImp implements SlideShowService {
 	public void loadSlideShow(SlideShow slideshow) {
 		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
+		this.slideShowEventDispatcher.fireEvent(slideshow);
 		
-		this.nextSlide(); //load first availible slide.
+		this.nextSlide(); //load first available slide.
 	}
 
 	@Override
 	public void resetSlideShow() {
 		this.slideshow = null;
 		this.iterator = null;
+	}
+
+	@Override
+	public SlideShowEventDispatcher getSlideShowEventDispatcher() {
+		return slideShowEventDispatcher;
+	}
+
+	@Override
+	public SlideEventDispatcher getSlideEventDispatcher() {
+		return slideEventDispatcher;
 	}
 }

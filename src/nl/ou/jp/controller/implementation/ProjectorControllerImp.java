@@ -62,53 +62,33 @@ public class ProjectorControllerImp implements ProjectorController {
 	public void openPresentation(Path path) {
 		SlideShow slideshow = this.projectorInfra.openPresentation(path);
 		this.slideShowService.loadSlideShow(slideshow);
-		
-		this.fireEvent(()-> this.slideShowService);
 	}
 	
 	@Override
 	public void gotoSlideNumber(int number) {
 		this.slideShowService.gotoSlideIndex(number);
-		this.fireEvent(this::getCurrentSlide);
 	}
 
 	@Override
 	public void previousSlide() {
 		this.slideShowService.previousSlide();
-		this.fireEvent(this::getCurrentSlide);
 	}
 
 	@Override
 	public void nextSlide() {
 		this.slideShowService.nextSlide();
-		this.fireEvent(this::getCurrentSlide);
 	}
 	
-	@Override
-	public void addListener(EventListener subscriber) {
-		if(this.eventListeners == null) {
-			this.eventListeners = new ArrayList<>();
-		}
-		this.eventListeners.add(subscriber);
-	}
-
-	@Override
-	public void removeListener(EventListener eventListener) {
-		if(this.eventListeners != null) {
-			this.eventListeners.remove(eventListener);			
-		}
-	}
-	
-	@Override
-	public void fireEvent(Event event) {
-		if(this.eventListeners != null) {
-			this.eventListeners.forEach(x -> x.eventReceived(event));			
-		}
-	}
 
 	@Override
 	public void reset() {
 		this.slideShowService.resetSlideShow();
-		fireEvent(()->this);
+	}
+
+
+	@Override
+	public void registerSlideShowListeners(EventListener listener) {
+		this.slideShowService.getSlideEventDispatcher().addListener(listener);
+		this.slideShowService.getSlideShowEventDispatcher().addListener(listener);
 	}
 }
