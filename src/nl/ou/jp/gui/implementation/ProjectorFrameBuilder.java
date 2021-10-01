@@ -3,17 +3,16 @@ package nl.ou.jp.gui.implementation;
 import java.awt.MenuBar;
 import java.awt.event.*;
 
-import nl.ou.jp.gui.model.DrawStrategy;
 import nl.ou.jp.gui.model.ProjectorConfiguration;
 
 public class ProjectorFrameBuilder {
-	private DrawStrategy strategy;
+	private SwingDrawStrategy strategy;
 	private MenuBar menubar;
 	private WindowListener windowListener;
 	private KeyListener keyListener;
 	private ProjectorConfiguration configurationDefault;
 
-	public ProjectorFrameBuilder withStrategy(DrawStrategy strategy) {
+	public ProjectorFrameBuilder withStrategy(SwingDrawStrategy strategy) {
 		this.strategy = strategy;
 		return this;
 	}

@@ -21,13 +21,13 @@ import nl.ou.jp.util.Event;
 public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 	private static final long serialVersionUID = 3227L;
 	private transient Logger logger = LoggerManager.getLogger();
-	private transient DrawStrategy strategy = null;
+	private transient SwingDrawStrategy strategy = null;
 
 	private transient ProjectorContext projectorContext = null;
 	private transient ProjectorConfiguration configurationDefault = null;
 	
 	protected ProjectorGUIImp(
-			DrawStrategy strategy,
+			SwingDrawStrategy strategy,
 			MenuBar projectorViewMenuBar, 
 			WindowListener windowListener,
 			KeyListener keyListener, 
@@ -98,12 +98,10 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 			@Override
 			public void paintComponent(Graphics g) {
 				validateParameters(g, projectorContext);
-				strategy.setContext(projectorContext);
-				//strategy.setGraphics(g);
-				//strategy.setContentPane(getContentPane());
 				Slide slide = projectorContext.getProjector().getCurrentSlide();
 				if(slide != null) {
-					strategy.draw(slide, null, 0, 0);					
+					strategy.setContext(projectorContext);
+					strategy.draw(g, slide, null, 0, 0);					
 				} 
 			}
 		});
