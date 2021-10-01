@@ -21,4 +21,14 @@ public class SlideShowImp extends SlideShowCompositeTemplate implements SlideSho
 	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
 		return new SlideShowImp(title, componants);
 	}
+	
+	@Override
+	public int getSequenceNumber() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setSequenceNumber(int seqnr) {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -8,10 +8,9 @@ import java.awt.event.*;
 import java.nio.file.Path;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.domain.SlideShowService;
-import nl.ou.jp.domain.core.model.Slide;
-import nl.ou.jp.gui.ProjectorGUI;
-import nl.ou.jp.gui.ProjectorGUIException;
+import nl.ou.jp.domain.*;
+import nl.ou.jp.domain.core.model.*;
+import nl.ou.jp.gui.*;
 import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
 import nl.ou.jp.util.Event;
@@ -25,125 +24,120 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 
 	private transient ProjectorContext projectorContext = null;
 	private transient ProjectorConfiguration configurationDefault = null;
-	
-	protected ProjectorGUIImp(
-			DrawStrategy strategy,
-			MenuBar projectorViewMenuBar, 
-			WindowListener windowListener,
-			KeyListener keyListener, 
-			ProjectorConfiguration configurationDefault) 
-		{
+
+	private transient Slide currentSlide;
+
+	protected ProjectorGUIImp(DrawStrategy strategy, MenuBar projectorViewMenuBar, WindowListener windowListener,
+			KeyListener keyListener, ProjectorConfiguration configurationDefault) {
 		this.strategy = strategy;
 		this.configurationDefault = configurationDefault;
-		
-		if(this.configurationDefault == null) {
+
+		if (this.configurationDefault == null) {
 			throw new ProjectorGUIException("Configuration cannot be NULL.");
 		}
-		
-		if(this.strategy == null) {
+
+		if (this.strategy == null) {
 			throw new ProjectorGUIException("Strategy cannot be NULL.");
 		}
-		
-		setMenuBar(projectorViewMenuBar); //may be null
-		addWindowListener(windowListener); //may be null
+
+		setMenuBar(projectorViewMenuBar); // may be null
+		addWindowListener(windowListener); // may be null
 		addKeyListener(keyListener); // may be null
-		
+
 		setTitle(configurationDefault.getDefaultTitle());
 		setSize(configurationDefault.getDefaultSlideDimensions());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
-
 	public void initialize(ProjectorContext projectorContext) {
-		ProjectorController projectorController = projectorContext.getController();
-		
+
+		ProjectorController projectorController = projectorContext.getController();		
 		if(projectorController == null) {
+
 			throw new ProjectorGUIException("Context item is invalid.");
 		}
-		
+
 		this.projectorContext = projectorContext;
 		this.projectorContext.setMainGUI(this);
 		this.projectorContext.setConfiguration(this.configurationDefault);
-		
-		projectorController.addListener(this);
-		
+
+		projectorController.registerSlideShowListeners(this);
+
 		initializeContentPane();
 	}
-	
+
 	@Override
 	public void start(String path) {
+
 		if(this.projectorContext == null || this.projectorContext.getController() == null) {
 			throw new ProjectorGUIException("Context has not been intialized yet.");
 		}
 		
 		if(path != null) {
 			this.projectorContext.getController().openPresentation(Path.of(path));			
+
 		}
-		
+
 		setVisible(true);
 	}
-	
+
 	private void initializeContentPane() {
 		getContentPane().add(new JComponent() {
 			private static final long serialVersionUID = -7453172265625523541L;
+
 			@Override
 			public Dimension getPreferredSize() {
 				return configurationDefault.getDefaultSlideDimensions();
 			}
+
 			
 			@Override
 			public void paintComponent(Graphics g) {
 				validateParameters(g, projectorContext);
-				Slide slide = projectorContext.getController().getCurrentSlide();
-				if(slide != null) {
+			
+				if(currentSlide != null) {
 					strategy.setContext(projectorContext);
-					strategy.draw(g, this, slide, null, 0, 0);					
+					strategy.draw(g, this,currentSlide, null, 0, 0);					
 				} 
 			}
 		});
 	}
-	
+
 	private boolean validateParameters(Graphics g, ProjectorContext projectorContext) {
-		if(g == null || projectorContext == null) {
+		if (g == null || projectorContext == null) {
 			throw new ProjectorGUIException("Input parameters cannot be NULL.");
 		}
+
 		if(projectorContext.getConfiguration() == null || projectorContext.getMainGUI() == null || projectorContext.getController() == null) {
 			throw new ProjectorGUIException("Context has not been properly initialized.");
 		}
 		
 		return (projectorContext.getController().getSlideShowSize() > 0);
 	}
-	
-	@Override
-	public void eventReceived(Event event) {
+
+	private void eventReceivedSlideShow(SlideShowEvent event) {
 		logger.logInfo("updating");
-		Object source = event.getSource();
-		if(source instanceof SlideShowService) {
-			updateSlideShow((SlideShowService)source);	
-		}
-		
-		if(source instanceof Slide) {
-			 update();
+		SlideShow source = (SlideShow) event.getSource();
+
+		if (source != null) {
+			this.setTitle(source.getTitle());
 		}
 	}
-	
-	private void updateSlideShow(SlideShowService updatedSlideShow) {
-		String title = updatedSlideShow.getSlideShowTitle();
-		if(title == null || title.isEmpty()) {
-			title = this.configurationDefault.getDefaultTitle();				
-		}
-		this.setTitle(title);
-		 update();
+
+	private void eventReceivedSlide(SlideEvent event) {
+		logger.logInfo("updating");
+		currentSlide = (Slide) event.getSource();
+		update();
 	}
-	
+
 	private void update() {
 		repaint();
 		this.getContentPane().repaint();
 	}
-	
+
 	@Override
 	public void showMessageDialog(String message, String title) {
-		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);		
+		JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
@@ -151,10 +145,25 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
+
 	@Override
 	public void exit() {
-		this.dispose(); //clearup before termination.
-		this.setVisible(false);	
+		this.dispose(); // clearup before termination.
+		this.setVisible(false);
 		System.exit(0);
 	}
+
+
+	@Override 
+	public void eventReceived(Event event) 
+	  { 
+		  if(event instanceof SlideShowEvent) 
+		  {
+			  this.eventReceivedSlideShow((SlideShowEvent)event);
+		  }
+		  if(event instanceof SlideEvent) 
+		  {
+			  this.eventReceivedSlide((SlideEvent)event);
+		  }
+	  }
 }

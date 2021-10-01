@@ -55,6 +55,7 @@ public class SlideShowComponantIteratorImp implements SlideShowComponantIterator
 			throw new NoSuchElementException();
 		}
 		
+		this.componants.get(currentIndex).setSequenceNumber(this.currentIndex);
 		return this.componants.get(this.currentIndex);			
 	}
 
