@@ -3,8 +3,7 @@ package nl.ou.jp.gui.implementation;
 import java.awt.*;
 
 import nl.ou.jp.domain.core.model.*;
-import nl.ou.jp.gui.model.SlideItemStyle;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.*;
 import nl.ou.jp.gui.model.Rectangle;
 
 public abstract class SwingDrawStrategy {
@@ -15,13 +14,6 @@ public abstract class SwingDrawStrategy {
 	
 	protected SwingDrawStrategy(SwingDrawStrategy next) {
 		this.strategy = next;
-	}
-	
-	public Rectangle draw(Object graphics, SlideShowComponant data, SlideItemStyle fontstyle, int x, int y) {
-		if(graphics instanceof Graphics) {
-			return draw((Graphics) graphics, data, fontstyle, x, y);
-		}
-		return new RectangleImp(0,0,0,0);
 	}
 	
 	public abstract Rectangle draw(Graphics graphics, SlideShowComponant data, SlideItemStyle fontstyle, int x, int y);
