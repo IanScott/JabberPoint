@@ -2,7 +2,6 @@ package nl.ou.jp.controller.implementation;
 
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.*;
 
 import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.domain.SlideShowService;
@@ -10,7 +9,6 @@ import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.infra.*;
 import nl.ou.jp.logging.Logger;
 import nl.ou.jp.logging.LoggerManager;
-import nl.ou.jp.util.*;
 import nl.ou.jp.util.EventListener;
 
 public class ProjectorControllerImp implements ProjectorController {
@@ -19,7 +17,6 @@ public class ProjectorControllerImp implements ProjectorController {
 	private ProjectorInfra projectorInfra = null;
 	private SlideShowService slideShowService = null;
 	
-	private List<EventListener> eventListeners = null; 
 	
 	public ProjectorControllerImp(ProjectorInfra projectorInfra, SlideShowService service) {
 		this.projectorInfra = projectorInfra;

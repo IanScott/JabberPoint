@@ -19,6 +19,7 @@ public class SlideShowServiceFactory {
 	}
 	
 	public SlideShowService create() {
-		return new SlideShowServiceImp(new SlideShowBuilderImp(new SlideBuilderImp()),new SlideShowEventDispatcher(), new SlideEventDispatcher());
+		SlideShowBuilder slideshowBuilder = new SlideShowBuilderImp(new SlideBuilderImp());
+		return new SlideShowServiceImp(slideshowBuilder, new SlideShowEventDispatcher(), new SlideEventDispatcher());
 	}
 }

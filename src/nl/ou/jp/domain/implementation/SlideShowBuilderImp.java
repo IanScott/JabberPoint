@@ -51,7 +51,13 @@ public class SlideShowBuilderImp extends ComponantBuilderTemplate implements Sli
 	public SlideShow getSlideShow() {
 		List<SlideShowComponant> slides = componantBuilders.stream().map(ComponantBuilder::build).collect(Collectors.toList());
 		this.withComponants(slides);
-		return (SlideShow)this.build();
+		SlideShow slideshow = (SlideShow)this.build();
+		
+		//reset values
+		this.componants = null;
+		this.title = null;
+		
+		return slideshow;
 	}
 
 	@Override
