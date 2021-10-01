@@ -49,10 +49,11 @@ public class SlideShowServiceImp implements SlideShowService {
 	public Slide getCurrentSlide() {
 		if(this.iterator !=null) {
 			Slide slide = (Slide)this.iterator.getCurrentItem();
-			if(slide != null) {
-				slide.setSequenceNumber(this.iterator.getCurrentIndex());
-				return (Slide)slide.copy();
-			}			
+			
+			if(slide != null)
+			{
+				return (Slide)slide.copy();	
+			}			 
 		}
 		
 		return null;

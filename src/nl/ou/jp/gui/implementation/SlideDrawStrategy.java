@@ -124,7 +124,14 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 				@Override
 				public SlideShowComponantIterator getIterator() {
 					return null;
-				}	
+				}
+				@Override
+				public int getSequenceNumber() {
+					return 0;
+				}
+				@Override
+				public void setSequenceNumber(int seqnr) {
+				}
 		};
 	}
 		

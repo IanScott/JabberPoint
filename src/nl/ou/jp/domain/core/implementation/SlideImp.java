@@ -12,9 +12,9 @@ public class SlideImp extends SlideShowCompositeTemplate implements Slide {
 		super(title, componants);
 	}
 
-	public SlideImp(String title, int sequanceNumber, List<SlideShowComponant> componants) {
+	public SlideImp(String title, int sequenceNumber, List<SlideShowComponant> componants) {
 		super(title, componants);
-		this.sequenceNumber = sequanceNumber;
+		this.sequenceNumber = sequenceNumber;
 	}
 	
 	@Override
