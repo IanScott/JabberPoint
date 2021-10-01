@@ -37,7 +37,7 @@ public class ProjectorGUIFactory {
 		DrawStrategy strategy = variant.createDrawStrategy();
 		ProjectorContext projectorContext = variant.createContext();
 
-		ProjectorGUIImp projectorView = new ProjectorFrameBuilder()
+		ProjectorGUIImp projectorView = new ProjectorGUIBuilder()
 			.withStrategy(strategy)		
 			.withKeyListener(keylistener) 
 			.withWindowListener(windowlistener)
