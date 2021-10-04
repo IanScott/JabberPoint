@@ -12,7 +12,10 @@ public class SlideShowImp extends SlideShowCompositeTemplate implements SlideSho
 	@Override
 	public Slide getSlide(int index) {
 		if(this.componants != null) {
-			return (Slide)this.componants.get(index);
+			Slide slide =  (Slide)this.componants.get(index);
+			if(slide != null) {
+				return (Slide)slide.copy();					
+			}
 		}
 		return null;
 	}

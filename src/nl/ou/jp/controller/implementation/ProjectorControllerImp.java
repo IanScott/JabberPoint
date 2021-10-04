@@ -56,8 +56,8 @@ public class ProjectorControllerImp implements ProjectorController {
 	}
 	
 	@Override
-	public void openPresentation(Path path) {
-		SlideShow slideshow = this.projectorInfra.openPresentation(path);
+	public void openSlideShow(Path path) {
+		SlideShow slideshow = this.projectorInfra.openSlideShow(path);
 		this.slideShowService.loadSlideShow(slideshow);
 	}
 	

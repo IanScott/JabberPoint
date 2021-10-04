@@ -14,8 +14,10 @@ public class JibberJabberPoint {
 		
 		ProjectorController projectorController = ProjectorControllerFactory.getInstance().create(projectorInfra, slideShowService); // load Controller
 		
-		ProjectorGUI gui = ProjectorGUIFactory.getInstance().create(projectorController); // load View (GUI)
+		ProjectorVariant variant = ProjectorVariantFactory.getInstance().create(projectorController); // load gui variant data
+		ProjectorGUI gui = ProjectorGUIFactory.getInstance().create(variant); // load GUI
 		
+		//start gui with path
 		gui.start(path);
 	}
 	

@@ -4,8 +4,8 @@ import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorConfiguration;
 import nl.ou.jp.gui.model.ProjectorContext;
 
-public class AboutCommand implements ProjectorCommand {
-	
+public class AboutCommand implements ProjectorCommand {	
+	private static final String NAME = "ABOUT";
 	private static final String ABOUTMESSAGEID = "ABOUTMESSAGE";
 	private static final String ABOUTMESSAGETITLEID = "ABOUTMESSAGETITLE";
 	private ProjectorContext projectorContext = null;
@@ -20,5 +20,10 @@ public class AboutCommand implements ProjectorCommand {
 		String title = config.getMessage(ABOUTMESSAGETITLEID);
 		String message = config.getMessage(ABOUTMESSAGEID);
 		projectorContext.getMainGUI().showMessageDialog(message, title);
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
 	}
 }

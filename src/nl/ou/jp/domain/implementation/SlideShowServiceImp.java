@@ -48,12 +48,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	@Override
 	public Slide getCurrentSlide() {
 		if(this.iterator !=null) {
-			Slide slide = (Slide)this.iterator.getCurrentItem();
-			
-			if(slide != null)
-			{
-				return (Slide)slide.copy();	
-			}			 
+			return (Slide)this.iterator.getCurrentItem();	 
 		}
 		
 		return null;

@@ -1,4 +1,4 @@
-package nl.ou.jp.gui.implementation;
+package nl.ou.jp.gui.implementation.drawstrategies;
 
 import java.awt.*;
 import java.awt.font.*;
