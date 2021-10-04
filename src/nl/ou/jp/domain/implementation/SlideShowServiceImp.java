@@ -1,11 +1,7 @@
 package nl.ou.jp.domain.implementation;
 
-import java.text.DecimalFormat;
-
 import nl.ou.jp.domain.*;
 import nl.ou.jp.domain.core.AnnotationFactory;
-import nl.ou.jp.domain.core.implementation.AnnotationLineImp;
-import nl.ou.jp.domain.core.implementation.AnnotationPointImp;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
 
@@ -57,12 +53,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	@Override
 	public Slide getCurrentSlide() {
 		if(this.iterator !=null) {
-			Slide slide = (Slide)this.iterator.getCurrentItem();
-			
-			if(slide != null)
-			{
-				return (Slide)slide.copy();	
-			}			 
+			return (Slide)this.iterator.getCurrentItem();	 
 		}
 		
 		return null;
@@ -129,12 +120,18 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void makeSlideShowReadOnly() {
-		slideShowController.makeSlideShowReadOnly(slideshow);
+		if(this.slideshow != null) 
+		{
+			slideShowController.makeSlideShowReadOnly(slideshow);	
+		}
 	}
 
 	@Override
 	public void enableSlideShowAnnotations() {
-		slideShowController.enableSlideShowAnnotations(slideshow);
+		if(this.slideshow != null) 
+		{
+			slideShowController.enableSlideShowAnnotations(slideshow);	
+		}
 	}
 
 	@Override
@@ -145,7 +142,13 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void addToLineAnnotation(int index, double x, double y) {
-		if(x > 0 && x < 100 && y > 0 && y < 100)
+		int minCoordinateValue = 0;
+		int maxCoordinateValue = 100;
+		
+		if(x > minCoordinateValue && 
+		   x < maxCoordinateValue && 
+		   y > minCoordinateValue && 
+		   y < maxCoordinateValue)
 		{
 			RelativePosition position = new RelativePositionImp(x,y);
 			AnnotationPoint point = AnnotationFactory.getInstance().createAnnotationPoint(position);

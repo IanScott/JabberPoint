@@ -34,16 +34,6 @@ public class AnnotationLineImp extends SlideShowCompositeTemplate implements Ann
 	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
 		return new AnnotationLineImp(lineWeight, lineColor);
 	}
-	
-	@Override
-	public int getSequenceNumber() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setSequenceNumber(int seqnr) {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public void add(SlideShowComponant componant) {
@@ -55,10 +45,21 @@ public class AnnotationLineImp extends SlideShowCompositeTemplate implements Ann
 		if(componant instanceof AnnotationPoint) 
 		{
 			points.add((AnnotationPoint)componant);
-		}else 
+		}
+		else 
 		{
 			throw new IllegalArgumentException();
 		}
 		
+	}
+	
+	@Override
+	public int getSequenceNumber() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setSequenceNumber(int seqnr) {
+		throw new UnsupportedOperationException();
 	}
 }

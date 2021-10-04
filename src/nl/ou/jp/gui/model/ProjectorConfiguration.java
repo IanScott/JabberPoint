@@ -1,9 +1,9 @@
 package nl.ou.jp.gui.model;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
-//Kind of Factory
 public interface ProjectorConfiguration {
 
 	String getDefaultTitle();
@@ -14,9 +14,9 @@ public interface ProjectorConfiguration {
 
 	Dimension getDefaultInnerSlideDimensions();
 
-	int getSlideBackgroundRGBColor();
+	Color getSlideBackgroundColor();
 
-	int getDefaultFontRGBColor();
+	Color getDefaultFontColor();
 
 	Font getDefaultLabelFont();
 

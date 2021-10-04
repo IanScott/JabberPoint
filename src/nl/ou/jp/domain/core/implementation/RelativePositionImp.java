@@ -1,8 +1,5 @@
 package nl.ou.jp.domain.core.implementation;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-
 import nl.ou.jp.domain.core.model.RelativePosition;
 
 public class RelativePositionImp implements RelativePosition {

@@ -27,8 +27,8 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 
 	private transient Slide currentSlide;
 
-	protected ProjectorGUIImp(DrawStrategy strategy, MenuBar projectorViewMenuBar, WindowListener windowListener,
-			KeyListener keyListener, ProjectorConfiguration configurationDefault) {
+	public ProjectorGUIImp(DrawStrategy strategy, MenuBar projectorViewMenuBar, WindowListener windowListener,
+			KeyListener keyListener, ProjectorConfiguration configurationDefault, ProjectorContext context) {
 		this.strategy = strategy;
 		this.configurationDefault = configurationDefault;
 
@@ -47,9 +47,11 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		setTitle(configurationDefault.getDefaultTitle());
 		setSize(configurationDefault.getDefaultSlideDimensions());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		initialize(context);
 	}
 
-	public void initialize(ProjectorContext projectorContext) {
+	private void initialize(ProjectorContext projectorContext) {
 
 		ProjectorController projectorController = projectorContext.getController();		
 		if(projectorController == null) {
@@ -74,7 +76,7 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		}
 		
 		if(path != null) {
-			this.projectorContext.getController().openPresentation(Path.of(path));			
+			this.projectorContext.getController().openSlideShow(Path.of(path));			
 
 		}
 
@@ -97,7 +99,7 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 			
 				if(currentSlide != null) {
 					strategy.setContext(projectorContext);
-					strategy.draw(g, this,currentSlide, null, 0, 0);					
+					strategy.draw(g, this, currentSlide, null, 0, 0);					
 				} 
 			}
 		});
@@ -115,21 +117,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		return (projectorContext.getController().getSlideShowSize() > 0);
 	}
 
-	private void eventReceivedSlideShow(SlideShowEvent event) {
-		logger.logInfo("updating");
-		SlideShow source = (SlideShow) event.getSource();
-
-		if (source != null) {
-			this.setTitle(source.getTitle());
-		}
-	}
-
-	private void eventReceivedSlide(SlideEvent event) {
-		logger.logInfo("updating");
-		currentSlide = (Slide) event.getSource();
-		update();
-	}
-
 	private void update() {
 		repaint();
 		this.getContentPane().repaint();
@@ -141,7 +128,7 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 	}
 
 	@Override
-	public void showErrorMessage(String message, String title) {
+	public void showErrorMessageDialog(String message, String title) {
 		JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
@@ -152,7 +139,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		this.setVisible(false);
 		System.exit(0);
 	}
-
 
 	@Override 
 	public void eventReceived(Event event) 
@@ -166,4 +152,19 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 			  this.eventReceivedSlide((SlideEvent)event);
 		  }
 	  }
+	
+	private void eventReceivedSlideShow(SlideShowEvent event) {
+		logger.logInfo("updating");
+		SlideShow source = (SlideShow) event.getSource();
+		
+		if (source != null) {
+			this.setTitle(source.getTitle());
+		}
+	}
+	
+	private void eventReceivedSlide(SlideEvent event) {
+		logger.logInfo("updating");
+		currentSlide = (Slide) event.getSource();
+		update();
+	}
 }

@@ -24,8 +24,9 @@ public interface ProjectorController {
 	
 	InputStream fetchFileAsStream(Path path);
 	
-	void openPresentation(Path path);
+	void openSlideShow(Path path);
 	
 	void reset();
+	
 	void registerSlideShowListeners(EventListener listener);
 }

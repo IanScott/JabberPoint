@@ -1,40 +1,35 @@
-package nl.ou.jp.gui.implementation.subfactories;
+package nl.ou.jp.gui.implementation.uicontrollers;
+
+import static nl.ou.jp.gui.implementation.uicontrollers.ControllerConstants.*;
 
 import java.awt.event.*;
 import java.util.*;
 import java.util.function.Consumer;
 
 import nl.ou.jp.gui.ProjectorGUIException;
-import nl.ou.jp.gui.implementation.commands.CommandNames;
 import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.logging.*;
 
-public class ProjectorViewKeyListenerFactory {
+public class ProjectorGUIKeyListener extends KeyAdapter {
+
 	private Logger logger = LoggerManager.getLogger();
-	private Map<CommandNames, ProjectorCommand> projectorCommands = null;
+	
+	private Map<String, ProjectorCommand> projectorCommands = null;
 	private Map<Integer, Consumer<KeyEvent>> actionmapping = null;
 	
-	private static ProjectorViewKeyListenerFactory instance = null;
 	
-	public static ProjectorViewKeyListenerFactory getInstance() {
-		if(instance == null) {
-			instance = new ProjectorViewKeyListenerFactory();
-		}
-		return instance;
-	}
-	
-	private ProjectorViewKeyListenerFactory() {
-		//singleton
-	}
-	
-	public KeyListener create(Map<CommandNames, ProjectorCommand> projectorCommands) {
+	public ProjectorGUIKeyListener(Map<String, ProjectorCommand> projectorCommands) {
 		this.projectorCommands = projectorCommands;
-		return new KeyAdapter(){
-			@Override
-			public void keyPressed(KeyEvent keyEvent) {
-				keyPressedImp(keyEvent);
-			}
-		};
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent keyEvent) {
+		keyPressedImp(keyEvent);
+	}
+	
+	private void keyPressedImp(final KeyEvent keyEvent) {
+		initActionMapping();	
+		this.actionmapping.getOrDefault(keyEvent.getKeyCode(), this::unSupported).accept(keyEvent);
 	}
 	
 	private void initActionMapping(){
@@ -53,22 +48,17 @@ public class ProjectorViewKeyListenerFactory {
 		}
 	}
 	
-	private void keyPressedImp(final KeyEvent keyEvent) {
-		initActionMapping();
-		
-		this.actionmapping.getOrDefault(keyEvent.getKeyCode(), this::unSupported).accept(keyEvent);
-	}
 
 	private void exitAction(KeyEvent keyEvent) {
-		loadCommand(this.projectorCommands.get(CommandNames.EXIT));
+		loadCommand(this.projectorCommands.get(EXITCOMMANDNAME));
 	}
 
 	private void previousAction(KeyEvent keyEvent) {
-		loadCommand(this.projectorCommands.get(CommandNames.PREVIOUSSLIDE));
+		loadCommand(this.projectorCommands.get(PREVIOUSSLIDECOMMANDNAME));
 	}
 
 	private void nextAction(KeyEvent keyEvent) {
-		loadCommand(this.projectorCommands.get(CommandNames.NEXTSLIDE));
+		loadCommand(this.projectorCommands.get(NEXTSLIDECOMMANDNAME));
 	}
 
 	private void unSupported(KeyEvent keyEvent) {

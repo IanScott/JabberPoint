@@ -7,28 +7,24 @@ public class SlideShowImp extends SlideShowCompositeTemplate implements SlideSho
 
 	private SlideShowState slideShowState;
 
-	
 	 public SlideShowImp(String title, List<SlideShowComponant> slides) {
 		 super(title, slides); 
 	 }
-	 
-
-	public SlideShowImp() {
-	}
 
 	@Override
 	public Slide getSlide(int index) {
-		if (this.componants != null) {
-			return (Slide) this.componants.get(index);
+		if(this.componants != null) {
+			Slide slide =  (Slide)this.componants.get(index);
+			if(slide != null) {
+				return (Slide)slide.copy();					
+			}
 		}
 		return null;
 	}
 
 	@Override
 	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
-		// return new SlideShowImp(title, componants);
-		return new SlideShowImp();
-
+		 return new SlideShowImp(title, componants);
 	}
 
 	@Override
@@ -53,12 +49,18 @@ public class SlideShowImp extends SlideShowCompositeTemplate implements SlideSho
 
 	@Override
 	public void startLineAnnotation(int index, AnnotationLine line) {
-		slideShowState.startLineAnnotation(this, index, line);
+		if(line != null) 
+		{
+			slideShowState.startLineAnnotation(this, index, line);			
+		}
 	}
 
 	@Override
 	public void addToLineAnnotation(int index, AnnotationPoint point) {
-		slideShowState.addToLineAnnotation(this, index, point);
+		if(point != null) 
+		{
+			slideShowState.addToLineAnnotation(this, index, point);			
+		}
 	}
 
 	@Override

@@ -4,5 +4,4 @@ import nl.ou.jp.util.EventListener;
 
 public interface SlideShowEventListener extends EventListener {
 
-	 void eventReceived(SlideShowEvent event);
 }

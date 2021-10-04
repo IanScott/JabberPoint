@@ -21,7 +21,7 @@ public class ProjectorInfraImp implements ProjectorInfra {
 	}
 	
 	@Override
-	public SlideShow openPresentation(Path path) {
+	public SlideShow openSlideShow(Path path) {
 		this.directory = path.getParent();
 		Accessor accessor = getAccessor(path); 
 		SlideShowBuilder builder = accessor.loadFile(path.toString());
@@ -42,7 +42,7 @@ public class ProjectorInfraImp implements ProjectorInfra {
 	}
 	
 	@Override
-	public void savePresentation(SlideShow slideshow, Path path) {
+	public void saveSlideShow(SlideShow slideshow, Path path) {
 		logger.logDebug("Unimplemented method.");
 	}
 	

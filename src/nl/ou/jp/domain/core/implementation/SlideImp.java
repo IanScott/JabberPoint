@@ -8,8 +8,9 @@ import nl.ou.jp.domain.core.model.*;
 public class SlideImp extends SlideShowCompositeTemplate implements Slide {
 	
 	private int sequenceNumber = -1;
-	private List<AnnotationLine> lines;
+	
 	private AnnotationLine currentLine;
+	private List<AnnotationLine> lines;
 	
 	public SlideImp(String title, List<SlideShowComponant> componants) {
 		super(title, componants);

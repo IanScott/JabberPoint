@@ -1,4 +1,4 @@
-package nl.ou.jp.gui.implementation;
+package nl.ou.jp.gui.implementation.drawstrategies;
 
 import java.awt.*;
 
@@ -35,7 +35,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 	private Rectangle renderSlideBounds(Graphics g, Component component) {
 		ProjectorConfiguration configuration = getProjectorContext().getConfiguration();
 		
-		Color backgroundColor = new Color(configuration.getSlideBackgroundRGBColor());	
+		Color backgroundColor = configuration.getSlideBackgroundColor();	
 		g.setColor(backgroundColor);
 		g.fillRect(0, 0, component.getSize().width, component.getSize().height);
 		return new Rectangle(0, 0, component.getSize().width, component.getSize().height);
@@ -49,7 +49,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		Font font = configuration.getDefaultLabelFont();
 		g.setFont(font);
 		
-		Color fontColor = new Color(configuration.getDefaultFontRGBColor());
+		Color fontColor = configuration.getDefaultFontColor();
 		g.setColor(fontColor);
 			
 		String template = getProjectorContext().getConfiguration().getMessage(SLIDEOFID);

@@ -8,9 +8,9 @@ import nl.ou.jp.domain.core.model.SlideShow;
 
 public interface ProjectorInfra {
 	
-	SlideShow openPresentation(Path path);
+	SlideShow openSlideShow(Path path);
 
-	void savePresentation(SlideShow slideshow, Path path);
+	void saveSlideShow(SlideShow slideshow, Path path);
 
 	InputStream fetchFileAsStream(Path path);
 }
