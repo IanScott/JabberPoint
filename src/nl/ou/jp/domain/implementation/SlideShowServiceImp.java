@@ -1,6 +1,12 @@
 package nl.ou.jp.domain.implementation;
 
+import java.text.DecimalFormat;
+
 import nl.ou.jp.domain.*;
+import nl.ou.jp.domain.core.AnnotationFactory;
+import nl.ou.jp.domain.core.implementation.AnnotationLineImp;
+import nl.ou.jp.domain.core.implementation.AnnotationPointImp;
+import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
 
 public class SlideShowServiceImp implements SlideShowService {
@@ -15,10 +21,13 @@ public class SlideShowServiceImp implements SlideShowService {
 	private SlideShowEventDispatcher slideShowEventDispatcher = null;
 	private SlideEventDispatcher slideEventDispatcher = null;
 	
-	public SlideShowServiceImp(SlideShowBuilder slideShowBuilder, SlideShowEventDispatcher slideShowDispatcher, SlideEventDispatcher slideDispatcher) {
+	private SlideShowController slideShowController = null;
+	
+	public SlideShowServiceImp(SlideShowBuilder slideShowBuilder, SlideShowEventDispatcher slideShowDispatcher, SlideEventDispatcher slideDispatcher, SlideShowController slideShowController) {
 		this.slideShowBuilder= slideShowBuilder;
 		this.slideShowEventDispatcher = slideShowDispatcher;
 		this.slideEventDispatcher = slideDispatcher;
+		this.slideShowController = slideShowController;
 	}
 	
 	@Override
@@ -93,6 +102,8 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void loadSlideShow(SlideShow slideshow) {
+		this.slideShowController.makeSlideShowReadOnly(slideshow);
+		
 		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
 		this.slideShowEventDispatcher.fireEvent(slideshow);
@@ -118,21 +129,27 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void makeSlideShowReadOnly() {
-		throw new UnsupportedOperationException();
+		slideShowController.makeSlideShowReadOnly(slideshow);
 	}
 
 	@Override
 	public void enableSlideShowAnnotations() {
-		throw new UnsupportedOperationException();
+		slideShowController.enableSlideShowAnnotations(slideshow);
 	}
 
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
-		throw new UnsupportedOperationException();
+		AnnotationLine line = AnnotationFactory.getInstance().createAnnotationLine(lineWeight, color);
+		slideShowController.startLineAnnotation(index, line);
 	}
 
 	@Override
 	public void addToLineAnnotation(int index, double x, double y) {
-		throw new UnsupportedOperationException();
+		if(x > 0 && x < 100 && y > 0 && y < 100)
+		{
+			RelativePosition position = new RelativePositionImp(x,y);
+			AnnotationPoint point = AnnotationFactory.getInstance().createAnnotationPoint(position);
+			slideShowController.addToLineAnnotation(index, point);		
+		}
 	}
 }

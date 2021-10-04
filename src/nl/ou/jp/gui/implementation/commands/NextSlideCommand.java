@@ -15,6 +15,5 @@ public class NextSlideCommand implements ProjectorCommand {
 	public void execute() {
 		ProjectorController projectorController = this.projectorContext.getController();
 		projectorController.nextSlide();
-	}
-	
+	}	
 }

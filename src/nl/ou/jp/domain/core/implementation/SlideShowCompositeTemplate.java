@@ -10,12 +10,18 @@ import nl.ou.jp.domain.core.model.SlideShowComponantIterator;
 public abstract class SlideShowCompositeTemplate {
 	private static final int EMPTY = 0;
 	
-	private String title = null;
+	protected String title = null;
+	
 	protected List<SlideShowComponant> componants = null;
 	
-	protected SlideShowCompositeTemplate(String title, List<SlideShowComponant> componants) {
-		this.title = title;
-		this.componants = componants;
+	protected SlideShowCompositeTemplate(String title, List<SlideShowComponant> componants) 
+	{
+		this.title = title; 
+		this.componants = componants; 
+	}
+	 
+	protected SlideShowCompositeTemplate() {
+		
 	}
 	
 	public String getTitle() {
@@ -28,14 +34,7 @@ public abstract class SlideShowCompositeTemplate {
 		}
 		return EMPTY;
 	}
-
-	public void add(SlideShowComponant componant) {
-		if(this.componants == null) {
-			this.componants = new ArrayList<>();
-		}
-		this.componants.add(componant);
-	}
-
+	
 	public SlideShowComponantIterator getIterator() {
 		if(this.componants == null) {
 			this.componants = new ArrayList<>();
