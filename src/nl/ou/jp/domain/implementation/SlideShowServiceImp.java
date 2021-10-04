@@ -115,4 +115,24 @@ public class SlideShowServiceImp implements SlideShowService {
 	public SlideEventDispatcher getSlideEventDispatcher() {
 		return slideEventDispatcher;
 	}
+
+	@Override
+	public void makeSlideShowReadOnly() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void enableSlideShowAnnotations() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void startLineAnnotation(int index, int lineWeight, int color) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void addToLineAnnotation(int index, int x, int y) {
+		throw new UnsupportedOperationException();
+	}
 }

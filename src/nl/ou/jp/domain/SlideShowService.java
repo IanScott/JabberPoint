@@ -24,6 +24,14 @@ public interface SlideShowService {
 	
 	void resetSlideShow();
 	
+	void makeSlideShowReadOnly();
+	
+	void enableSlideShowAnnotations();
+	
+	void startLineAnnotation(int index, int lineWeight, int color);
+	
+	void addToLineAnnotation(int index, int x, int y);
+	
 	SlideShowEventDispatcher getSlideShowEventDispatcher();
 	SlideEventDispatcher getSlideEventDispatcher();
 }
