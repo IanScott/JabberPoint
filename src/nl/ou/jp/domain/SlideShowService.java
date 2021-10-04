@@ -30,7 +30,7 @@ public interface SlideShowService {
 	
 	void startLineAnnotation(int index, int lineWeight, int color);
 	
-	void addToLineAnnotation(int index, int x, int y);
+	void addToLineAnnotation(int index, double x, double y);
 	
 	SlideShowEventDispatcher getSlideShowEventDispatcher();
 	SlideEventDispatcher getSlideEventDispatcher();

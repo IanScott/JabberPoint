@@ -132,7 +132,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	}
 
 	@Override
-	public void addToLineAnnotation(int index, int x, int y) {
+	public void addToLineAnnotation(int index, double x, double y) {
 		throw new UnsupportedOperationException();
 	}
 }
