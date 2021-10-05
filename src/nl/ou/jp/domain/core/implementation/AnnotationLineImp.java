@@ -12,10 +12,12 @@ public class AnnotationLineImp extends SlideShowCompositeTemplate implements Ann
 	private final int lineWeight;
 	private final int lineColor;
 	
-	//private List<AnnotationPoint> points;
+	private int sequenceNumber = -1;
 	
-	public AnnotationLineImp(int lineWeight, int lineColor)
+	public AnnotationLineImp(String title, List<SlideShowComponant> componants,int lineWeight, int lineColor)
 	{ 
+		super(title, componants);
+		
 		this.lineWeight = lineWeight;
 		this.lineColor = lineColor;
 	}
@@ -32,35 +34,16 @@ public class AnnotationLineImp extends SlideShowCompositeTemplate implements Ann
 
 	@Override
 	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
-		return new AnnotationLineImp(lineWeight, lineColor);
+		return new AnnotationLineImp(title, componants,lineWeight, lineColor);
 	}
 
-	/*
-	@Override
-	public void add(SlideShowComponant componant) {
-		if(this.points == null) 
-		{
-			points = new ArrayList<>();
-		}
-		
-		if(componant instanceof AnnotationPoint) 
-		{
-			points.add((AnnotationPoint)componant);
-		}
-		else 
-		{
-			throw new IllegalArgumentException();
-		}
-		
-	}
-	*/
 	@Override
 	public int getSequenceNumber() {
-		throw new UnsupportedOperationException();
+		return this.sequenceNumber;
 	}
 
 	@Override
 	public void setSequenceNumber(int seqnr) {
-		throw new UnsupportedOperationException();
+		this.sequenceNumber = seqnr;
 	}
 }

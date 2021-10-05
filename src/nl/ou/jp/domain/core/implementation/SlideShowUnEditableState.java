@@ -41,12 +41,12 @@ private static SlideShowUnEditableState instance = null;
 	}
 
 	@Override
-	public void startLineAnnotation(SlideShow slideShow, int index, AnnotationLine line) {
+	public void startLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationLine line) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void addToLineAnnotation(SlideShow slideShow, int index, AnnotationPoint point) {
+	public void addToLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationPoint point) {
 		throw new UnsupportedOperationException();
 	}
 }

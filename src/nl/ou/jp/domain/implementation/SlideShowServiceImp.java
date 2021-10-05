@@ -139,7 +139,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
 		System.out.println("Start Line Anno");
-		AnnotationLine line = AnnotationFactory.getInstance().createAnnotationLine(lineWeight, color);
+		AnnotationLine line = AnnotationFactory.getInstance().createAnnotationLine("", null, lineWeight, color);
 		slideShowController.startLineAnnotation(index, line);
 	}
 
@@ -148,7 +148,7 @@ public class SlideShowServiceImp implements SlideShowService {
 		System.out.println("Add to Line Anno");
 		
 		int minCoordinateValue = 0;
-		int maxCoordinateValue = 100;
+		int maxCoordinateValue = 1;
 		
 		if(x > minCoordinateValue && 
 		   x < maxCoordinateValue && 
@@ -157,7 +157,8 @@ public class SlideShowServiceImp implements SlideShowService {
 		{
 			RelativePosition position = new RelativePositionImp(x,y);
 			AnnotationPoint point = AnnotationFactory.getInstance().createAnnotationPoint(position);
-			slideShowController.addToLineAnnotation(index, point);		
+			slideShowController.addToLineAnnotation(index, point);
+			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}
 }

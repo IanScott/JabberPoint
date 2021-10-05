@@ -21,9 +21,6 @@ public abstract class SlideShowCompositeTemplate implements SlideShowComposite {
 		this.componants = componants; 
 	}
 	 
-	protected SlideShowCompositeTemplate() {
-		
-	}
 	
 	@Override
 	public String getTitle() {

@@ -8,6 +8,8 @@ import nl.ou.jp.domain.core.model.SlideShowComponantIterator;
 public class AnnotationPointImp implements AnnotationPoint {
 
 	private RelativePosition relativePosition; 
+	private int sequenceNumber = -1;
+
 	
 	public AnnotationPointImp(RelativePosition relativePosition) 
 	{
@@ -21,14 +23,14 @@ public class AnnotationPointImp implements AnnotationPoint {
 
 	@Override
 	public int getSequenceNumber() {
-		throw new UnsupportedOperationException();
+		return this.sequenceNumber;
 	}
 
 	@Override
 	public void setSequenceNumber(int seqnr) {
-		throw new UnsupportedOperationException();
+		this.sequenceNumber = seqnr;
 	}
-
+	
 	@Override
 	public void add(SlideShowComponant componant) {
 		throw new UnsupportedOperationException();

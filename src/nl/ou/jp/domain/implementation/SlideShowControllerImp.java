@@ -28,11 +28,17 @@ public class SlideShowControllerImp implements SlideShowController {
 
 	@Override
 	public void startLineAnnotation(int index, AnnotationLine line) {
-		this.slideShow.startLineAnnotation(index, line);	
+		if(this.slideShow != null) 
+		{
+			this.slideShow.startLineAnnotation(index, line);				
+		}
 	}
 
 	@Override
 	public void addToLineAnnotation(int index, AnnotationPoint pointAnnotation) {
-		this.slideShow.addToLineAnnotation(index, pointAnnotation);			
+		if(this.slideShow != null) 
+		{
+			this.slideShow.addToLineAnnotation(index, pointAnnotation);	
+		}
 	}
 }

@@ -6,12 +6,9 @@ import java.util.List;
 import nl.ou.jp.domain.core.model.*;
 
 public class SlideImp extends SlideShowCompositeTemplate implements Slide {
-	
+
 	private int sequenceNumber = -1;
-	
-	private AnnotationLine currentLine;
-	private List<AnnotationLine> lines;
-	
+
 	public SlideImp(String title, List<SlideShowComponant> componants) {
 		super(title, componants);
 
@@ -22,7 +19,7 @@ public class SlideImp extends SlideShowCompositeTemplate implements Slide {
 
 		this.sequenceNumber = sequenceNumber;
 	}
-	
+
 	@Override
 	public int getSequenceNumber() {
 		return this.sequenceNumber;
@@ -36,29 +33,10 @@ public class SlideImp extends SlideShowCompositeTemplate implements Slide {
 	@Override
 	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
 		return new SlideImp(title, sequenceNumber, componants);
-	}	
+	}
 	
-	public void add(SlideShowComponant componant) {
-		if(this.componants == null) {
-			this.componants = new ArrayList<>();
-		}
-		this.componants.add(componant);
-	}
-
-	@Override
-	public void startLineAnnotation(AnnotationLine line) {
-		if(this.lines == null) 
-		{
-			this.lines = new ArrayList<>();
-		}
-		
-		AnnotationLine newLine = line;
-		currentLine = newLine;
-		this.lines.add(currentLine);
-	}
-
 	@Override
 	public void addToLineAnnotation(AnnotationPoint point) {
-		currentLine.add(point);
+		this.componants.get(this.componants.size() - 1).add(point);
 	}
 }

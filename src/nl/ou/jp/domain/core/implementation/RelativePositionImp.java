@@ -6,7 +6,7 @@ public class RelativePositionImp implements RelativePosition {
 	
 	private double x;
 	private double y;
-	private final int precision = 1;
+	private final int precision = 4;
 	
 	public RelativePositionImp(double x, double y) 
 	{
@@ -16,7 +16,7 @@ public class RelativePositionImp implements RelativePosition {
 	
 	public double getRelativeX() 
 	{
-		return round(x, precision);
+		return round(x, precision); 
 	}
 	
 	public double getRelativeY() 

@@ -41,12 +41,14 @@ private static SlideShowAnnotationState instance = null;
 	}
 
 	@Override
-	public void startLineAnnotation(SlideShow slideShow, int index, AnnotationLine line) {
-		slideShow.getSlide(index).startLineAnnotation(line);
+	public void startLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationLine line) {
+		SlideImp slide = (SlideImp)componants.get(index);
+		slide.add(line);
 	}
 
 	@Override
-	public void addToLineAnnotation(SlideShow slideShow, int index, AnnotationPoint point) {
-		slideShow.getSlide(index).add(point);
+	public void addToLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationPoint point) {
+		SlideImp slide = (SlideImp)componants.get(index);
+		slide.addToLineAnnotation(point);
 	}
 }
