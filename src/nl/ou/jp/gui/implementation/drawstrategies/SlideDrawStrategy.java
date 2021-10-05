@@ -59,6 +59,8 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 	}		
 		
 	private void renderArea(Graphics g, Component component, Slide slide) {
+		System.out.println("Slide size: "+slide.size());
+		
 		ProjectorConfiguration config = getProjectorContext().getConfiguration();
 
 		Dimension innerArea = config.getDefaultInnerSlideDimensions();
@@ -73,7 +75,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 			getStrategy().setContext(getProjectorContext());
 			getStrategy().setScale(scale);
 			
-			SlideShowItem item = getTitleItem(slide.getTitle());
+			SlideShowComponant item = getTitleItem(slide.getTitle());
 			
 			SlideShowComponantIterator iterator = null;
 			do{
@@ -81,7 +83,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 					iterator = slide.getIterator();
 				}else {
 					iterator.gotoNext();
-					item = (SlideShowItem) iterator.getCurrentItem();
+					item =  iterator.getCurrentItem();
 				}
 				y = renderSlideShowItem(g, component, item, x, y);
 			}while(iterator.hasNext()); 
@@ -89,12 +91,15 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		}		
 	}
 
-	private int renderSlideShowItem(Graphics g , Component component, SlideShowItem item, int x, int y) {
+	private int renderSlideShowItem(Graphics g , Component component, SlideShowComponant item, int x, int y) {
 		try {
-			SlideItemStyle style = getProjectorContext().getConfiguration().getStyle(item.getLevel().getRating());
+			SlideItemStyle style = null;
+			if(item instanceof SlideShowItem) {
+				style = getProjectorContext().getConfiguration().getStyle(((SlideShowItem)item).getLevel().getRating());				
+			}
 			y += getStrategy().draw(g, component, item, style, x, y).getHeight();			
 		}catch(Exception e) {
-			logger.logError("Error Rendering Item "+ x+" "+y+ " item: "+item.getLevel());
+			logger.logError("Error Rendering Item "+ x+" "+y+ " item: "+item.getSequenceNumber());
 			logger.logError(e.getMessage());
 		}
 		return y;

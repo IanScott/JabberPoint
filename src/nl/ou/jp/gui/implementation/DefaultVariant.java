@@ -4,6 +4,8 @@ import java.awt.MenuBar;
 import java.awt.event.*;
 import java.util.*;
 
+import javax.swing.event.MouseInputAdapter;
+
 import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.gui.ProjectorVariant;
 import nl.ou.jp.gui.implementation.commands.*;
@@ -42,7 +44,7 @@ public class DefaultVariant implements ProjectorVariant {
 
 	@Override
 	public DrawStrategy getDrawStrategy() {
-		return new SlideDrawStrategy(new TextDrawStrategy(new FigureDrawStrategy(null)));
+		return new SlideDrawStrategy(new TextDrawStrategy(new FigureDrawStrategy(new AnnotationLineDrawStrategy(null))));
 	}
 
 	@Override
@@ -59,7 +61,12 @@ public class DefaultVariant implements ProjectorVariant {
 				new ExitCommand(projectorContext),
 				new SaveCommand(projectorContext),
 				new AboutCommand(projectorContext),
-				new ResetCommand(projectorContext)
+				new ResetCommand(projectorContext),
+				new AddDataToLineAnnotationCommand(projectorContext),
+				new StartLineAnnotationCommand(projectorContext),
+				new SetAnnotationLineColorCommand(projectorContext),
+				new SetAnnotationLineWeightCommand(projectorContext),
+				new SetAnnotationModeCommand(projectorContext)
 		};
 		
 		Map<String,ProjectorCommand>  projectorCommands = new HashMap<>();
@@ -72,5 +79,10 @@ public class DefaultVariant implements ProjectorVariant {
 	@Override
 	public ProjectorContext getContext() {
 		return this.projectorContext;
+	}
+
+	@Override
+	public MouseInputAdapter getMouseInputAdapter() {
+		return new ProjectorGUIMouseAdapter(commands, projectorContext);
 	}
 }

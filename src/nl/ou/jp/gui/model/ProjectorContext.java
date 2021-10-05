@@ -13,5 +13,15 @@ public interface ProjectorContext {
 	public ProjectorConfiguration getConfiguration();
 	public void setConfiguration(ProjectorConfiguration projectorConfiguration);
 	
+	public void setMouseRelativeXLocation(double x);
+	public void setMouseRelativeYLocation(double y);
 	
+	public double getMouseRelativeXLocation();
+	public double getMouseRelativeYLocation();
+	
+	public void setAnnotationLineWeight(int weight);
+	public int getAnnotationLineWeight();
+	
+	public void setAnnotationLineColor(int color);
+	public int getAnnotationLineColor();
 }

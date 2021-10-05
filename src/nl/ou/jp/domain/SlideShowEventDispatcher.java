@@ -7,12 +7,8 @@ public class SlideShowEventDispatcher extends EventDispatcherAdapter {
 
 	@Override
 	public void fireEvent(Object source) {
-		
-		if(source instanceof SlideShow) 
-		{
-			if(this.eventListeners != null) {
-				this.eventListeners.forEach(x -> x.eventReceived(new SlideShowEvent((SlideShow)source)));			
-			}	
-		}
+		if(this.eventListeners != null) {
+			this.eventListeners.forEach(x -> x.eventReceived(new SlideShowEvent((SlideShow)source)));			
+		}	
 	}
 }

@@ -4,6 +4,7 @@ import java.util.*;
 
 import nl.ou.jp.domain.core.model.SlideShowComponant;
 import nl.ou.jp.domain.core.model.SlideShowComponantIterator;
+import nl.ou.jp.gui.implementation.drawstrategies.AnnotationLineDrawStrategy;
 
 public class SlideShowComponantIteratorImp implements SlideShowComponantIterator {
 
@@ -56,7 +57,8 @@ public class SlideShowComponantIteratorImp implements SlideShowComponantIterator
 		}
 		
 		this.componants.get(currentIndex).setSequenceNumber(this.currentIndex);
-		return this.componants.get(this.currentIndex);			
+		
+		return this.componants.get(this.currentIndex).copy();				
 	}
 
 	@Override

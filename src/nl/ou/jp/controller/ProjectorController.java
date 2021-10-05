@@ -29,4 +29,14 @@ public interface ProjectorController {
 	void reset();
 	
 	void registerSlideShowListeners(EventListener listener);
+	
+	void makeSlideShowReadOnly();
+	
+	void enableSlideShowAnnotations();
+	
+	boolean canAnnotate();
+	
+	void startLineAnnotation(int lineWeight, int color);
+	
+	void addToLineAnnotation(double x, double y);
 }

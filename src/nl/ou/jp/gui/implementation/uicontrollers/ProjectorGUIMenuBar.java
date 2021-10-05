@@ -20,6 +20,7 @@ public class ProjectorGUIMenuBar extends MenuBar {
 		this.projectorConfiguration = projectorConfiguration;
 		initializeFileMenu(projectorCommands);
 		initializaViewMenu(projectorCommands);
+		initializaAnnotationMenu(projectorCommands);
 		initializeHelpMenu(projectorCommands);
 	}
 	
@@ -40,6 +41,14 @@ public class ProjectorGUIMenuBar extends MenuBar {
 		addMenu(fileMenu);
 	}
 
+	private void initializaAnnotationMenu(Map<String, ProjectorCommand> projectorCommands) {
+		Menu menu = new Menu(getName("MODE"));
+		addActionMenu(menu, getName("ANRADIO"), projectorCommands.get("SETANNOTATIONMODE"));
+		addActionMenu(menu, getName("ANWEIGHT"), projectorCommands.get("SETANNOTATIONLINEWEIGHT"));
+		addActionMenu(menu, getName("ANCOLOR"), projectorCommands.get("SETANNOTATIONLINECOLOR"));
+		addMenu(menu);
+	}
+	
 	private void initializaViewMenu(Map<String, ProjectorCommand> projectorCommands) {
 		Menu viewMenu = new Menu(getName(VIEWMENUNAME));
 		addActionMenu(viewMenu, getName(NEXTMENUNAME), projectorCommands.get(NEXTSLIDECOMMANDNAME));

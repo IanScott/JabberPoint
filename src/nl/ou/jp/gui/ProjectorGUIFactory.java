@@ -1,7 +1,6 @@
 package nl.ou.jp.gui;
 
 import nl.ou.jp.gui.implementation.*;
-import nl.ou.jp.gui.model.*;
 
 public class ProjectorGUIFactory {	
 	private static ProjectorGUIFactory instance = null;
@@ -23,6 +22,7 @@ public class ProjectorGUIFactory {
 				variant.getMenubar(),
 				variant.getWindowlistener(),
 				variant.getKeylistener(),
+				variant.getMouseInputAdapter(),
 				variant.getConfiguration(),
 				variant.getContext()
 				);

@@ -99,6 +99,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	public void resetSlideShow() {
 		this.slideshow = null;
 		this.iterator = null;
+		this.slideShowEventDispatcher.fireEvent(slideshow);
 	}
 
 	@Override
@@ -113,21 +114,21 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void makeSlideShowReadOnly() {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void enableSlideShowAnnotations() {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void addToLineAnnotation(int index, double x, double y) {
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
 	}
 }

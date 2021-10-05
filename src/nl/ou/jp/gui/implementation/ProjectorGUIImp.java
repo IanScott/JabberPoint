@@ -1,6 +1,7 @@
 package nl.ou.jp.gui.implementation;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
 
 import java.awt.*;
 import java.awt.Dimension;
@@ -11,6 +12,7 @@ import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.domain.*;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.*;
+import nl.ou.jp.gui.implementation.drawstrategies.AnnotationLineDrawStrategy;
 import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
 import nl.ou.jp.util.Event;
@@ -28,7 +30,7 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 	private transient Slide currentSlide;
 
 	public ProjectorGUIImp(DrawStrategy strategy, MenuBar projectorViewMenuBar, WindowListener windowListener,
-			KeyListener keyListener, ProjectorConfiguration configurationDefault, ProjectorContext context) {
+			KeyListener keyListener, MouseInputAdapter mouseInputAdapter, ProjectorConfiguration configurationDefault, ProjectorContext context) {
 		this.strategy = strategy;
 		this.configurationDefault = configurationDefault;
 
@@ -43,10 +45,13 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		setMenuBar(projectorViewMenuBar); // may be null
 		addWindowListener(windowListener); // may be null
 		addKeyListener(keyListener); // may be null
-
+		addMouseListener(mouseInputAdapter); //may be null
+		addMouseMotionListener(mouseInputAdapter);
+		
 		setTitle(configurationDefault.getDefaultTitle());
 		setSize(configurationDefault.getDefaultSlideDimensions());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setResizable(false);
 		
 		initialize(context);
 	}
@@ -100,6 +105,9 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 				if(currentSlide != null) {
 					strategy.setContext(projectorContext);
 					strategy.draw(g, this, currentSlide, null, 0, 0);					
+				}else {
+					this.removeAll();
+					super.paintComponent(g);
 				} 
 			}
 		});
@@ -132,7 +140,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 	
-
 	@Override
 	public void exit() {
 		this.dispose(); // clearup before termination.
@@ -159,12 +166,31 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		
 		if (source != null) {
 			this.setTitle(source.getTitle());
+		}else {
+			this.currentSlide = null;
+			update();
 		}
 	}
 	
 	private void eventReceivedSlide(SlideEvent event) {
 		logger.logInfo("updating");
 		currentSlide = (Slide) event.getSource();
+		currentSlide.add(AnnotationLineDrawStrategy.getTestItem());
 		update();
 	}
+
+	@Override
+	public int showItemSelectorDialog(String message, String title, String[] items) {
+		return JOptionPane.showOptionDialog(this,
+				message,
+				title,
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				items,
+				items[0]);
+
+	}
+	
+	
 }

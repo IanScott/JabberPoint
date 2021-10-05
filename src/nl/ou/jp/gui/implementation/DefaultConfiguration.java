@@ -33,10 +33,13 @@ public class DefaultConfiguration implements ProjectorConfiguration {
 	private static final int FONTSTYLE = Font.BOLD;
 	private static final int FONTHEIGHT = 10;
 	private static final String DEFAULT_TEXT_FONTNAME = "Helvetica";
+	
 	private SlideItemStyle[] slideItemStyles; 
+	private Map<String, Color> colors;
 	
 	public DefaultConfiguration() {
 		createStyles();
+		createColors();
 	}
 
 	@Override
@@ -108,5 +111,33 @@ public class DefaultConfiguration implements ProjectorConfiguration {
 		slideItemStyles[2] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 50, Color.black, 36, 10);	// style voor item-level 2
 		slideItemStyles[3] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 70, Color.black, 30, 10);	// style voor item-level 3
 		slideItemStyles[4] = new SlideItemStyleImp(DEFAULT_TEXT_FONTNAME, 90, Color.black, 24, 10);	// style voor item-level 4
+	}
+
+	@Override
+	public Map<String,Color> getColors() {
+		return colors;
+	}
+	
+	private void createColors() {
+		colors = new HashMap<>();
+		colors.put("BLACK", Color.BLACK);
+		colors.put("RED", Color.RED);
+		colors.put("YELLOW", Color.YELLOW);
+		colors.put("GREEN", Color.GREEN);
+		colors.put("BLUE", Color.BLUE);
+		colors.put("WHITE", Color.WHITE);
+
+	}
+
+	@Override
+	public String getColorName(int rgb) {
+		Set<String> keys = colors.keySet();
+		for(String key: keys) {
+			if(rgb ==colors.get(key).getRGB()) {
+				return key;
+			}
+		}
+		
+		return "Unknown";
 	}
 }

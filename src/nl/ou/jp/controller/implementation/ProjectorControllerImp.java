@@ -16,7 +16,8 @@ public class ProjectorControllerImp implements ProjectorController {
 	
 	private ProjectorInfra projectorInfra = null;
 	private SlideShowService slideShowService = null;
-	
+	private int currentSlideSequenceNumber = -1; // kan beter ???
+	private boolean canAnnotate = false; //Dit moet weg. ???
 	
 	public ProjectorControllerImp(ProjectorInfra projectorInfra, SlideShowService service) {
 		this.projectorInfra = projectorInfra;
@@ -76,16 +77,42 @@ public class ProjectorControllerImp implements ProjectorController {
 		this.slideShowService.nextSlide();
 	}
 	
-
 	@Override
 	public void reset() {
 		this.slideShowService.resetSlideShow();
 	}
 
-
 	@Override
 	public void registerSlideShowListeners(EventListener listener) {
 		this.slideShowService.getSlideEventDispatcher().addListener(listener);
 		this.slideShowService.getSlideShowEventDispatcher().addListener(listener);
+	}
+
+	@Override
+	public void makeSlideShowReadOnly() {
+		this.canAnnotate = false;
+		this.slideShowService.makeSlideShowReadOnly();
+	}
+
+	@Override
+	public void enableSlideShowAnnotations() {
+		this.canAnnotate = true;
+		this.slideShowService.enableSlideShowAnnotations();
+	}
+
+	@Override
+	public void startLineAnnotation(int lineWeight, int color) {
+		this.currentSlideSequenceNumber = slideShowService.getCurrentSlideNumber();
+		this.slideShowService.startLineAnnotation(this.currentSlideSequenceNumber, lineWeight, color);
+	}
+
+	@Override
+	public void addToLineAnnotation(double x, double y) {
+		this.slideShowService.addToLineAnnotation(this.currentSlideSequenceNumber, x, y);
+	}
+
+	@Override
+	public boolean canAnnotate() {
+		return this.canAnnotate;
 	}
 }

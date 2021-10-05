@@ -7,4 +7,6 @@ public interface ProjectorGUI extends SlideShowEventListener, SlideEventListener
 	void exit();
 	void showMessageDialog(String message, String title);
 	void showErrorMessageDialog(String message, String title);
+	
+	int showItemSelectorDialog(String message, String title, String[] items);
 }

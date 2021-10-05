@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 
 import nl.ou.jp.domain.core.model.SlideShowComponant;
 import nl.ou.jp.domain.core.model.SlideShowComponantIterator;
+import nl.ou.jp.domain.core.model.SlideShowComposite;
 
-public abstract class SlideShowCompositeTemplate {
+public abstract class SlideShowCompositeTemplate implements SlideShowComposite {
 	private static final int EMPTY = 0;
 	
 	private String title = null;
@@ -18,10 +19,12 @@ public abstract class SlideShowCompositeTemplate {
 		this.componants = componants;
 	}
 	
+	@Override
 	public String getTitle() {
 		return this.title;
 	}
 
+	@Override
 	public int size() {
 		if(this.componants != null) {
 			return this.componants.size();
@@ -29,6 +32,7 @@ public abstract class SlideShowCompositeTemplate {
 		return EMPTY;
 	}
 
+	@Override
 	public void add(SlideShowComponant componant) {
 		if(this.componants == null) {
 			this.componants = new ArrayList<>();
@@ -36,6 +40,7 @@ public abstract class SlideShowCompositeTemplate {
 		this.componants.add(componant);
 	}
 
+	@Override
 	public SlideShowComponantIterator getIterator() {
 		if(this.componants == null) {
 			this.componants = new ArrayList<>();
@@ -43,6 +48,7 @@ public abstract class SlideShowCompositeTemplate {
 		return new SlideShowComponantIteratorImp(this.componants);
 	}
 	
+	@Override
 	public SlideShowComponant copy() {
 		List<SlideShowComponant> componantsCopy = this.componants.stream().map(SlideShowComponant::copy).collect(Collectors.toList());
 		return createComponant(this.title, componantsCopy);
