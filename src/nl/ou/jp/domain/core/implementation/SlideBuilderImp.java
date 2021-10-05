@@ -3,7 +3,6 @@ package nl.ou.jp.domain.core.implementation;
 import java.util.*;
 
 import nl.ou.jp.domain.core.model.*;
-import nl.ou.jp.gui.implementation.drawstrategies.AnnotationLineDrawStrategy;
 
 public class SlideBuilderImp extends ComponantBuilderTemplate implements SlideBuilder {
 	
@@ -17,7 +16,7 @@ public class SlideBuilderImp extends ComponantBuilderTemplate implements SlideBu
 	
 	@Override
 	protected boolean componantAllowed(SlideShowComponant componant) {
-		return (componant instanceof SlideShowItem || componant instanceof AnnotationLineDrawStrategy.AnnotationItem);
+		return (componant instanceof SlideShowItem || componant instanceof AnnotationLine);
 	}
 
 	@Override

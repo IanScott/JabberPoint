@@ -68,7 +68,9 @@ public class SlideShowBuilderImp extends ComponantBuilderTemplate implements Sli
 
 	@Override
 	protected SlideShowComponant create(String title, List<SlideShowComponant> componants) {
-		return new SlideShowImp(title, componants);
+		SlideShowImp slideShow = new SlideShowImp(title,componants);
+		slideShow.setState(SlideShowEditableState.getInstance());		
+		return slideShow;
 	}
 	
 	@Override

@@ -4,7 +4,6 @@ import java.util.*;
 
 import nl.ou.jp.domain.core.model.SlideShowComponant;
 import nl.ou.jp.domain.core.model.SlideShowComponantIterator;
-import nl.ou.jp.gui.implementation.drawstrategies.AnnotationLineDrawStrategy;
 
 public class SlideShowComponantIteratorImp implements SlideShowComponantIterator {
 
@@ -70,8 +69,7 @@ public class SlideShowComponantIteratorImp implements SlideShowComponantIterator
 	public void setIndex(int index) {
 		if(this.componants == null || index < 0 || index > this.componants.size() -1) {
 			throw new NoSuchElementException();
-		}
-		
+		}	
 		this.currentIndex = index;
 	}
 }

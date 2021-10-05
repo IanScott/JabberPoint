@@ -175,7 +175,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 	private void eventReceivedSlide(SlideEvent event) {
 		logger.logInfo("updating");
 		currentSlide = (Slide) event.getSource();
-		currentSlide.add(AnnotationLineDrawStrategy.getTestItem());
 		update();
 	}
 

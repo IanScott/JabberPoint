@@ -11,12 +11,18 @@ import nl.ou.jp.domain.core.model.SlideShowComposite;
 public abstract class SlideShowCompositeTemplate implements SlideShowComposite {
 	private static final int EMPTY = 0;
 	
-	private String title = null;
+	protected String title = null;
+	
 	protected List<SlideShowComponant> componants = null;
 	
-	protected SlideShowCompositeTemplate(String title, List<SlideShowComponant> componants) {
-		this.title = title;
-		this.componants = componants;
+	protected SlideShowCompositeTemplate(String title, List<SlideShowComponant> componants) 
+	{
+		this.title = title; 
+		this.componants = componants; 
+	}
+	 
+	protected SlideShowCompositeTemplate() {
+		
 	}
 	
 	@Override
