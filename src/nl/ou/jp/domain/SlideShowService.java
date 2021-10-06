@@ -32,6 +32,8 @@ public interface SlideShowService {
 	
 	void addToLineAnnotation(int index, double x, double y);
 	
+	boolean canAnnotate();
+	
 	SlideShowEventDispatcher getSlideShowEventDispatcher();
 	SlideEventDispatcher getSlideEventDispatcher();
 }
