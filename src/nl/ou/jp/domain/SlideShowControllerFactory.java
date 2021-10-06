@@ -1,6 +1,5 @@
 package nl.ou.jp.domain;
 
-import nl.ou.jp.domain.core.model.SlideShow;
 import nl.ou.jp.domain.implementation.SlideShowControllerImp;
 
 public class SlideShowControllerFactory {
@@ -18,8 +17,9 @@ public class SlideShowControllerFactory {
 	private SlideShowControllerFactory() {
 		
 	}
-	 public SlideShowController Create() 
-	 {
-		 return new SlideShowControllerImp();
-	 }
+	
+	public SlideShowController create() 
+	{
+		return new SlideShowControllerImp();
+	}
 }
