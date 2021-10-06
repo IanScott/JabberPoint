@@ -33,7 +33,7 @@ public class AnnotationLineImp extends SlideShowCompositeTemplate implements Ann
 	}
 
 	@Override
-	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
+	public SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
 		return new AnnotationLineImp(title, componants,lineWeight, lineColor);
 	}
 

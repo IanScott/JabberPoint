@@ -4,12 +4,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import nl.ou.jp.domain.core.implementation.SlideShowCompositeTemplate;
-import nl.ou.jp.domain.core.model.AnnotationLine;
-import nl.ou.jp.domain.core.model.AnnotationPoint;
-import nl.ou.jp.domain.core.model.RelativePosition;
-import nl.ou.jp.domain.core.model.SlideShowComponant;
-import nl.ou.jp.domain.core.model.SlideShowComponantIterator;
+import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.*;
 
 public class AnnotationLineDrawStrategy extends SwingDrawStrategy {
@@ -22,12 +17,11 @@ public class AnnotationLineDrawStrategy extends SwingDrawStrategy {
 	@Override
 	public Rectangle draw(Graphics graphics, Component component, SlideShowComponant data, SlideItemStyle fontstyle,
 			int x, int y) {
-		System.out.println("AnnotationLineDrawStrategy");
+		
 		if(!(data instanceof AnnotationLine)) {
 			return this.getNext(graphics, component, data, fontstyle, x, y);
 		}
 		
-		System.out.println("Drawing line");
 		AnnotationLine item = ((AnnotationLine)data);
 		SlideShowComponantIterator it = item.getIterator();
 		

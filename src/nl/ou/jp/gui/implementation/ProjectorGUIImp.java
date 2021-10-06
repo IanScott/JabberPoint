@@ -1,7 +1,7 @@
 package nl.ou.jp.gui.implementation;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
 
 import java.awt.*;
 import java.awt.Dimension;
@@ -12,7 +12,6 @@ import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.domain.*;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.*;
-import nl.ou.jp.gui.implementation.drawstrategies.AnnotationLineDrawStrategy;
 import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
 import nl.ou.jp.util.Event;
@@ -29,8 +28,12 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 
 	private transient Slide currentSlide;
 
-	public ProjectorGUIImp(DrawStrategy strategy, MenuBar projectorViewMenuBar, WindowListener windowListener,
-			KeyListener keyListener, MouseInputAdapter mouseInputAdapter, ProjectorConfiguration configurationDefault, ProjectorContext context) {
+	public ProjectorGUIImp(
+			DrawStrategy strategy, MenuBar projectorViewMenuBar, 
+			WindowListener windowListener, KeyListener keyListener, 
+			MouseListener mouseListener, MouseInputListener mouseInputListener, 
+			ProjectorConfiguration configurationDefault, ProjectorContext context) {
+		
 		this.strategy = strategy;
 		this.configurationDefault = configurationDefault;
 
@@ -45,8 +48,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		setMenuBar(projectorViewMenuBar); // may be null
 		addWindowListener(windowListener); // may be null
 		addKeyListener(keyListener); // may be null
-		addMouseListener(mouseInputAdapter); //may be null
-		addMouseMotionListener(mouseInputAdapter);
 		
 		setTitle(configurationDefault.getDefaultTitle());
 		setSize(configurationDefault.getDefaultSlideDimensions());
@@ -54,6 +55,9 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		setResizable(false);
 		
 		initialize(context);
+		
+		getContentPane().addMouseListener(mouseListener);
+		getContentPane().addMouseMotionListener(mouseInputListener);
 	}
 
 	private void initialize(ProjectorContext projectorContext) {
@@ -75,16 +79,12 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 
 	@Override
 	public void start(String path) {
-
 		if(this.projectorContext == null || this.projectorContext.getController() == null) {
 			throw new ProjectorGUIException("Context has not been intialized yet.");
 		}
-		
 		if(path != null) {
 			this.projectorContext.getController().openSlideShow(Path.of(path));			
-
 		}
-
 		setVisible(true);
 	}
 
@@ -97,7 +97,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 				return configurationDefault.getDefaultSlideDimensions();
 			}
 
-			
 			@Override
 			public void paintComponent(Graphics g) {
 				validateParameters(g, projectorContext);
@@ -190,6 +189,13 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 				items[0]);
 
 	}
-	
-	
+
+	@Override
+	public Dimension getCanvasDimension() {
+		var dimension = new Dimension();
+		dimension.width = this.getContentPane().getWidth();
+		dimension.height = this.getContentPane().getHeight();
+		return dimension;
+	}
+
 }

@@ -22,7 +22,8 @@ public class ProjectorGUIFactory {
 				variant.getMenubar(),
 				variant.getWindowlistener(),
 				variant.getKeylistener(),
-				variant.getMouseInputAdapter(),
+				variant.getMouseListener(),
+				variant.getMouseInputListener(),
 				variant.getConfiguration(),
 				variant.getContext()
 				);

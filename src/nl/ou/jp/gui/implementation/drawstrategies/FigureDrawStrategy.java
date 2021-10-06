@@ -28,7 +28,6 @@ public class FigureDrawStrategy extends SwingDrawStrategy {
 		if(!(data instanceof FigureItem)) {
 			return getNext(graphics, component, data, slideItemStyle, x, y);
 		}
-		System.out.println("drawing Figure");
 		
 		FigureItem figure = (FigureItem)data;
 		InputStream stream = getProjectorContext().getController().fetchFileAsStream(Path.of(figure.getSource()));
@@ -36,7 +35,6 @@ public class FigureDrawStrategy extends SwingDrawStrategy {
 		BufferedImage bufferedImage = null;
 		try {
 			bufferedImage = ImageIO.read(stream);
-			System.out.println(bufferedImage);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -44,10 +44,13 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public int getCurrentSlideNumber() {
+		System.out.println("calling getCurrentSlideNumber");
 		if(this.iterator == null) {
 			return EMPTYSIZE;
 		}
-		return this.iterator.getCurrentIndex();
+		int index = this.iterator.getCurrentIndex();
+		System.out.println("currentSlideNumber: "+index);
+		return index;
 	}
 
 	@Override
@@ -93,10 +96,12 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void loadSlideShow(SlideShow slideshow) {
+		System.out.println("Load Slideshow");
 		this.slideShowController.makeSlideShowReadOnly(slideshow);
 		
 		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
+		System.out.println("iterator: "+this.iterator);
 		this.slideShowEventDispatcher.fireEvent(slideshow);
 		
 		this.nextSlide(); //load first available slide.

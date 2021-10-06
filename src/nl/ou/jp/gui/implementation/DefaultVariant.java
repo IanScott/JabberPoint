@@ -4,7 +4,7 @@ import java.awt.MenuBar;
 import java.awt.event.*;
 import java.util.*;
 
-import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
 
 import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.gui.ProjectorVariant;
@@ -82,7 +82,12 @@ public class DefaultVariant implements ProjectorVariant {
 	}
 
 	@Override
-	public MouseInputAdapter getMouseInputAdapter() {
-		return new ProjectorGUIMouseAdapter(commands, projectorContext);
+	public MouseInputListener getMouseInputListener() {
+		return new ProjectorGUIMouseInputListener(commands, projectorContext);
+	}
+
+	@Override
+	public MouseListener getMouseListener() {
+		return new ProjectorGUIMouseListener(commands);
 	}
 }

@@ -103,12 +103,16 @@ public class ProjectorControllerImp implements ProjectorController {
 	@Override
 	public void startLineAnnotation(int lineWeight, int color) {
 		this.currentSlideSequenceNumber = slideShowService.getCurrentSlideNumber();
-		this.slideShowService.startLineAnnotation(this.currentSlideSequenceNumber, lineWeight, color);
+		if(canAnnotate()) {
+			this.slideShowService.startLineAnnotation(this.currentSlideSequenceNumber, lineWeight, color);			
+		}
 	}
 
 	@Override
 	public void addToLineAnnotation(double x, double y) {
-		this.slideShowService.addToLineAnnotation(this.currentSlideSequenceNumber, x, y);
+		if(canAnnotate()) {
+			this.slideShowService.addToLineAnnotation(this.currentSlideSequenceNumber, x, y);			
+		}
 	}
 
 	@Override
