@@ -1,10 +1,8 @@
 package nl.ou.jp.domain.core.implementation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.ou.jp.domain.core.model.AnnotationLine;
-import nl.ou.jp.domain.core.model.AnnotationPoint;
 import nl.ou.jp.domain.core.model.SlideShowComponant;
 
 public class AnnotationLineImp extends SlideShowCompositeTemplate implements AnnotationLine{

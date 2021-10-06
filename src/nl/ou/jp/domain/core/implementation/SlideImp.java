@@ -1,6 +1,5 @@
 package nl.ou.jp.domain.core.implementation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import nl.ou.jp.domain.core.model.*;
