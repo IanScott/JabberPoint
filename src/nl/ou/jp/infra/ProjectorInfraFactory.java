@@ -19,6 +19,6 @@ public class ProjectorInfraFactory {
 	}
 	
 	public ProjectorInfra create(SlideShowBuilder builder) {
-		return new ProjectorInfraImp(new XMLAccessor(builder)); //Omzetten naar chain responsiblity
+		return new ProjectorInfraImp(new XMLAccessor(builder));
 	}
 }

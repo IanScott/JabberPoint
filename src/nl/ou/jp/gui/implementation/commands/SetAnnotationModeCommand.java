@@ -4,6 +4,7 @@ import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorContext;
 
 public class SetAnnotationModeCommand  implements ProjectorCommand{
+	private static final String NAME = "SETANNOTATIONMODE";
 	private ProjectorContext context = null;
 	
 	public SetAnnotationModeCommand(ProjectorContext context) {
@@ -32,7 +33,7 @@ public class SetAnnotationModeCommand  implements ProjectorCommand{
 	
 	@Override
 	public String getName() {
-		return "SETANNOTATIONMODE";
+		return NAME;
 	}
 
 }

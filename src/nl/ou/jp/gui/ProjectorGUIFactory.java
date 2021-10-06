@@ -17,15 +17,19 @@ public class ProjectorGUIFactory {
 	}
 	
 	public ProjectorGUI create(ProjectorVariant variant) {
-		return new ProjectorGUIImp(
+		ProjectorGUI gui = new ProjectorGUIImp(
 				variant.getDrawStrategy(),
-				variant.getMenubar(),
-				variant.getWindowlistener(),
-				variant.getKeylistener(),
-				variant.getMouseListener(),
-				variant.getMouseInputListener(),
 				variant.getConfiguration(),
 				variant.getContext()
 				);
+		
+		
+		gui.setMenubar(variant.getMenubar());
+		gui.setWindowlistener(variant.getWindowlistener());
+		gui.setKeylistener(variant.getKeylistener());
+		gui.setMouseListener(variant.getMouseListener());
+		gui.setMouseInputListener(variant.getMouseInputListener());
+		
+		return gui;
 	}
 }

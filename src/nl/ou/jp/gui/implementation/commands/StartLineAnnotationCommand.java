@@ -4,6 +4,7 @@ import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorContext;
 
 public class StartLineAnnotationCommand implements ProjectorCommand {
+	private static final String NAME = "STARTLINEANNOTATION";
 	private ProjectorContext context = null;
 	
 	public StartLineAnnotationCommand(ProjectorContext context) {
@@ -19,7 +20,6 @@ public class StartLineAnnotationCommand implements ProjectorCommand {
 
 	@Override
 	public String getName() {
-		return "STARTLINEANNOTATION";
+		return NAME;
 	}
-
 }
