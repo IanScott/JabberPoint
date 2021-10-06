@@ -166,4 +166,13 @@ public class SlideShowServiceImp implements SlideShowService {
 			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}
+
+	@Override
+	public boolean canAnnotate() {
+		if(this.slideshow != null) 
+		{
+			return this.slideshow.canAnnotate();
+		}
+		return false;
+	}
 }
