@@ -5,6 +5,7 @@ import nl.ou.jp.gui.model.ProjectorContext;
 
 public class AddDataToLineAnnotationCommand implements ProjectorCommand {
 
+	private static final String NAME = "ADDDATATOLINEANNOTATION";
 	private ProjectorContext context = null;
 	
 	public AddDataToLineAnnotationCommand(ProjectorContext context) {
@@ -20,6 +21,6 @@ public class AddDataToLineAnnotationCommand implements ProjectorCommand {
 
 	@Override
 	public String getName() {
-		return "ADDDATATOLINEANNOTATION";
+		return NAME;
 	}
 }

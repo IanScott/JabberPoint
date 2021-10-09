@@ -140,4 +140,19 @@ public class DefaultConfiguration implements ProjectorConfiguration {
 		
 		return "Unknown";
 	}
+
+	@Override
+	public int[] getLineWeights() {
+		return new int[] {1, 2, 3, 4, 5};
+	}
+
+	@Override
+	public int getDefaultLineWeight() {
+		return 1;
+	}
+
+	@Override
+	public int getDefaultColorCode() {
+		return Color.BLACK.getRGB();
+	}
 }

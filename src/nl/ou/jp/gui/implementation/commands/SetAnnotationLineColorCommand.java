@@ -9,6 +9,10 @@ import nl.ou.jp.gui.model.ProjectorContext;
 
 public class SetAnnotationLineColorCommand implements ProjectorCommand {
 
+	private static final String LINECOLORTITLEID = "COLORTITLE";
+	private static final String CURRENTVALUEID = "CURRENTVALUE";
+	private static final String CHOOSECOLORID = "CHOOSECOLOR";
+	private static final String NAME = "SETANNOTATIONLINECOLOR";
 	private ProjectorContext context = null;
 	
 	public SetAnnotationLineColorCommand(ProjectorContext context) {
@@ -30,8 +34,9 @@ public class SetAnnotationLineColorCommand implements ProjectorCommand {
 			options[index] = it.next();
 			index++;
 		}
-		
-		int value = this.context.getMainGUI().showItemSelectorDialog("Choose an Annotation Color. Current value: "+currentColorName, "Annotation Line Weigth", options);
+		String message = getMessage(CHOOSECOLORID)+" "+getMessage(CURRENTVALUEID)+" "+currentColorName;
+		String title = getMessage(LINECOLORTITLEID);
+		int value = this.context.getMainGUI().showItemSelectorDialog(message, title, options);
 		if(value < 0) {
 			return;
 		}
@@ -40,9 +45,12 @@ public class SetAnnotationLineColorCommand implements ProjectorCommand {
 		this.context.setAnnotationLineColor(color.getRGB());
 	}
 
+	private String getMessage(String id) {
+		return this.context.getConfiguration().getMessage(id);
+	}
+	
 	@Override
 	public String getName() {
-		return "SETANNOTATIONLINECOLOR";
+		return NAME;
 	}
-
 }

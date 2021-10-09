@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
 import java.awt.*;
-import java.awt.Dimension;
 import java.awt.event.*;
 import java.nio.file.Path;
 
@@ -28,11 +27,7 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 
 	private transient Slide currentSlide;
 
-	public ProjectorGUIImp(
-			DrawStrategy strategy, MenuBar projectorViewMenuBar, 
-			WindowListener windowListener, KeyListener keyListener, 
-			MouseListener mouseListener, MouseInputListener mouseInputListener, 
-			ProjectorConfiguration configurationDefault, ProjectorContext context) {
+	public ProjectorGUIImp(DrawStrategy strategy, ProjectorConfiguration configurationDefault, ProjectorContext context) {
 		
 		this.strategy = strategy;
 		this.configurationDefault = configurationDefault;
@@ -45,19 +40,12 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 			throw new ProjectorGUIException("Strategy cannot be NULL.");
 		}
 
-		setMenuBar(projectorViewMenuBar); // may be null
-		addWindowListener(windowListener); // may be null
-		addKeyListener(keyListener); // may be null
-		
 		setTitle(configurationDefault.getDefaultTitle());
 		setSize(configurationDefault.getDefaultSlideDimensions());
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
 		
 		initialize(context);
-		
-		getContentPane().addMouseListener(mouseListener);
-		getContentPane().addMouseMotionListener(mouseInputListener);
 	}
 
 	private void initialize(ProjectorContext projectorContext) {
@@ -71,7 +59,9 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		this.projectorContext = projectorContext;
 		this.projectorContext.setMainGUI(this);
 		this.projectorContext.setConfiguration(this.configurationDefault);
-
+		this.projectorContext.setAnnotationLineColor(this.configurationDefault.getDefaultColorCode());
+		this.projectorContext.setAnnotationLineWeight(this.configurationDefault.getDefaultLineWeight());
+		
 		projectorController.registerSlideShowListeners(this);
 
 		initializeContentPane();
@@ -187,7 +177,6 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 				null,
 				items,
 				items[0]);
-
 	}
 
 	@Override
@@ -198,4 +187,28 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 		return dimension;
 	}
 
+	@Override
+	public void setMenubar(MenuBar menubar) {
+		setMenuBar(menubar);
+	}
+
+	@Override
+	public void setWindowlistener(WindowListener listener) {
+		addWindowListener(listener);
+	}
+
+	@Override
+	public void setKeylistener(KeyListener listener) {
+		addKeyListener(listener); 
+	}
+
+	@Override
+	public void setMouseListener(MouseListener listener) {
+		getContentPane().addMouseListener(listener);
+	}
+
+	@Override
+	public void setMouseInputListener(MouseInputListener listener) {
+		getContentPane().addMouseMotionListener(listener);
+	}
 }

@@ -25,8 +25,10 @@ public interface ProjectorConfiguration {
 
 	String getMessage(String messageId);
 	
-	Map<String,Color> getColors();
+	int[] getLineWeights();
+	int getDefaultLineWeight();
 	
+	int getDefaultColorCode();
+	Map<String,Color> getColors();
 	String getColorName(int rgb);
-
 }
