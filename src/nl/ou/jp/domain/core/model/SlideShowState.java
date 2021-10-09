@@ -6,6 +6,6 @@ public interface SlideShowState {
 	boolean canAnnotate();
 	void add(List<SlideShowComponant> componants, SlideShowComponant componant);
 	void setTitle(String oldTitle, String newTitle);
-	void startLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationLine line);
-	void addToLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationPoint point);
+	void startLineAnnotation(SlideShowComponant slideShowComponant, AnnotationLine line);
+	void addToLineAnnotation(SlideShowComponant slideShowComponant, AnnotationPoint point);
 }

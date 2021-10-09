@@ -40,7 +40,21 @@ public abstract class SlideShowCompositeTemplate implements SlideShowComposite {
 		if(this.componants == null) {
 			this.componants = new ArrayList<>();
 		}
-		this.componants.add(componant);
+		
+		if(componant != null)
+		{
+			this.componants.add(componant);	
+		}
+	}
+
+	@Override
+	public SlideShowComponant get(int index) 
+	{
+		if(this.componants != null) 
+		{
+			return this.componants.get(index);
+		}
+		return null;
 	}
 
 	@Override
@@ -53,8 +67,12 @@ public abstract class SlideShowCompositeTemplate implements SlideShowComposite {
 	
 	@Override
 	public SlideShowComponant copy() {
-		List<SlideShowComponant> componantsCopy = this.componants.stream().map(SlideShowComponant::copy).collect(Collectors.toList());
-		return createComponant(this.title, componantsCopy);
+		List<SlideShowComponant> componantsCopy = null;
+		if(this.componants != null) 
+		{
+			componantsCopy = this.componants.stream().map(SlideShowComponant::copy).collect(Collectors.toList());
+		}
+		return createComponant(this.title, componantsCopy);	
 	}
 	
 	protected abstract SlideShowComponant createComponant(String title, List<SlideShowComponant> componants);

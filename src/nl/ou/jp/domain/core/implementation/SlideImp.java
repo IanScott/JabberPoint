@@ -34,6 +34,7 @@ public class SlideImp extends SlideShowCompositeTemplate implements Slide {
 		return new SlideImp(title, sequenceNumber, componants);
 	}
 	
+	//Methode weghalen -> verplaatsen naar SlideShowImp
 	@Override
 	public void addToLineAnnotation(AnnotationPoint point) {
 		this.componants.get(this.componants.size() - 1).add(point);

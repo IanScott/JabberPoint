@@ -6,6 +6,8 @@ public interface SlideShowComponant {
 	
 	void add(SlideShowComponant componant);
 	SlideShowComponantIterator getIterator();
+	SlideShowComponant get(int index);
 	
 	SlideShowComponant copy();
+	int size();
 }

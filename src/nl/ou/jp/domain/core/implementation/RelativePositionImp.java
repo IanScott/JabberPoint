@@ -6,7 +6,7 @@ public class RelativePositionImp implements RelativePosition {
 	
 	private double x;
 	private double y;
-	private final int precision = 4;
+	private static final int precision = 4;
 	
 	public RelativePositionImp(double x, double y) 
 	{

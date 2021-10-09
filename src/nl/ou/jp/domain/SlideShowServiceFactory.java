@@ -20,7 +20,7 @@ public class SlideShowServiceFactory {
 	
 	public SlideShowService create() {
 		SlideShowBuilder slideshowBuilder = new SlideShowBuilderImp(new SlideBuilderImp());
-		SlideShowController slideShowController = SlideShowControllerFactory.GetInstance().Create();
+		SlideShowController slideShowController = SlideShowControllerFactory.GetInstance().create();
 		return new SlideShowServiceImp(slideshowBuilder, new SlideShowEventDispatcher(), new SlideEventDispatcher(), slideShowController);
 	}
 }
