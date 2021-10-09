@@ -22,6 +22,10 @@ public interface ProjectorContext {
 	public void setAnnotationLineWeight(int weight);
 	public int getAnnotationLineWeight();
 	
+	/**
+	 * Set the RGB code of the Color to be used to render an AnnotationLine.
+	 * @param color
+	 */
 	public void setAnnotationLineColor(int color);
 	public int getAnnotationLineColor();
 }
