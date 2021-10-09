@@ -45,13 +45,10 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public int getCurrentSlideNumber() {
-		System.out.println("calling getCurrentSlideNumber");
 		if(this.iterator == null) {
 			return EMPTYSIZE;
 		}
-		int index = this.iterator.getCurrentIndex();
-		System.out.println("currentSlideNumber: "+index);
-		return index;
+		return this.iterator.getCurrentIndex();
 	}
 
 	@Override
@@ -97,12 +94,10 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void loadSlideShow(SlideShow slideshow) {
-		System.out.println("Load Slideshow");
 		this.slideShowController.makeSlideShowReadOnly(slideshow);
 		
 		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
-		System.out.println("iterator: "+this.iterator);
 		this.slideShowEventDispatcher.fireEvent(slideshow);
 		
 		this.nextSlide(); //load first available slide.
@@ -144,15 +139,12 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
-		System.out.println("Start Line Anno");
 		AnnotationLine line = AnnotationFactory.getInstance().createAnnotationLine("", null, lineWeight, color);
 		slideShowController.startLineAnnotation(index, line);
 	}
 
 	@Override
-	public void addToLineAnnotation(int index, double x, double y) {
-		System.out.println("Add to Line Anno");
-		
+	public void addToLineAnnotation(int index, double x, double y) {		
 		int minCoordinateValue = 0;
 		int maxCoordinateValue = 1;
 		
