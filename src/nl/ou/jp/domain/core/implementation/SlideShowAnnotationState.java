@@ -37,14 +37,13 @@ private static SlideShowAnnotationState instance = null;
 	}
 
 	@Override
-	public void startLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationLine line) {
-		SlideImp slide = (SlideImp)componants.get(index);
-		slide.add(line);
+	public void startLineAnnotation(SlideShowComponant slideShowComponant, AnnotationLine line) {
+		slideShowComponant.add(line);
 	}
 
 	@Override
-	public void addToLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationPoint point) {
-		SlideImp slide = (SlideImp)componants.get(index);
-		slide.addToLineAnnotation(point);
+	public void addToLineAnnotation(SlideShowComponant slideShowComponant, AnnotationPoint point) {
+		SlideShowComponant lastAnnotation = slideShowComponant.get(slideShowComponant.size() - 1);
+		lastAnnotation.add(point);
 	}
 }

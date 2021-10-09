@@ -48,6 +48,16 @@ public abstract class SlideShowCompositeTemplate implements SlideShowComposite {
 	}
 
 	@Override
+	public SlideShowComponant get(int index) 
+	{
+		if(this.componants != null) 
+		{
+			return this.componants.get(index);
+		}
+		return null;
+	}
+
+	@Override
 	public SlideShowComponantIterator getIterator() {
 		if(this.componants == null) {
 			this.componants = new ArrayList<>();

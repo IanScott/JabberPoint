@@ -29,4 +29,15 @@ public abstract class SlideShowLeaf implements SlideShowComponant {
 	public void setSequenceNumber(int seqnr) {
 		this.sequenceNumber = seqnr;
 	}
+	
+	@Override
+	public SlideShowComponant get(int index) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public int size() {
+		throw new UnsupportedOperationException();
+	}
+	
 }

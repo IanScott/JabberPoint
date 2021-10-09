@@ -50,7 +50,7 @@ public class SlideShowImp extends SlideShowCompositeTemplate implements SlideSho
 	public void startLineAnnotation(int index, AnnotationLine line) {
 		if(line != null) 
 		{
-			slideShowState.startLineAnnotation(this.componants, index, line);			
+			slideShowState.startLineAnnotation(this.componants.get(index), line);			
 		}
 	}
 
@@ -58,7 +58,7 @@ public class SlideShowImp extends SlideShowCompositeTemplate implements SlideSho
 	public void addToLineAnnotation(int index, AnnotationPoint point) {
 		if(point != null) 
 		{
-			slideShowState.addToLineAnnotation(this.componants, index, point);			
+			slideShowState.addToLineAnnotation(this.componants.get(index), point);			
 		}
 	}
 

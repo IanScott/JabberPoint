@@ -37,12 +37,12 @@ public class SlideShowEditableState implements SlideShowState {
 	}
 
 	@Override
-	public void startLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationLine line) {
+	public void startLineAnnotation(SlideShowComponant slideShowComponant, AnnotationLine line) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void addToLineAnnotation(List<SlideShowComponant> componants, int index, AnnotationPoint point) {
+	public void addToLineAnnotation(SlideShowComponant slideShowComponant, AnnotationPoint point) {
 		throw new UnsupportedOperationException();
 	}
 	
