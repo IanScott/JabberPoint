@@ -5,7 +5,7 @@ import nl.ou.jp.domain.implementation.SlideShowControllerImp;
 public class SlideShowControllerFactory {
 	private static SlideShowControllerFactory instance = null;
 	
-	public static SlideShowControllerFactory GetInstance() 
+	public static SlideShowControllerFactory getInstance() 
 	{
 		if(instance == null) 
 		{

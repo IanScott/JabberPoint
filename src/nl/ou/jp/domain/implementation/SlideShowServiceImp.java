@@ -5,6 +5,7 @@ import nl.ou.jp.domain.core.AnnotationLineFactory;
 import nl.ou.jp.domain.core.AnnotationPointFactory;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
+import nl.ou.jp.util.EventDispatcher;
 
 public class SlideShowServiceImp implements SlideShowService {
 	private static final String EMPTYSTRING = "";
@@ -15,8 +16,8 @@ public class SlideShowServiceImp implements SlideShowService {
 	
 	private SlideShowBuilder slideShowBuilder = null;
 	
-	private SlideShowEventDispatcher slideShowEventDispatcher = null;
-	private SlideEventDispatcher slideEventDispatcher = null;
+	private EventDispatcher slideShowEventDispatcher = null;
+	private EventDispatcher slideEventDispatcher = null;
 	
 	private SlideShowController slideShowController = null;
 	
@@ -45,13 +46,10 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public int getCurrentSlideNumber() {
-		System.out.println("calling getCurrentSlideNumber");
 		if(this.iterator == null) {
 			return EMPTYSIZE;
 		}
-		int index = this.iterator.getCurrentIndex();
-		System.out.println("currentSlideNumber: "+index);
-		return index;
+		return this.iterator.getCurrentIndex();
 	}
 
 	@Override
@@ -114,12 +112,12 @@ public class SlideShowServiceImp implements SlideShowService {
 	}
 
 	@Override
-	public SlideShowEventDispatcher getSlideShowEventDispatcher() {
+	public EventDispatcher getSlideShowEventDispatcher() {
 		return slideShowEventDispatcher;
 	}
 
 	@Override
-	public SlideEventDispatcher getSlideEventDispatcher() {
+	public EventDispatcher getSlideEventDispatcher() {
 		return slideEventDispatcher;
 	}
 

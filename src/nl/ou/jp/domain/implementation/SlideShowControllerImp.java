@@ -10,11 +10,7 @@ import nl.ou.jp.domain.core.model.SlideShow;
 public class SlideShowControllerImp implements SlideShowController {
 
 	private SlideShow slideShow;
-	
-	public SlideShowControllerImp() 
-	{
-	}
-	
+		
 	@Override
 	public void makeSlideShowReadOnly(SlideShow slideShow) {
 		slideShow.setState(SlideShowUnEditableState.getInstance());

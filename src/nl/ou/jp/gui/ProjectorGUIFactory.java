@@ -17,7 +17,7 @@ public class ProjectorGUIFactory {
 	}
 	
 	public ProjectorGUI create(ProjectorVariant variant) {
-		ProjectorGUI gui = new ProjectorGUIImp(
+		ProjectorGUI gui = new SwingProjectorGUI(
 				variant.getDrawStrategy(),
 				variant.getConfiguration(),
 				variant.getContext()

@@ -17,7 +17,7 @@ import nl.ou.jp.util.Event;
 
 /**
 */
-public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
+public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 	private static final long serialVersionUID = 3227L;
 	private transient Logger logger = LoggerManager.getLogger();
 	private transient DrawStrategy strategy = null;
@@ -25,9 +25,9 @@ public class ProjectorGUIImp extends JFrame implements ProjectorGUI {
 	private transient ProjectorContext projectorContext = null;
 	private transient ProjectorConfiguration configurationDefault = null;
 
-	private transient Slide currentSlide;
+	private transient SlideShowComponant currentSlide;
 
-	public ProjectorGUIImp(DrawStrategy strategy, ProjectorConfiguration configurationDefault, ProjectorContext context) {
+	public SwingProjectorGUI(DrawStrategy strategy, ProjectorConfiguration configurationDefault, ProjectorContext context) {
 		
 		this.strategy = strategy;
 		this.configurationDefault = configurationDefault;
