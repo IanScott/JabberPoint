@@ -9,27 +9,23 @@ import nl.ou.jp.domain.core.model.AnnotationPoint;
 import nl.ou.jp.domain.core.model.RelativePosition;
 import nl.ou.jp.domain.core.model.SlideShowComponant;
 
-public class AnnotationFactory {
-	private static AnnotationFactory instance = null;
+public class AnnotationLineFactory {
+	private static AnnotationLineFactory instance = null;
 	
-	public static AnnotationFactory getInstance() 
+	public static AnnotationLineFactory getInstance() 
 	{
 		if(instance == null) 
 		{
-			instance = new AnnotationFactory();
+			instance = new AnnotationLineFactory();
 		}
 		return instance;
 	}
 	
-	private AnnotationFactory(){
+	private AnnotationLineFactory(){
 		
 	}
 	
 	public AnnotationLine createAnnotationLine(String title, List<SlideShowComponant> componants, int lineWeight, int lineColor) {
 		return new AnnotationLineImp(title, componants, lineWeight, lineColor);
 	}
-
-	public AnnotationPoint createAnnotationPoint(RelativePosition relativePosition) {
-		return new AnnotationPointImp(relativePosition);
-	}	
 }

@@ -1,7 +1,8 @@
 package nl.ou.jp.domain.implementation;
 
 import nl.ou.jp.domain.*;
-import nl.ou.jp.domain.core.AnnotationFactory;
+import nl.ou.jp.domain.core.AnnotationLineFactory;
+import nl.ou.jp.domain.core.AnnotationPointFactory;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
 
@@ -96,12 +97,10 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void loadSlideShow(SlideShow slideshow) {
-		System.out.println("Load Slideshow");
 		this.slideShowController.makeSlideShowReadOnly(slideshow);
 		
 		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
-		System.out.println("iterator: "+this.iterator);
 		this.slideShowEventDispatcher.fireEvent(slideshow);
 		
 		this.nextSlide(); //load first available slide.
@@ -143,15 +142,12 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
-		System.out.println("Start Line Anno");
-		AnnotationLine line = AnnotationFactory.getInstance().createAnnotationLine("", null, lineWeight, color);
+		AnnotationLine line = AnnotationLineFactory.getInstance().createAnnotationLine("", null, lineWeight, color);
 		slideShowController.startLineAnnotation(index, line);
 	}
 
 	@Override
-	public void addToLineAnnotation(int index, double x, double y) {
-		System.out.println("Add to Line Anno");
-		
+	public void addToLineAnnotation(int index, double x, double y) {		
 		int minCoordinateValue = 0;
 		int maxCoordinateValue = 1;
 		
@@ -161,7 +157,7 @@ public class SlideShowServiceImp implements SlideShowService {
 		   y < maxCoordinateValue)
 		{
 			RelativePosition position = new RelativePositionImp(x,y);
-			AnnotationPoint point = AnnotationFactory.getInstance().createAnnotationPoint(position);
+			AnnotationPoint point = AnnotationPointFactory.getInstance().createAnnotationPoint(position);
 			slideShowController.addToLineAnnotation(index, point);
 			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
