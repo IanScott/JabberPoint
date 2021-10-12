@@ -1,6 +1,7 @@
 package nl.ou.jp.domain.implementation;
 
 import nl.ou.jp.domain.*;
+
 import nl.ou.jp.domain.core.SlideShowComponantFactory;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
@@ -159,6 +160,7 @@ public class SlideShowServiceImp implements SlideShowService {
 			var item = SlideShowComponantFactory.getInstance().createSlideShowComponant(SlideShowComponantFactory.ANNOTATIONPOINT_TYPE);
 			((AnnotationPoint)item).setRelativePosition(new RelativePositionImp(x,y));
 			slideShowController.addToLineAnnotation(index, ((AnnotationPoint)item));
+
 			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}
