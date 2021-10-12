@@ -5,6 +5,7 @@ import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorContext;
 
 public class PreviousSlideCommand implements ProjectorCommand {
+	private static final String NAME = "PREVIOUSSLIDE";
 	private ProjectorContext projectorContext = null;
 	
 	public PreviousSlideCommand(ProjectorContext projectorContext) {
@@ -13,7 +14,12 @@ public class PreviousSlideCommand implements ProjectorCommand {
 	
 	@Override
 	public void execute() {
-		ProjectorController projectorController = projectorContext.getProjector();
+		ProjectorController projectorController = projectorContext.getController();
 		projectorController.previousSlide();
+	}
+
+	@Override
+	public String getName() {
+		return NAME;
 	}
 }

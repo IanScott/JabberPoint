@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import nl.ou.jp.domain.core.model.Slide;
 import nl.ou.jp.util.*;
 
-public interface ProjectorController extends EventDispatcher {
+public interface ProjectorController {
 	
 	String getSlideShowTitle();
 	
@@ -22,11 +22,21 @@ public interface ProjectorController extends EventDispatcher {
 	
 	void nextSlide();
 	
-	// Persistence Methods
 	InputStream fetchFileAsStream(Path path);
 	
-	void openPresentation(Path path);
+	void openSlideShow(Path path);
 	
 	void reset();
-
+	
+	void registerSlideShowListeners(EventListener listener);
+	
+	void makeSlideShowReadOnly();
+	
+	void enableSlideShowAnnotations();
+	
+	boolean canAnnotate();
+	
+	void startLineAnnotation(int lineWeight, int color);
+	
+	void addToLineAnnotation(double x, double y);
 }

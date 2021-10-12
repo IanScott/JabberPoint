@@ -1,6 +1,7 @@
 package nl.ou.jp.domain;
 
 import nl.ou.jp.domain.core.model.*;
+import nl.ou.jp.util.EventDispatcher;
 
 public interface SlideShowService {
 
@@ -21,4 +22,20 @@ public interface SlideShowService {
 	SlideShowBuilder getSlideShowBuilder();
 	
 	void loadSlideShow(SlideShow slideshow);
+	
+	void resetSlideShow();
+	
+	void makeSlideShowReadOnly();
+	
+	void enableSlideShowAnnotations();
+	
+	void startLineAnnotation(int index, int lineWeight, int color);
+	
+	void addToLineAnnotation(int index, double x, double y);
+	
+	boolean canAnnotate();
+	
+	EventDispatcher getSlideShowEventDispatcher();
+	
+	EventDispatcher getSlideEventDispatcher();
 }

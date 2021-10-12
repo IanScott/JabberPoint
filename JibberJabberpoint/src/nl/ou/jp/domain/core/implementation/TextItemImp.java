@@ -7,6 +7,10 @@ public class TextItemImp extends SlideShowLeaf implements TextItem {
 	private String text = null;
 	private Level level = null;
 	
+	public TextItemImp() {
+		super();
+	}
+	
 	public TextItemImp(String text, Level level) {
 		this.text = text;
 		this.level = level;
@@ -23,7 +27,18 @@ public class TextItemImp extends SlideShowLeaf implements TextItem {
 	}
 	
 	@Override
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+	
+	@Override
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	@Override
 	public SlideShowComponant copy() {
 		return new TextItemImp(this.text, this.level);
 	}
+
 }

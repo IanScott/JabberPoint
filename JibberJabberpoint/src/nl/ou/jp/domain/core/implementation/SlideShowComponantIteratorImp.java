@@ -55,7 +55,9 @@ public class SlideShowComponantIteratorImp implements SlideShowComponantIterator
 			throw new NoSuchElementException();
 		}
 		
-		return this.componants.get(this.currentIndex);			
+		this.componants.get(currentIndex).setSequenceNumber(this.currentIndex);
+		
+		return this.componants.get(this.currentIndex).copy();				
 	}
 
 	@Override
@@ -67,8 +69,7 @@ public class SlideShowComponantIteratorImp implements SlideShowComponantIterator
 	public void setIndex(int index) {
 		if(this.componants == null || index < 0 || index > this.componants.size() -1) {
 			throw new NoSuchElementException();
-		}
-		
+		}	
 		this.currentIndex = index;
 	}
 }

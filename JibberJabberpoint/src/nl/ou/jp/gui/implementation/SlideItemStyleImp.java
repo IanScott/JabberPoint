@@ -8,7 +8,7 @@ import nl.ou.jp.gui.model.SlideItemStyle;
 public class SlideItemStyleImp implements SlideItemStyle {
 	private int indent;
 	private Color color;
-	private Font font;
+	private String fontname;
 	private int fontSize;
 	private int leading;
 
@@ -16,7 +16,7 @@ public class SlideItemStyleImp implements SlideItemStyle {
 		this.indent = indent;
 		this.color = color;
 		this.fontSize = points;
-		font = new Font(fontname, Font.BOLD, fontSize);
+		this.fontname = fontname;
 		this.leading = leading;
 	}
 
@@ -37,7 +37,8 @@ public class SlideItemStyleImp implements SlideItemStyle {
 	
 	@Override
 	public Font getFont(float scale) {
-		return font.deriveFont(fontSize * scale);
+		return new Font(this.fontname, Font.BOLD, (int) (this.fontSize * scale));
+
 	}
 	
 	public String toString() {

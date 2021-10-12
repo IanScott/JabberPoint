@@ -5,18 +5,20 @@ import java.util.List;
 import nl.ou.jp.domain.core.model.*;
 
 public class SlideImp extends SlideShowCompositeTemplate implements Slide {
-	
+
 	private int sequenceNumber = -1;
-	
+
 	public SlideImp(String title, List<SlideShowComponant> componants) {
 		super(title, componants);
+
 	}
 
-	public SlideImp(String title, int sequanceNumber, List<SlideShowComponant> componants) {
+	public SlideImp(String title, int sequenceNumber, List<SlideShowComponant> componants) {
 		super(title, componants);
-		this.sequenceNumber = sequanceNumber;
+
+		this.sequenceNumber = sequenceNumber;
 	}
-	
+
 	@Override
 	public int getSequenceNumber() {
 		return this.sequenceNumber;
@@ -30,5 +32,11 @@ public class SlideImp extends SlideShowCompositeTemplate implements Slide {
 	@Override
 	protected SlideShowComponant createComponant(String title, List<SlideShowComponant> componants) {
 		return new SlideImp(title, sequenceNumber, componants);
-	}	
+	}
+	
+	//Methode weghalen -> verplaatsen naar SlideShowImp
+	@Override
+	public void addToLineAnnotation(AnnotationPoint point) {
+		this.componants.get(this.componants.size() - 1).add(point);
+	}
 }

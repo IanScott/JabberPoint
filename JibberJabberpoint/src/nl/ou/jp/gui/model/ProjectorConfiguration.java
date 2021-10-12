@@ -1,6 +1,10 @@
 package nl.ou.jp.gui.model;
 
-//Kind of Factory
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.Map;
+
 public interface ProjectorConfiguration {
 
 	String getDefaultTitle();
@@ -11,14 +15,20 @@ public interface ProjectorConfiguration {
 
 	Dimension getDefaultInnerSlideDimensions();
 
-	int getSlideBackgroundRGBColor();
+	Color getSlideBackgroundColor();
 
-	int getDefaultFontRGBColor();
+	Color getDefaultFontColor();
 
-	SlideItemFont getDefaultLabelFont();
+	Font getDefaultLabelFont();
 
 	String getMenuName(String menuId);
 
 	String getMessage(String messageId);
-
+	
+	int[] getLineWeights();
+	int getDefaultLineWeight();
+	
+	int getDefaultColorCode();
+	Map<String,Color> getColors();
+	String getColorName(int rgb);
 }

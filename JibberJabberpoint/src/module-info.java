@@ -6,7 +6,9 @@ module jibberjabberpoint {
 	
 	exports nl.ou.jp.infra;
 	exports nl.ou.jp.controller;
+	
 	exports nl.ou.jp.gui;
+	exports nl.ou.jp.gui.model;
 	
 	exports nl.ou.jp.util;
 	exports nl.ou.jp.application;

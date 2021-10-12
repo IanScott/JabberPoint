@@ -1,4 +1,4 @@
-package nl.ou.jp.gui.implementation;
+package nl.ou.jp.gui.implementation.drawstrategies;
 
 import java.awt.*;
 import java.awt.font.*;
@@ -7,13 +7,10 @@ import java.text.AttributedString;
 import java.util.*;
 import java.util.List;
 
-import nl.ou.jp.domain.core.model.SlideShowComponant;
-import nl.ou.jp.domain.core.model.TextItem;
+import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.ProjectorGUIException;
-import nl.ou.jp.gui.model.SlideItemStyle;
-import nl.ou.jp.gui.model.Rectangle;
+import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
-
 
 /** <p>Een tekst item.</p>
  */
@@ -21,7 +18,7 @@ import nl.ou.jp.logging.*;
 public class TextDrawStrategy extends SwingDrawStrategy {
 	private Logger logger = LoggerManager.getLogger();
 	
-	public TextDrawStrategy(SwingDrawStrategy next) {
+	public TextDrawStrategy(DrawStrategy next) {
 		super(next);
 	}
 	
@@ -42,24 +39,25 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 			}
 			ysize += layout.getLeading() + layout.getDescent();
 		}
-		return new RectangleImp((int) (myStyle.getIndent()*scale), 0, xsize, ysize );
+		return new Rectangle((int) (myStyle.getIndent()*scale), 0, xsize, ysize );
 	}
 
 	@Override
-	public Rectangle draw(SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
+	public Rectangle draw(Graphics graphics, Component component, SlideShowComponant data, SlideItemStyle myStyle, int x, int y) {
 		if(!(data instanceof TextItem)) {
-			return this.getNext(data, myStyle, x, y);
+			return this.getNext(graphics, component, data, myStyle, x, y);
 		}
-		
+
 		TextItem textitem = (TextItem)data;
 		
 		String text = (textitem.getText() == null)?"":textitem.getText();
 	
-		List<TextLayout> layouts = getLayouts(getGraphics(), myStyle, getScale(), text);
+		List<TextLayout> layouts = getLayouts(graphics, myStyle, getScale(), text);
 		
 		Point pen = new Point(x + (int)(myStyle.getIndent() * getScale()), 
 				y + (int) (myStyle.getLeading() * getScale()));
-		Graphics2D g2d = (Graphics2D)getGraphics();
+		Graphics2D g2d = (Graphics2D)graphics;
+		
 		g2d.setColor(myStyle.getColor());
 		Iterator<TextLayout> it = layouts.iterator();
 		while (it.hasNext()) {
@@ -69,7 +67,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 			pen.y += layout.getDescent();
 		}
 		
-		return getBoundingBox(getGraphics(), text, myStyle, getScale());
+		return getBoundingBox(graphics, text, myStyle, getScale());
 	  }
 
 	
@@ -91,7 +89,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 
 	private int getDefaultSlideWidth() {
 		try {
-			return getProjectorContext().getConfiguration().getDefaultSlideDimensions().getWidth();			
+			return (int)getProjectorContext().getConfiguration().getDefaultSlideDimensions().getWidth();			
 		}catch(Exception e) {
 			logger.logError("Failed to fetch default slide dimensions.");
 			throw new ProjectorGUIException(e.getMessage());
@@ -103,5 +101,4 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 		attrStr.addAttribute(TextAttribute.FONT, slideItemStyle.getFont(scale), 0, text.length());			
 		return attrStr;
 	}
-
 }
