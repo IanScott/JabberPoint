@@ -1,7 +1,7 @@
 package nl.ou.jp.domain.implementation;
 
 import nl.ou.jp.domain.*;
-import nl.ou.jp.domain.core.AnnotationFactory;
+import nl.ou.jp.domain.core.SlideShowComponantFactory;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.util.EventDispatcher;
@@ -139,8 +139,10 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
-		AnnotationLine line = AnnotationFactory.getInstance().createAnnotationLine("", null, lineWeight, color);
-		slideShowController.startLineAnnotation(index, line);
+		var item = SlideShowComponantFactory.getInstance().createSlideShowComponant(SlideShowComponantFactory.ANNOTATIONLINE_TYPE);
+		((AnnotationLine)item).setLineWeight(lineWeight);
+		((AnnotationLine)item).setLineColor(color);
+		slideShowController.startLineAnnotation(index, ((AnnotationLine)item));
 	}
 
 	@Override
@@ -153,9 +155,10 @@ public class SlideShowServiceImp implements SlideShowService {
 		   y > minCoordinateValue && 
 		   y < maxCoordinateValue)
 		{
-			RelativePosition position = new RelativePositionImp(x,y);
-			AnnotationPoint point = AnnotationFactory.getInstance().createAnnotationPoint(position);
-			slideShowController.addToLineAnnotation(index, point);
+			
+			var item = SlideShowComponantFactory.getInstance().createSlideShowComponant(SlideShowComponantFactory.ANNOTATIONPOINT_TYPE);
+			((AnnotationPoint)item).setRelativePosition(new RelativePositionImp(x,y));
+			slideShowController.addToLineAnnotation(index, ((AnnotationPoint)item));
 			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}

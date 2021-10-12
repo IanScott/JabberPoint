@@ -36,5 +36,6 @@ public interface SlideShowService {
 	boolean canAnnotate();
 	
 	EventDispatcher getSlideShowEventDispatcher();
+	
 	EventDispatcher getSlideEventDispatcher();
 }

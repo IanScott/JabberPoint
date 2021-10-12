@@ -1,7 +1,7 @@
-package nl.ou.jp.gui;
+package nl.ou.jp.gui.implementation;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.gui.implementation.DefaultVariant;
+import nl.ou.jp.gui.model.ProjectorVariant;
 
 public class ProjectorVariantFactory {
 

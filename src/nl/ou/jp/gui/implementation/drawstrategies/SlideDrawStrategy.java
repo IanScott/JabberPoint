@@ -3,7 +3,8 @@ package nl.ou.jp.gui.implementation.drawstrategies;
 import java.awt.*;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.domain.core.SlideShowItemFactory;
+import nl.ou.jp.domain.core.SlideShowComponantFactory;
+import nl.ou.jp.domain.core.implementation.SimpleLevel;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.*;
 import nl.ou.jp.logging.*;
@@ -106,7 +107,10 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 	}
 		
 	private SlideShowItem getTitleItem(String title) {
-		return SlideShowItemFactory.getInstance().createSlideShowItem(TEXTITEM_TYPE, title, 0);
+		var item = SlideShowComponantFactory.getInstance().createSlideShowComponant(TEXTITEM_TYPE);
+		((TextItem)item).setLevel(new SimpleLevel(0));
+		((TextItem)item).setText(title);
+		return ((TextItem)item);
 	}
 		
 	// geef de schaal om de slide te kunnen tekenen

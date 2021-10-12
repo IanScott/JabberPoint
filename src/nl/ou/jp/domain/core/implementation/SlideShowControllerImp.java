@@ -1,11 +1,9 @@
-package nl.ou.jp.domain.implementation;
+package nl.ou.jp.domain.core.implementation;
 
-import nl.ou.jp.domain.SlideShowController;
-import nl.ou.jp.domain.core.implementation.SlideShowAnnotationState;
-import nl.ou.jp.domain.core.implementation.SlideShowUnEditableState;
 import nl.ou.jp.domain.core.model.AnnotationLine;
 import nl.ou.jp.domain.core.model.AnnotationPoint;
 import nl.ou.jp.domain.core.model.SlideShow;
+import nl.ou.jp.domain.core.model.SlideShowController;
 
 public class SlideShowControllerImp implements SlideShowController {
 

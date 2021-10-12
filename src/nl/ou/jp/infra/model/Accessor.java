@@ -9,7 +9,7 @@ import nl.ou.jp.domain.core.model.SlideShow;
 
 public interface Accessor {
 
-	SlideShowBuilder loadFile(String fn);
+	SlideShowBuilder loadFile(SlideShowBuilder builder, String fn);
 
 	void saveFile(SlideShow slideshow, String fn);
 	

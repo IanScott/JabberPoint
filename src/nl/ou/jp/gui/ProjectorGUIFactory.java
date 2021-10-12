@@ -1,6 +1,8 @@
 package nl.ou.jp.gui;
 
+import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.gui.implementation.*;
+import nl.ou.jp.gui.model.ProjectorVariant;
 
 public class ProjectorGUIFactory {	
 	private static ProjectorGUIFactory instance = null;
@@ -16,7 +18,9 @@ public class ProjectorGUIFactory {
 		//singleton
 	}
 	
-	public ProjectorGUI create(ProjectorVariant variant) {
+	public ProjectorGUI create(ProjectorController projectorController) {
+		ProjectorVariant variant = ProjectorVariantFactory.getInstance().create(projectorController); // load gui variant data
+		
 		ProjectorGUI gui = new SwingProjectorGUI(
 				variant.getDrawStrategy(),
 				variant.getConfiguration(),

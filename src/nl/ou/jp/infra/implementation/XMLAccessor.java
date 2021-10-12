@@ -37,13 +37,7 @@ public class XMLAccessor implements Accessor {
     protected static final String PCE = "Parser Configuration Exception";
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
-    
-    private SlideShowBuilder slideshowBuilder = null;
-    
-    public XMLAccessor(SlideShowBuilder buider) {
-    	this.slideshowBuilder = buider;
-    }
-    
+     
 	@Override
 	public String[] getSupportedFileExtensions() {
 		return SUPPORTEDEXTENSIONS;
@@ -56,7 +50,7 @@ public class XMLAccessor implements Accessor {
     }
 
     @Override
-	public SlideShowBuilder loadFile(String filename){
+	public SlideShowBuilder loadFile(SlideShowBuilder slideshowBuilder, String filename){
 		int slideNumber = 0 ;
 		int itemNumber = 0; 
 		int max = 0;
@@ -82,7 +76,14 @@ public class XMLAccessor implements Accessor {
 					String type = getType(item);
 					String data = getData(item);
 					int level = getLevel(item);
-					slideshowBuilder.appendSlideItemToSlide(slideNumber, type, data, level);
+					
+					if("TEXT".equals(type)) {
+						slideshowBuilder.appendTextItemToSlide(data, level);
+					}
+					
+					if("IMAGE".equals(type)) {
+						slideshowBuilder.appendFigureItemToSlide(data, level);
+					}
 				}
 			}
 		} 
@@ -119,7 +120,7 @@ public class XMLAccessor implements Accessor {
 	
 	private String getType(Element item) {
 		NamedNodeMap attributes = item.getAttributes();
-		return attributes.getNamedItem(KIND).getTextContent().toLowerCase();
+		return attributes.getNamedItem(KIND).getTextContent().toUpperCase();
 	}
 	
 	private String getData(Element item) {

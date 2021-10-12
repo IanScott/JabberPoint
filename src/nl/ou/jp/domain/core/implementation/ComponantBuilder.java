@@ -4,34 +4,34 @@ import java.util.*;
 
 import nl.ou.jp.domain.core.model.*;
 
-public abstract class ComponantBuilderTemplate implements ComponantBuilder {
+public abstract class ComponantBuilder {
 	private static final String ILLEGALCOMPONANTMESSAGE = "Illegal Componant: ";
 	
 	protected String title = null;
 	protected List<SlideShowComponant> componants = null;
 	
-	protected ComponantBuilderTemplate() {
+	protected ComponantBuilder() {
 		super();
 	}
 	
-	protected ComponantBuilderTemplate(String title, List<SlideShowComponant> componants) {
+	protected ComponantBuilder(String title, List<SlideShowComponant> componants) {
 		this.title = title;
 		this.componants = componants;
 	}
 	
-	public ComponantBuilderTemplate withTitle(String title) {
+	public ComponantBuilder withTitle(String title) {
 		this.title = title;
 		return this;
 	}
 	
-	public <T extends SlideShowComponant>ComponantBuilderTemplate withComponants(List<T> componants) {
+	public <T extends SlideShowComponant>ComponantBuilder withComponants(List<T> componants) {
 		for(T componant: componants) {
 			addComponant(componant);
 		}
 		return this;
 	}
 	
-	public <T extends SlideShowComponant>ComponantBuilderTemplate withComponant(T componant) {		
+	public <T extends SlideShowComponant>ComponantBuilder withComponant(T componant) {		
 		addComponant(componant);
 		return this;
 	}

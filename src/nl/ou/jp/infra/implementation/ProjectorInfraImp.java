@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import nl.ou.jp.domain.SlideShowBuilder;
 import nl.ou.jp.domain.core.model.SlideShow;
+import nl.ou.jp.domain.implementation.SlideShowBuilderImp;
 import nl.ou.jp.infra.*;
 import nl.ou.jp.infra.model.*;
 import nl.ou.jp.logging.*;
@@ -24,9 +24,9 @@ public class ProjectorInfraImp implements ProjectorInfra {
 	public SlideShow openSlideShow(Path path) {
 		this.directory = path.getParent();
 		Accessor accessor = getAccessor(path); 
-		SlideShowBuilder builder = accessor.loadFile(path.toString());
+		SlideShowBuilderImp builder = new SlideShowBuilderImp();
+		accessor.loadFile(builder,path.toString());
 		return builder.getSlideShow();
-
 	}
 	
 	private Accessor getAccessor(Path path) {

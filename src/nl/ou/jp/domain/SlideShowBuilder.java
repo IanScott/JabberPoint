@@ -7,7 +7,9 @@ public interface SlideShowBuilder {
 	
 	void appendSlide(String title);
 	
-	void appendSlideItemToSlide(int slideIndex, String type, String data, int level);
+	void appendTextItemToSlide(String text, int level);
+	
+	void appendFigureItemToSlide(String source, int level);
 	
 	SlideShow getSlideShow();
 }

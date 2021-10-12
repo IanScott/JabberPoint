@@ -7,7 +7,6 @@ import java.util.*;
 import javax.swing.event.MouseInputListener;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.gui.ProjectorVariant;
 import nl.ou.jp.gui.implementation.commands.*;
 import nl.ou.jp.gui.implementation.drawstrategies.*;
 import nl.ou.jp.gui.implementation.uicontrollers.*;

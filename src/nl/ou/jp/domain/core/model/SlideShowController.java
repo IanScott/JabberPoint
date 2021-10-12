@@ -1,8 +1,4 @@
-package nl.ou.jp.domain;
-
-import nl.ou.jp.domain.core.model.AnnotationLine;
-import nl.ou.jp.domain.core.model.AnnotationPoint;
-import nl.ou.jp.domain.core.model.SlideShow;
+package nl.ou.jp.domain.core.model;
 
 public interface SlideShowController {
 	void makeSlideShowReadOnly(SlideShow slideShow);
