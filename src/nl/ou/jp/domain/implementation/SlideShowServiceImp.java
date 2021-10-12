@@ -1,8 +1,6 @@
 package nl.ou.jp.domain.implementation;
 
 import nl.ou.jp.domain.*;
-
-import nl.ou.jp.domain.core.SlideShowComponantFactory;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.util.EventDispatcher;

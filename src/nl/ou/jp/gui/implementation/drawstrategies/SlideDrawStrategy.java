@@ -3,7 +3,7 @@ package nl.ou.jp.gui.implementation.drawstrategies;
 import java.awt.*;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.domain.core.SlideShowComponantFactory;
+import nl.ou.jp.domain.SlideShowComponantFactory;
 import nl.ou.jp.domain.core.implementation.SimpleLevel;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.*;

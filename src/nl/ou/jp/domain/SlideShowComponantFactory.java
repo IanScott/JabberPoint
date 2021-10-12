@@ -1,4 +1,4 @@
-package nl.ou.jp.domain.core;
+package nl.ou.jp.domain;
 
 import nl.ou.jp.domain.core.implementation.*;
 import nl.ou.jp.domain.core.model.*;
