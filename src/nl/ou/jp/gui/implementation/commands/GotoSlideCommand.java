@@ -8,7 +8,7 @@ import nl.ou.jp.gui.model.ProjectorConfiguration;
 import nl.ou.jp.gui.model.ProjectorContext;
 
 public class GotoSlideCommand implements ProjectorCommand {
-	private static final String NAME = "GOTO";
+	private static final String NAME = "GOTOSLIDE";
 	private static final String PAGENUMBERID = "PAGENUMBER";
 	private ProjectorContext projectorContext;
 	

@@ -6,10 +6,9 @@ import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.util.EventDispatcher;
 
 public class SlideShowServiceImp implements SlideShowService {
-	private static final String EMPTYSTRING = "";
-	private static final int EMPTYSIZE = -1;
 	
-	private SlideShow slideshow = null;
+	private static final int EMPTYSIZE = -1;
+
 	private SlideShowComponantIterator iterator = null;
 	
 	private SlideShowBuilder slideShowBuilder = null;
@@ -28,18 +27,12 @@ public class SlideShowServiceImp implements SlideShowService {
 	
 	@Override
 	public String getSlideShowTitle() {
-		if(this.slideshow == null) {
-			return EMPTYSTRING;
-		}
-		return this.slideshow.getTitle();
+		return slideShowController.getSlideShowTitle();
 	}
 	
 	@Override
 	public int getSlideShowSize() {
-		if(this.slideshow == null) {
-			return EMPTYSIZE;
-		}
-		return this.slideshow.size();
+		return slideShowController.getSlideShowSize();
 	}
 
 	@Override
@@ -62,7 +55,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	@Override
 	public void gotoSlideIndex(int number) {
 		int index = number - 1; //convert from 1 starting index to 0 starting index.
-		if(index > this.slideshow.size() -1 || index < 0) {
+		if(index > this.slideShowController.getSlideShowSize() -1 || index < 0) {
 			return;
 		}
 		
@@ -93,9 +86,9 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void loadSlideShow(SlideShow slideshow) {
-		this.slideShowController.makeSlideShowReadOnly(slideshow);
+		this.slideShowController.loadSlideShow(slideshow);
+		this.slideShowController.makeSlideShowReadOnly();
 		
-		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
 		this.slideShowEventDispatcher.fireEvent(slideshow);
 		
@@ -104,9 +97,9 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void resetSlideShow() {
-		this.slideshow = null;
+		this.slideShowController.resetSlideShow();
 		this.iterator = null;
-		this.slideShowEventDispatcher.fireEvent(slideshow);
+		this.slideShowEventDispatcher.fireEvent(this.slideShowController.getSlideShow());
 	}
 
 	@Override
@@ -121,19 +114,12 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void makeSlideShowReadOnly() {
-		if(this.slideshow != null) 
-		{
-			slideShowController.makeSlideShowReadOnly(slideshow);	
-		}
-
+		slideShowController.makeSlideShowReadOnly();	
 	}
 
 	@Override
 	public void enableSlideShowAnnotations() {
-		if(this.slideshow != null) 
-		{
-			slideShowController.enableSlideShowAnnotations(slideshow);	
-		}
+		slideShowController.enableSlideShowAnnotations();	
 	}
 
 	@Override
@@ -165,10 +151,6 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public boolean canAnnotate() {
-		if(this.slideshow != null) 
-		{
-			return this.slideshow.canAnnotate();
-		}
-		return false;
+		return this.slideShowController.canAnnotate();
 	}
 }
