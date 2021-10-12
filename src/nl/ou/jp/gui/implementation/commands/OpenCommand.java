@@ -4,18 +4,18 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 
-import nl.ou.jp.gui.model.ProjectorCommand;
-import nl.ou.jp.gui.model.ProjectorConfiguration;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.*;
 
-public class OpenCommand implements ProjectorCommand {
+public class OpenCommand implements ProjectorCommand, GetMessageMixin {
 	private static final String NAME = "OPEN";
 	private static final String LOADERRORID = "LOADERROR";
 	private static final String IOEXCEPTIONID = "IOEXCEPTION";
-	private ProjectorContext projectorContext = null;
+	private ProjectorMediator projectorMediator = null;
+	private ProjectorConfiguration configuration = null;
 	
-	public OpenCommand(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	public OpenCommand(ProjectorMediator projectorMediator, ProjectorConfiguration configuration) {
+		this.projectorMediator = projectorMediator;
+		this.configuration = configuration;
 	}
 	
 	@Override
@@ -26,14 +26,13 @@ public class OpenCommand implements ProjectorCommand {
 			        
 			if (returnValue == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = jfc.getSelectedFile();
-				this.projectorContext.getController().openSlideShow(selectedFile.toPath());
+				this.projectorMediator.openSlideShow(selectedFile.toPath());
 			}
 		} catch (RuntimeException exc) {
-			ProjectorConfiguration config = this.projectorContext.getConfiguration();
-			String excp = config.getMessage(IOEXCEPTIONID);
-			String message = config.getMessage(LOADERRORID);
+			String excp = getMessage(configuration,IOEXCEPTIONID);
+			String message = getMessage(configuration,LOADERRORID);
 			
-			projectorContext.getMainGUI().showErrorMessageDialog(excp + exc, message);
+			projectorMediator.showErrorMessageDialog(excp + exc, message);
 		}
 	}
 	

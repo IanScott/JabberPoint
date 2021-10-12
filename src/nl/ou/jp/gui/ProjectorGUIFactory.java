@@ -19,10 +19,11 @@ public class ProjectorGUIFactory {
 	}
 	
 	public ProjectorGUI create(ProjectorController projectorController) {
-		ProjectorVariant variant = ProjectorVariantFactory.getInstance().create(projectorController); // load gui variant data
+		ProjectorVariant variant = ProjectorVariantFactory.getInstance().create(); // load gui variant data
 		
 		ProjectorGUI gui = new SwingProjectorGUI(
 				variant.getDrawStrategy(),
+				projectorController,
 				variant.getConfiguration(),
 				variant.getContext()
 				);

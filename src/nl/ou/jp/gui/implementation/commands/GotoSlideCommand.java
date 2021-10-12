@@ -1,32 +1,27 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import javax.swing.JOptionPane;
-
-import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorConfiguration;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
-public class GotoSlideCommand implements ProjectorCommand {
+
+public class GotoSlideCommand implements ProjectorCommand, GetMessageMixin {
 	private static final String NAME = "GOTOSLIDE";
+
 	private static final String PAGENUMBERID = "PAGENUMBER";
-	private ProjectorContext projectorContext;
 	
-	public GotoSlideCommand(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	private ProjectorMediator mediator;
+	private ProjectorConfiguration configuration;
+	
+	public GotoSlideCommand(ProjectorMediator mediator, ProjectorConfiguration configuration) {
+		this.mediator = mediator;
+		this.configuration = configuration;
 	}
 
 	@Override
 	public void execute() {
-		ProjectorController projectorController = this.projectorContext.getController();
-		ProjectorConfiguration config = this.projectorContext.getConfiguration();
-		String message = config.getMessage(PAGENUMBERID);
-		
-		if(projectorController.getSlideShowSize() > 0) {
-			String pageNumberStr = JOptionPane.showInputDialog((Object)message);
-			int pageNumber = Integer.parseInt(pageNumberStr);
-			projectorController.gotoSlideNumber(pageNumber);			
-		}
+		String message = getMessage(configuration, PAGENUMBERID);
+		mediator.gotoSlideNumber(message);			
 	}
 
 	@Override

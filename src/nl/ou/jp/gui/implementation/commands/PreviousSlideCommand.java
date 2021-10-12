@@ -1,21 +1,19 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.gui.model.ProjectorCommand;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
 public class PreviousSlideCommand implements ProjectorCommand {
 	private static final String NAME = "PREVIOUSSLIDE";
-	private ProjectorContext projectorContext = null;
+	private ProjectorMediator mediator;
 	
-	public PreviousSlideCommand(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	public PreviousSlideCommand(ProjectorMediator mediator) {
+		this.mediator = mediator;
 	}
 	
 	@Override
 	public void execute() {
-		ProjectorController projectorController = projectorContext.getController();
-		projectorController.previousSlide();
+		this.mediator.previousSlide();
 	}
 
 	@Override

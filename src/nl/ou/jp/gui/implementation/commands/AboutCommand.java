@@ -2,24 +2,25 @@ package nl.ou.jp.gui.implementation.commands;
 
 import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorConfiguration;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
-public class AboutCommand implements ProjectorCommand {	
+public class AboutCommand implements ProjectorCommand, GetMessageMixin {	
 	private static final String NAME = "ABOUT";
 	private static final String ABOUTMESSAGEID = "ABOUTMESSAGE";
 	private static final String ABOUTMESSAGETITLEID = "ABOUTMESSAGETITLE";
-	private ProjectorContext projectorContext = null;
+	private ProjectorMediator projectorMediator = null;
+	private ProjectorConfiguration configuration = null;
 	
-	public AboutCommand(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	public AboutCommand(ProjectorMediator projectorMediator, ProjectorConfiguration configuration) {
+		this.projectorMediator = projectorMediator;
+		this.configuration = configuration;
 	}
 
 	@Override
 	public void execute() {
-		ProjectorConfiguration config = projectorContext.getConfiguration();
-		String title = config.getMessage(ABOUTMESSAGETITLEID);
-		String message = config.getMessage(ABOUTMESSAGEID);
-		projectorContext.getMainGUI().showMessageDialog(message, title);
+		String title = getMessage(configuration,ABOUTMESSAGETITLEID);
+		String message = getMessage(configuration,ABOUTMESSAGEID);
+		projectorMediator.showMessageDialog(message, title);
 	}
 
 	@Override

@@ -2,29 +2,30 @@ package nl.ou.jp.gui.implementation.commands;
 
 import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorConfiguration;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
-public class SaveCommand implements ProjectorCommand {
+public class SaveCommand implements ProjectorCommand, GetMessageMixin {
 	private static final String NAME = "SAVE";
 	private static final String ERRORID = "LOADERROR";
 	private static final String IOEXCEPTIONID = "IOEXCEPTION";
-	private ProjectorContext projectorContext = null;
+	private ProjectorMediator projectorMediator = null;
+	private ProjectorConfiguration configuration = null;
 
-	public SaveCommand(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	public SaveCommand(ProjectorMediator projectorMediator, ProjectorConfiguration configuration) {
+		this.projectorMediator = projectorMediator;
+		this.configuration = configuration;
 	}
 	
 	@Override
 	public void execute() {
 		try {
 			//stub
-			projectorContext.getMainGUI().showErrorMessageDialog("Action is not implemented.", "error");
+			projectorMediator.showErrorMessageDialog("Action is not implemented.", "error");
 		} catch (Exception exc) {
-			ProjectorConfiguration config = this.projectorContext.getConfiguration();
-			String excp = config.getMessage(IOEXCEPTIONID);
-			String message = config.getMessage(ERRORID);
+			String excp = getMessage(configuration,IOEXCEPTIONID);
+			String message = getMessage(configuration, ERRORID);
 			
-			projectorContext.getMainGUI().showErrorMessageDialog(excp + exc, message);
+			projectorMediator.showErrorMessageDialog(excp + exc, message);
 		}
 	}
 
