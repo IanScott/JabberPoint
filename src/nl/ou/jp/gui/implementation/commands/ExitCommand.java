@@ -1,20 +1,20 @@
 package nl.ou.jp.gui.implementation.commands;
 
 import nl.ou.jp.gui.model.ProjectorCommand;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
 public class ExitCommand implements ProjectorCommand {
 	private static final String NAME = "EXIT";
-	private ProjectorContext projectorContext = null;
-	public ExitCommand(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	private ProjectorMediator projectorMediator = null;
+	
+	public ExitCommand(ProjectorMediator projectorMediator) {
+		this.projectorMediator = projectorMediator;
 	}
 	
 	@Override
 	public void execute() {		
-		projectorContext.getMainGUI().exit();
+		projectorMediator.exit();
 	}
-
 
 	@Override
 	public String getName() {

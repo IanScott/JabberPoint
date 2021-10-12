@@ -1,35 +1,32 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import nl.ou.jp.gui.model.ProjectorCommand;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.*;
 
-public class SetAnnotationModeCommand  implements ProjectorCommand{
+public class SetAnnotationModeCommand  implements ProjectorCommand, GetMessageMixin {
 	private static final String NAME = "SETANNOTATIONMODE";
-	private ProjectorContext context = null;
+	private ProjectorMediator mediator = null;
+	private ProjectorConfiguration configuration = null;
 	
-	public SetAnnotationModeCommand(ProjectorContext context) {
-		this.context = context;
+	public SetAnnotationModeCommand(ProjectorMediator mediator, ProjectorConfiguration configuration) {
+		this.mediator = mediator;
+		this.configuration = configuration;
 	}
 	
 	@Override
 	public void execute() {
-		if(this.context.getController().getCurrentSlideNumber()>-1) {
-			boolean canAnnotate = this.context.getController().canAnnotate();		
-			String message = (canAnnotate)?"Turn off Annotations?":"Turn on Annotations?";
-			
-			int value = this.context.getMainGUI().showItemSelectorDialog(message, "Annotation Mode", new String[] {"YES","NO"});
-			if(canAnnotate && value == 0) {
-				this.context.getController().makeSlideShowReadOnly();
-			}
-			if(!canAnnotate && value == 0){
-				this.context.getController().enableSlideShowAnnotations();
-			}			
-		}else {
-			this.context.getMainGUI().showErrorMessageDialog("Please Loade a Slide Show.","Annotation Mode");
-		}
+		boolean canAnnotate = this.mediator.canAnnotate();		
+		String message = (canAnnotate)?getMessage(configuration, "ANNOOFF"):getMessage(configuration,"ANNOON");
+		String title = getMessage(configuration, "ANNOMODE");
+		String[] options = new String[] {getMessage(configuration,"YES"), getMessage(configuration,"NO")};
 		
+		int value = this.mediator.showItemSelectorDialog(message, title, options);
+		if(canAnnotate && value == 0) {
+			this.mediator.makeSlideShowReadOnly();
+		}
+		if(!canAnnotate && value == 0){
+			this.mediator.enableSlideShowAnnotations();
+		}			
 	}
-	
 	
 	@Override
 	public String getName() {

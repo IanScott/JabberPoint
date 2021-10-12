@@ -15,5 +15,5 @@ public interface ProjectorVariant {
 	
 	DrawStrategy getDrawStrategy();
 	ProjectorConfiguration getConfiguration();
-	ProjectorContext getContext();
+	ProjectorMediator getContext();
 }

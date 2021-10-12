@@ -3,7 +3,6 @@ package nl.ou.jp.domain.implementation;
 import java.util.*;
 
 import nl.ou.jp.domain.*;
-import nl.ou.jp.domain.core.*;
 import nl.ou.jp.domain.core.implementation.*;
 import nl.ou.jp.domain.core.model.*;
 

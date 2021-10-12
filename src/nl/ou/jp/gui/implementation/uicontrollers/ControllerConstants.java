@@ -22,6 +22,4 @@ public class ControllerConstants {
 	protected static final String RESETCOMMANDNAME = "RESET";
 	protected static final String SAVECOMMANDNAME = "SAVE";
 	protected static final String OPENCOMMANDNAME = "OPEN";
-	
-	
 }
