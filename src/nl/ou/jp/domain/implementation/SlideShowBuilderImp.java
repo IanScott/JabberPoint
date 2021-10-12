@@ -61,10 +61,4 @@ public class SlideShowBuilderImp extends ComponantBuilder implements SlideShowBu
 		slideShow.setState(SlideShowEditableState.getInstance());		
 		return slideShow;
 	}
-	
-	@Override
-	public ComponantBuilder clone() {
-		return new SlideShowBuilderImp(this.title, this.componants);
-	}
-
 }

@@ -92,7 +92,7 @@ public class ProjectorMediatorImp implements ProjectorMediator {
 	
 	@Override
 	public void gotoSlideNumber(String message) {
-		String pageNumberStr = JOptionPane.showInputDialog((Object)message);
+		String pageNumberStr = JOptionPane.showInputDialog(message);
 		int pageNumber = Integer.parseInt(pageNumberStr);
 		this.controller.gotoSlideNumber(pageNumber);
 	}

@@ -56,8 +56,6 @@ public abstract class ComponantBuilder {
 	public SlideShowComponant build() {
 		return create(this.title, this.componants);
 	}
-	
-	public abstract ComponantBuilder clone();
-	
+
 	protected abstract SlideShowComponant create(String title, List<SlideShowComponant> componants);
 }
