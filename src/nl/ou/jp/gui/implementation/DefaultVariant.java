@@ -6,25 +6,21 @@ import java.util.*;
 
 import javax.swing.event.MouseInputListener;
 
-import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.gui.ProjectorVariant;
 import nl.ou.jp.gui.implementation.commands.*;
 import nl.ou.jp.gui.implementation.drawstrategies.*;
 import nl.ou.jp.gui.implementation.uicontrollers.*;
 import nl.ou.jp.gui.model.*;
 
-
 public class DefaultVariant implements ProjectorVariant {
 	private Map<String,ProjectorCommand> commands = null;
 	private ProjectorConfiguration configuration = null;
-	private ProjectorContext projectorContext = null;
+	private ProjectorMediator projectorMediator = null;
 	
-	public DefaultVariant(ProjectorController projectorController) {
-		projectorContext = new ProjectorContextImp();
-		projectorContext.setController(projectorController);
+	public DefaultVariant() {
+		projectorMediator = new ProjectorMediatorImp();
 		
 		configuration = new DefaultConfiguration();
-		commands = intializeCommands(projectorContext);
+		commands = intializeCommands(projectorMediator, configuration);
 	}
 	
 	@Override
@@ -52,22 +48,27 @@ public class DefaultVariant implements ProjectorVariant {
 		return this.configuration;
 	}
 	
-	private Map<String,ProjectorCommand> intializeCommands(ProjectorContext projectorContext) {
+	private Map<String,ProjectorCommand> intializeCommands(ProjectorMediator projectorMediator, ProjectorConfiguration configuration) {
 		ProjectorCommand[] commandlist = new ProjectorCommand[] {
-				new GotoSlideCommand(projectorContext),
-				new NextSlideCommand(projectorContext),
-				new PreviousSlideCommand(projectorContext),
-				new OpenCommand(projectorContext),
-				new ExitCommand(projectorContext),
-				new SaveCommand(projectorContext),
-				new AboutCommand(projectorContext),
-				new ResetCommand(projectorContext),
-				new AddDataToLineAnnotationCommand(projectorContext),
-				new StartLineAnnotationCommand(projectorContext),
-				new SetAnnotationLineColorCommand(projectorContext),
-				new SetAnnotationLineWeightCommand(projectorContext),
-				new SetAnnotationModeCommand(projectorContext)
+				new GotoSlideCommand(),
+				new NextSlideCommand(),
+				new PreviousSlideCommand(),
+				new OpenCommand(),
+				new ExitCommand(),
+				new SaveCommand(),
+				new AboutCommand(),
+				new ResetCommand(),
+				new AddDataToLineAnnotationCommand(),
+				new StartLineAnnotationCommand(),
+				new SetAnnotationLineColorCommand(),
+				new SetAnnotationLineWeightCommand(),
+				new SetAnnotationModeCommand()
 		};
+		
+		for(ProjectorCommand com: commandlist) {
+			com.setProjectorMediator(projectorMediator);
+			com.setProjectorConfiguration(configuration);
+		}
 		
 		Map<String,ProjectorCommand>  projectorCommands = new HashMap<>();
 		for(ProjectorCommand pc: commandlist) {
@@ -77,13 +78,13 @@ public class DefaultVariant implements ProjectorVariant {
 	}
 
 	@Override
-	public ProjectorContext getContext() {
-		return this.projectorContext;
+	public ProjectorMediator getContext() {
+		return this.projectorMediator;
 	}
 
 	@Override
 	public MouseInputListener getMouseInputListener() {
-		return new ProjectorGUIMouseInputListener(commands, projectorContext);
+		return new ProjectorGUIMouseInputListener(commands, projectorMediator);
 	}
 
 	@Override

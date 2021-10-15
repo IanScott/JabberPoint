@@ -1,6 +1,7 @@
-package nl.ou.jp.domain;
+package nl.ou.jp.domain.core;
 
-import nl.ou.jp.domain.implementation.SlideShowControllerImp;
+import nl.ou.jp.domain.core.implementation.SlideShowControllerImp;
+import nl.ou.jp.domain.core.model.SlideShowController;
 
 public class SlideShowControllerFactory {
 	private static SlideShowControllerFactory instance = null;
@@ -15,7 +16,7 @@ public class SlideShowControllerFactory {
 	}
 	
 	private SlideShowControllerFactory() {
-		
+		//singleton
 	}
 	
 	public SlideShowController create() 

@@ -1,34 +1,26 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import nl.ou.jp.gui.model.*;
-
-public class SetAnnotationLineWeightCommand implements ProjectorCommand {
+public class SetAnnotationLineWeightCommand extends ProjectorCommandTemplate implements GetMessageMixin {
 	
 	private static final String LINEWEIGHTTITLEID = "LINEWEIGHTTITLE";
 	private static final String CURRENTVALUEID = "CURRENTVALUE";
 	private static final String CHOOSELINEID = "CHOOSELINE";
 	private static final String NAME = "SETANNOTATIONLINEWEIGHT";
 	
-	private ProjectorContext context = null;
-	
-	public SetAnnotationLineWeightCommand(ProjectorContext context) {
-		this.context = context;
-	}
-	
 	@Override
 	public void execute() {
-		int currentvalue = this.context.getAnnotationLineWeight();
+		int currentvalue = this.mediator.getAnnotationLineWeight();
 		
-		int[] lineweights = this.context.getConfiguration().getLineWeights();
+		int[] lineweights = configuration.getLineWeights();
 		String[] options = toStrings(lineweights);
 		
-		String message = getMessage(CHOOSELINEID)+" "+getMessage(CURRENTVALUEID)+" "+currentvalue;
-		String title = getMessage(LINEWEIGHTTITLEID);
+		String message = getMessage(configuration,CHOOSELINEID)+" "+getMessage(configuration,CURRENTVALUEID)+" "+currentvalue;
+		String title = getMessage(configuration,LINEWEIGHTTITLEID);
 
-		int value = this.context.getMainGUI().showItemSelectorDialog(message, title, options);
+		int value = this.mediator.showItemSelectorDialog(message, title, options);
 		if(value > -1) {
 			int weight = Integer.parseInt(options[value]);
-			this.context.setAnnotationLineWeight(weight);
+			this.mediator.setAnnotationLineWeight(weight);
 		}
 	}
 	
@@ -38,10 +30,6 @@ public class SetAnnotationLineWeightCommand implements ProjectorCommand {
 			strings[i] = ints[i]+"";
 		}
 		return strings;
-	}
-	
-	private String getMessage(String id) {
-		return this.context.getConfiguration().getMessage(id);
 	}
 	
 	@Override

@@ -89,7 +89,7 @@ public class TextDrawStrategy extends SwingDrawStrategy {
 
 	private int getDefaultSlideWidth() {
 		try {
-			return (int)getProjectorContext().getConfiguration().getDefaultSlideDimensions().getWidth();			
+			return (int)getProjectorConfiguration().getDefaultSlideDimensions().getWidth();			
 		}catch(Exception e) {
 			logger.logError("Failed to fetch default slide dimensions.");
 			throw new ProjectorGUIException(e.getMessage());

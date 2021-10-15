@@ -1,6 +1,7 @@
 package nl.ou.jp.domain;
 
-import nl.ou.jp.domain.core.implementation.SlideBuilderImp;
+import nl.ou.jp.domain.core.SlideShowControllerFactory;
+import nl.ou.jp.domain.core.model.SlideShowController;
 import nl.ou.jp.domain.implementation.*;
 
 public class SlideShowServiceFactory {
@@ -19,7 +20,7 @@ public class SlideShowServiceFactory {
 	}
 	
 	public SlideShowService create() {
-		SlideShowBuilder slideshowBuilder = new SlideShowBuilderImp(new SlideBuilderImp());
+		SlideShowBuilder slideshowBuilder = new SlideShowBuilderImp();
 		SlideShowController slideShowController = SlideShowControllerFactory.getInstance().create();
 		return new SlideShowServiceImp(slideshowBuilder, new SlideShowEventDispatcher(), new SlideEventDispatcher(), slideShowController);
 	}

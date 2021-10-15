@@ -1,6 +1,5 @@
 package nl.ou.jp.infra;
 
-import nl.ou.jp.domain.SlideShowBuilder;
 import nl.ou.jp.infra.implementation.*;
 
 public class ProjectorInfraFactory {
@@ -18,7 +17,7 @@ public class ProjectorInfraFactory {
 		//singleton
 	}
 	
-	public ProjectorInfra create(SlideShowBuilder builder) {
-		return new ProjectorInfraImp(new XMLAccessor(builder));
+	public ProjectorInfra create() {
+		return new ProjectorInfraImp(new XMLAccessor());
 	}
 }

@@ -22,14 +22,16 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 	private transient Logger logger = LoggerManager.getLogger();
 	private transient DrawStrategy strategy = null;
 
-	private transient ProjectorContext projectorContext = null;
+	private transient ProjectorController projectorController = null;
+	private transient ProjectorMediator projectorMediator = null;
 	private transient ProjectorConfiguration configurationDefault = null;
 
 	private transient SlideShowComponant currentSlide;
 
-	public SwingProjectorGUI(DrawStrategy strategy, ProjectorConfiguration configurationDefault, ProjectorContext context) {
+	public SwingProjectorGUI(DrawStrategy strategy, ProjectorController projectorController, ProjectorConfiguration configurationDefault, ProjectorMediator context) {
 		
 		this.strategy = strategy;
+		this.projectorController = projectorController;
 		this.configurationDefault = configurationDefault;
 
 		if (this.configurationDefault == null) {
@@ -48,19 +50,12 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 		initialize(context);
 	}
 
-	private void initialize(ProjectorContext projectorContext) {
-
-		ProjectorController projectorController = projectorContext.getController();		
-		if(projectorController == null) {
-
-			throw new ProjectorGUIException("Context item is invalid.");
-		}
-
-		this.projectorContext = projectorContext;
-		this.projectorContext.setMainGUI(this);
-		this.projectorContext.setConfiguration(this.configurationDefault);
-		this.projectorContext.setAnnotationLineColor(this.configurationDefault.getDefaultColorCode());
-		this.projectorContext.setAnnotationLineWeight(this.configurationDefault.getDefaultLineWeight());
+	private void initialize(ProjectorMediator projectorMediator) {
+		this.projectorMediator = projectorMediator;
+		this.projectorMediator.setMainGUI(this);
+		this.projectorMediator.setProjectorController(this.projectorController);
+		this.projectorMediator.setAnnotationLineColor(this.configurationDefault.getDefaultColorCode());
+		this.projectorMediator.setAnnotationLineWeight(this.configurationDefault.getDefaultLineWeight());
 		
 		projectorController.registerSlideShowListeners(this);
 
@@ -69,11 +64,11 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 
 	@Override
 	public void start(String path) {
-		if(this.projectorContext == null || this.projectorContext.getController() == null) {
+		if(this.projectorMediator == null || this.projectorController == null) {
 			throw new ProjectorGUIException("Context has not been intialized yet.");
 		}
 		if(path != null) {
-			this.projectorContext.getController().openSlideShow(Path.of(path));			
+			this.projectorController.openSlideShow(Path.of(path));			
 		}
 		setVisible(true);
 	}
@@ -89,10 +84,11 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 
 			@Override
 			public void paintComponent(Graphics g) {
-				validateParameters(g, projectorContext);
+				validateParameters(g, projectorMediator);
 			
 				if(currentSlide != null) {
-					strategy.setContext(projectorContext);
+					strategy.setProjectorConfiguration(configurationDefault);
+					strategy.setProjectorController(projectorController);
 					strategy.draw(g, this, currentSlide, null, 0, 0);					
 				}else {
 					this.removeAll();
@@ -102,16 +98,16 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 		});
 	}
 
-	private boolean validateParameters(Graphics g, ProjectorContext projectorContext) {
-		if (g == null || projectorContext == null) {
+	private boolean validateParameters(Graphics g, ProjectorMediator projectorMediator) {
+		if (g == null || projectorMediator == null) {
 			throw new ProjectorGUIException("Input parameters cannot be NULL.");
 		}
 
-		if(projectorContext.getConfiguration() == null || projectorContext.getMainGUI() == null || projectorContext.getController() == null) {
+		if(this.projectorController == null) {
 			throw new ProjectorGUIException("Context has not been properly initialized.");
 		}
 		
-		return (projectorContext.getController().getSlideShowSize() > 0);
+		return (this.projectorController.getSlideShowSize() > 0);
 	}
 
 	private void update() {

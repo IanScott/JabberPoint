@@ -1,13 +1,9 @@
-package nl.ou.jp.gui;
+package nl.ou.jp.gui.model;
 
 import java.awt.MenuBar;
 import java.awt.event.*;
 
 import javax.swing.event.MouseInputListener;
-
-import nl.ou.jp.gui.model.DrawStrategy;
-import nl.ou.jp.gui.model.ProjectorConfiguration;
-import nl.ou.jp.gui.model.ProjectorContext;
 
 public interface ProjectorVariant {
 	MenuBar getMenubar();
@@ -19,5 +15,5 @@ public interface ProjectorVariant {
 	
 	DrawStrategy getDrawStrategy();
 	ProjectorConfiguration getConfiguration();
-	ProjectorContext getContext();
+	ProjectorMediator getContext();
 }

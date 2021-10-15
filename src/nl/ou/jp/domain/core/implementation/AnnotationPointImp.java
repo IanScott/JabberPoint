@@ -8,16 +8,23 @@ public class AnnotationPointImp   extends SlideShowLeaf implements AnnotationPoi
 
 	private RelativePosition relativePosition; 
 	
-	public AnnotationPointImp(RelativePosition relativePosition) 
-	{
+	public AnnotationPointImp() {
+		super();
+	}
+	
+	public AnnotationPointImp(RelativePosition relativePosition) {
 		this.relativePosition = relativePosition;
 	}
 	
-	public RelativePosition getRelativePosition() 
-	{
+	public RelativePosition getRelativePosition() {
 		return relativePosition;
 	}
 
+	@Override
+	public void setRelativePosition(RelativePosition position) {
+		this.relativePosition = position;
+	}
+	
 	@Override
 	public SlideShowComponant copy() {
 		return new AnnotationPointImp(this.relativePosition);

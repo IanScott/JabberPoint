@@ -1,17 +1,14 @@
 package nl.ou.jp.domain.implementation;
 
 import nl.ou.jp.domain.*;
-import nl.ou.jp.domain.core.AnnotationLineFactory;
-import nl.ou.jp.domain.core.AnnotationPointFactory;
 import nl.ou.jp.domain.core.implementation.RelativePositionImp;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.util.EventDispatcher;
 
 public class SlideShowServiceImp implements SlideShowService {
-	private static final String EMPTYSTRING = "";
-	private static final int EMPTYSIZE = -1;
 	
-	private SlideShow slideshow = null;
+	private static final int EMPTYSIZE = -1;
+
 	private SlideShowComponantIterator iterator = null;
 	
 	private SlideShowBuilder slideShowBuilder = null;
@@ -30,18 +27,12 @@ public class SlideShowServiceImp implements SlideShowService {
 	
 	@Override
 	public String getSlideShowTitle() {
-		if(this.slideshow == null) {
-			return EMPTYSTRING;
-		}
-		return this.slideshow.getTitle();
+		return slideShowController.getSlideShowTitle();
 	}
 	
 	@Override
 	public int getSlideShowSize() {
-		if(this.slideshow == null) {
-			return EMPTYSIZE;
-		}
-		return this.slideshow.size();
+		return slideShowController.getSlideShowSize();
 	}
 
 	@Override
@@ -64,7 +55,7 @@ public class SlideShowServiceImp implements SlideShowService {
 	@Override
 	public void gotoSlideIndex(int number) {
 		int index = number - 1; //convert from 1 starting index to 0 starting index.
-		if(index > this.slideshow.size() -1 || index < 0) {
+		if(index > this.slideShowController.getSlideShowSize() -1 || index < 0) {
 			return;
 		}
 		
@@ -95,9 +86,9 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void loadSlideShow(SlideShow slideshow) {
-		this.slideShowController.makeSlideShowReadOnly(slideshow);
+		this.slideShowController.loadSlideShow(slideshow);
+		this.slideShowController.makeSlideShowReadOnly();
 		
-		this.slideshow = slideshow;
 		this.iterator = slideshow.getIterator();
 		this.slideShowEventDispatcher.fireEvent(slideshow);
 		
@@ -106,9 +97,9 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void resetSlideShow() {
-		this.slideshow = null;
+		this.slideShowController.resetSlideShow();
 		this.iterator = null;
-		this.slideShowEventDispatcher.fireEvent(slideshow);
+		this.slideShowEventDispatcher.fireEvent(this.slideShowController.getSlideShow());
 	}
 
 	@Override
@@ -123,25 +114,20 @@ public class SlideShowServiceImp implements SlideShowService {
 
 	@Override
 	public void makeSlideShowReadOnly() {
-		if(this.slideshow != null) 
-		{
-			slideShowController.makeSlideShowReadOnly(slideshow);	
-		}
-
+		slideShowController.makeSlideShowReadOnly();	
 	}
 
 	@Override
 	public void enableSlideShowAnnotations() {
-		if(this.slideshow != null) 
-		{
-			slideShowController.enableSlideShowAnnotations(slideshow);	
-		}
+		slideShowController.enableSlideShowAnnotations();	
 	}
 
 	@Override
 	public void startLineAnnotation(int index, int lineWeight, int color) {
-		AnnotationLine line = AnnotationLineFactory.getInstance().createAnnotationLine("", null, lineWeight, color);
-		slideShowController.startLineAnnotation(index, line);
+		var item = SlideShowComponantFactory.getInstance().createSlideShowComponant(SlideShowComponantFactory.ANNOTATIONLINE_TYPE);
+		((AnnotationLine)item).setLineWeight(lineWeight);
+		((AnnotationLine)item).setLineColor(color);
+		slideShowController.startLineAnnotation(index, ((AnnotationLine)item));
 	}
 
 	@Override
@@ -154,19 +140,17 @@ public class SlideShowServiceImp implements SlideShowService {
 		   y > minCoordinateValue && 
 		   y < maxCoordinateValue)
 		{
-			RelativePosition position = new RelativePositionImp(x,y);
-			AnnotationPoint point = AnnotationPointFactory.getInstance().createAnnotationPoint(position);
-			slideShowController.addToLineAnnotation(index, point);
+			
+			var item = SlideShowComponantFactory.getInstance().createSlideShowComponant(SlideShowComponantFactory.ANNOTATIONPOINT_TYPE);
+			((AnnotationPoint)item).setRelativePosition(new RelativePositionImp(x,y));
+			slideShowController.addToLineAnnotation(index, ((AnnotationPoint)item));
+
 			this.slideEventDispatcher.fireEvent(iterator.getCurrentItem());
 		}
 	}
 
 	@Override
 	public boolean canAnnotate() {
-		if(this.slideshow != null) 
-		{
-			return this.slideshow.canAnnotate();
-		}
-		return false;
+		return this.slideShowController.canAnnotate();
 	}
 }
