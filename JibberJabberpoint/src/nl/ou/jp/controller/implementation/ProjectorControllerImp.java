@@ -18,6 +18,10 @@ public class ProjectorControllerImp implements ProjectorController {
 	private SlideShowService slideShowService = null;
 	private int currentSlideSequenceNumber = -1; // kan beter ???
 	
+	public ProjectorControllerImp() {
+		super();
+	}
+	
 	public ProjectorControllerImp(ProjectorInfra projectorInfra, SlideShowService service) {
 		this.projectorInfra = projectorInfra;
 		this.slideShowService = service;
@@ -115,5 +119,15 @@ public class ProjectorControllerImp implements ProjectorController {
 	@Override
 	public boolean canAnnotate() {
 		return this.slideShowService.canAnnotate();
+	}
+
+	@Override
+	public void setProjectorInfra(ProjectorInfra projectorInfra) {
+		this.projectorInfra = projectorInfra;
+	}
+
+	@Override
+	public void setSlideShowService(SlideShowService service) {
+		this.slideShowService = service;
 	}
 }

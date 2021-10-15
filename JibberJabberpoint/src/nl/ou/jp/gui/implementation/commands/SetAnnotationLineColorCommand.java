@@ -4,27 +4,19 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.Iterator;
 
-import nl.ou.jp.gui.model.ProjectorCommand;
-import nl.ou.jp.gui.model.ProjectorContext;
-
-public class SetAnnotationLineColorCommand implements ProjectorCommand {
+public class SetAnnotationLineColorCommand extends ProjectorCommandTemplate implements GetMessageMixin{
 
 	private static final String LINECOLORTITLEID = "COLORTITLE";
 	private static final String CURRENTVALUEID = "CURRENTVALUE";
 	private static final String CHOOSECOLORID = "CHOOSECOLOR";
 	private static final String NAME = "SETANNOTATIONLINECOLOR";
-	private ProjectorContext context = null;
-	
-	public SetAnnotationLineColorCommand(ProjectorContext context) {
-		this.context = context;
-	}
 	
 	@Override
 	public void execute() {
-		int currentvalue = this.context.getAnnotationLineColor();
-		String currentColorName = this.context.getConfiguration().getColorName(currentvalue);
+		int currentvalue = this.mediator.getAnnotationLineColor();
+		String currentColorName = configuration.getColorName(currentvalue);
 
-		Collection<String> colors = this.context.getConfiguration().getColors().keySet();
+		Collection<String> colors = configuration.getColors().keySet();
 		
 		String[] options = new String[colors.size()];
 		
@@ -34,19 +26,15 @@ public class SetAnnotationLineColorCommand implements ProjectorCommand {
 			options[index] = it.next();
 			index++;
 		}
-		String message = getMessage(CHOOSECOLORID)+" "+getMessage(CURRENTVALUEID)+" "+currentColorName;
-		String title = getMessage(LINECOLORTITLEID);
-		int value = this.context.getMainGUI().showItemSelectorDialog(message, title, options);
+		String message = getMessage(configuration,CHOOSECOLORID)+" "+getMessage(configuration,CURRENTVALUEID)+" "+currentColorName;
+		String title = getMessage(configuration,LINECOLORTITLEID);
+		int value = this.mediator.showItemSelectorDialog(message, title, options);
 		if(value < 0) {
 			return;
 		}
 		String sv = options[value];
-		Color color = this.context.getConfiguration().getColors().get(sv);
-		this.context.setAnnotationLineColor(color.getRGB());
-	}
-
-	private String getMessage(String id) {
-		return this.context.getConfiguration().getMessage(id);
+		Color color = configuration.getColors().get(sv);
+		this.mediator.setAnnotationLineColor(color.getRGB());
 	}
 	
 	@Override

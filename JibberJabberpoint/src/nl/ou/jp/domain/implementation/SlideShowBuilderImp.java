@@ -3,7 +3,6 @@ package nl.ou.jp.domain.implementation;
 import java.util.*;
 
 import nl.ou.jp.domain.*;
-import nl.ou.jp.domain.core.*;
 import nl.ou.jp.domain.core.implementation.*;
 import nl.ou.jp.domain.core.model.*;
 
@@ -46,7 +45,6 @@ public class SlideShowBuilderImp extends ComponantBuilder implements SlideShowBu
 		this.lastslide.add(item);
 	}
 	
-	@Override
 	public SlideShow getSlideShow() {
 		return(SlideShow)this.build();
 	}
@@ -62,10 +60,4 @@ public class SlideShowBuilderImp extends ComponantBuilder implements SlideShowBu
 		slideShow.setState(SlideShowEditableState.getInstance());		
 		return slideShow;
 	}
-	
-	@Override
-	public ComponantBuilder clone() {
-		return new SlideShowBuilderImp(this.title, this.componants);
-	}
-
 }

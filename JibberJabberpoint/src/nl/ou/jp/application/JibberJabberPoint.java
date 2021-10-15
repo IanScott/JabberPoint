@@ -15,9 +15,10 @@ public class JibberJabberPoint {
 		ProjectorController projectorController = ProjectorControllerFactory.getInstance().create(projectorInfra, slideShowService); // load Controller
 		
 		ProjectorGUI gui = ProjectorGUIFactory.getInstance().create(projectorController); // load GUI
-		
+
 		//start gui with path
 		gui.start(path);
+
 	}
 	
 	/**

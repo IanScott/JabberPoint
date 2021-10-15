@@ -7,20 +7,20 @@ import java.util.Map;
 import javax.swing.event.MouseInputAdapter;
 
 import nl.ou.jp.gui.model.ProjectorCommand;
-import nl.ou.jp.gui.model.ProjectorContext;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
-public class ProjectorGUIMouseInputListener extends MouseInputAdapter{
+public class ProjectorGUIMouseInputListener extends MouseInputAdapter {
 	private Map<String, ProjectorCommand> projectorCommands = null; 
-	private ProjectorContext context = null;
+	private ProjectorMediator context = null;
 	
-	public ProjectorGUIMouseInputListener(Map<String, ProjectorCommand> projectorCommands, ProjectorContext context) {
+	public ProjectorGUIMouseInputListener(Map<String, ProjectorCommand> projectorCommands, ProjectorMediator context) {
 		this.projectorCommands = projectorCommands;
 		this.context = context;
 	}
 		
 	@Override
 	public void mouseDragged(MouseEvent event) {
-		Dimension canvas = this.context.getMainGUI().getCanvasDimension();
+		Dimension canvas = this.context.getCanvasDimension();
 		this.context.setMouseRelativeXLocation((double)event.getX()/(double)canvas.width);
 		this.context.setMouseRelativeYLocation((double)event.getY()/(double)canvas.height);
 		this.projectorCommands.get("ADDDATATOLINEANNOTATION").execute();

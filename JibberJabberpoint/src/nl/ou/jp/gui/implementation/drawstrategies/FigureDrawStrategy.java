@@ -30,7 +30,7 @@ public class FigureDrawStrategy extends SwingDrawStrategy {
 		}
 		
 		FigureItem figure = (FigureItem)data;
-		InputStream stream = getProjectorContext().getController().fetchFileAsStream(Path.of(figure.getSource()));
+		InputStream stream = this.getProjectorController().fetchFileAsStream(Path.of(figure.getSource()));
 		
 		BufferedImage bufferedImage = null;
 		try {

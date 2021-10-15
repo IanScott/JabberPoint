@@ -3,7 +3,7 @@ package nl.ou.jp.domain;
 import nl.ou.jp.domain.core.model.SlideShow;
 import nl.ou.jp.util.Event;
 
-public class SlideShowEvent implements Event{
+public class SlideShowEvent implements Event {
 
 	private SlideShow source;
 	

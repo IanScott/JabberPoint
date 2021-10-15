@@ -18,6 +18,10 @@ public class ProjectorControllerFactory {
 		//singleton
 	}
 	
+	public ProjectorController create() {
+		return new ProjectorControllerImp();
+	}
+	
 	public ProjectorController create(ProjectorInfra projectorInfra, SlideShowService service) {
 		return new ProjectorControllerImp(projectorInfra, service);
 	}

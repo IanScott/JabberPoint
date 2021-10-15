@@ -3,7 +3,7 @@ package nl.ou.jp.gui.implementation.drawstrategies;
 import java.awt.*;
 
 import nl.ou.jp.controller.ProjectorController;
-import nl.ou.jp.domain.core.SlideShowComponantFactory;
+import nl.ou.jp.domain.SlideShowComponantFactory;
 import nl.ou.jp.domain.core.implementation.SimpleLevel;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.*;
@@ -34,7 +34,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 	}
 		
 	private Rectangle renderSlideBounds(Graphics g, Component component) {
-		ProjectorConfiguration configuration = getProjectorContext().getConfiguration();
+		ProjectorConfiguration configuration = this.getProjectorConfiguration();
 		
 		Color backgroundColor = configuration.getSlideBackgroundColor();	
 		g.setColor(backgroundColor);
@@ -43,8 +43,8 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 	}
 		
 	private void renderPosition(Graphics g, Slide slide) {
-		ProjectorController projectorController = getProjectorContext().getController();
-		ProjectorConfiguration configuration = getProjectorContext().getConfiguration();
+		ProjectorController projectorController = this.getProjectorController();
+		ProjectorConfiguration configuration = getProjectorConfiguration();
 		Dimension innerArea = configuration.getDefaultInnerSlideDimensions();
 		
 		Font font = configuration.getDefaultLabelFont();
@@ -53,16 +53,14 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		Color fontColor = configuration.getDefaultFontColor();
 		g.setColor(fontColor);
 			
-		String template = getProjectorContext().getConfiguration().getMessage(SLIDEOFID);
+		String template = configuration.getMessage(SLIDEOFID);
 		String slideOf = String.format(template,(1 + slide.getSequenceNumber()),projectorController.getSlideShowSize());
 		
 		g.drawString(slideOf, (int)innerArea.getHeight(), (int)innerArea.getWidth());
 	}		
 		
-	private void renderArea(Graphics g, Component component, Slide slide) {
-		System.out.println("Slide size: "+slide.size());
-		
-		ProjectorConfiguration config = getProjectorContext().getConfiguration();
+	private void renderArea(Graphics g, Component component, Slide slide) {	
+		ProjectorConfiguration config = getProjectorConfiguration();
 
 		Dimension innerArea = config.getDefaultInnerSlideDimensions();
 		
@@ -73,7 +71,8 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		int y = area.y;
 		
 		if(getStrategy() != null) {
-			getStrategy().setContext(getProjectorContext());
+			getStrategy().setProjectorController(getProjectorController());
+			getStrategy().setProjectorConfiguration(getProjectorConfiguration());
 			getStrategy().setScale(scale);
 			
 			SlideShowComponant item = getTitleItem(slide.getTitle());
@@ -96,7 +95,7 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 		try {
 			SlideItemStyle style = null;
 			if(item instanceof SlideShowItem) {
-				style = getProjectorContext().getConfiguration().getStyle(((SlideShowItem)item).getLevel().getRating());				
+				style = getProjectorConfiguration().getStyle(((SlideShowItem)item).getLevel().getRating());				
 			}
 			y += getStrategy().draw(g, component, item, style, x, y).getHeight();			
 		}catch(Exception e) {
@@ -118,5 +117,4 @@ public class SlideDrawStrategy extends SwingDrawStrategy {
 			var dimension = config.getDefaultSlideDimensions();
 			return Math.min(((float)area.width) / (dimension.width), ((float)area.height / (dimension.height)));
 	}
-	
 }

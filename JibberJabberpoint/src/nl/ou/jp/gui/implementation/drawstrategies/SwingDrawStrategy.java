@@ -2,6 +2,7 @@ package nl.ou.jp.gui.implementation.drawstrategies;
 
 import java.awt.*;
 
+import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.domain.core.model.*;
 import nl.ou.jp.gui.model.*;
 
@@ -9,7 +10,8 @@ public abstract class SwingDrawStrategy implements DrawStrategy {
 	
 	private DrawStrategy strategy;
 	private float scale;
-	private ProjectorContext projectorContext;
+	private ProjectorController controller;
+	private ProjectorConfiguration configuration;
 	
 	protected SwingDrawStrategy(DrawStrategy next) {
 		this.strategy = next;
@@ -24,18 +26,27 @@ public abstract class SwingDrawStrategy implements DrawStrategy {
 	}
 
 	protected Rectangle next(Graphics graphics, Component component, SlideShowComponant data, SlideItemStyle mystyle, int x, int y) {
-		this.strategy.setContext(this.projectorContext);
+		this.strategy.setProjectorController(this.controller);
 		this.strategy.setScale(this.scale);
 		return this.strategy.draw(graphics, component, data, mystyle, x, y);
 	}
 	
 	@Override
-	public void setContext(ProjectorContext projectorContext) {
-		this.projectorContext = projectorContext;
+	public void setProjectorController(ProjectorController controller) {
+		this.controller = controller;
 	}
 	
-	protected ProjectorContext getProjectorContext() {
-		return this.projectorContext;
+	@Override
+	public void setProjectorConfiguration(ProjectorConfiguration configuration) {
+		this.configuration = configuration;
+	}
+	
+	protected ProjectorConfiguration getProjectorConfiguration() {
+		return this.configuration;
+	}
+	
+	protected ProjectorController getProjectorController() {
+		return this.controller;
 	}
 
 	@Override
