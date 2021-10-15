@@ -45,7 +45,6 @@ public class SlideShowBuilderImp extends ComponantBuilder implements SlideShowBu
 		this.lastslide.add(item);
 	}
 	
-	@Override
 	public SlideShow getSlideShow() {
 		return(SlideShow)this.build();
 	}
