@@ -9,7 +9,6 @@ public class ControllerConstants {
 	protected static final String NEXTSLIDECOMMANDNAME = "NEXTSLIDE";
 	protected static final String PREVIOUSSLIDECOMMANDNAME = "PREVIOUSSLIDE";
 	protected static final String EXITCOMMANDNAME = "EXIT";
-	protected static final long serialVersionUID = 1L;
 	protected static final String ABOUTCOMMANDNAME = "ABOUT";
 	protected static final String HELPMENUNAME = "HELP";
 	protected static final String GOTOMENUNAME = "GOTO";

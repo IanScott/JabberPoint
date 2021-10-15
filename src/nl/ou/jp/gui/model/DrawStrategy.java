@@ -17,5 +17,4 @@ public interface DrawStrategy {
 	void setProjectorConfiguration(ProjectorConfiguration configuration);
 
 	void setScale(float scale);
-
 }

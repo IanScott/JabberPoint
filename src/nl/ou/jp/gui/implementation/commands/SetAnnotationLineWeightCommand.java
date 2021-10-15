@@ -1,21 +1,11 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import nl.ou.jp.gui.model.*;
-
-public class SetAnnotationLineWeightCommand implements ProjectorCommand, GetMessageMixin {
+public class SetAnnotationLineWeightCommand extends ProjectorCommandTemplate implements GetMessageMixin {
 	
 	private static final String LINEWEIGHTTITLEID = "LINEWEIGHTTITLE";
 	private static final String CURRENTVALUEID = "CURRENTVALUE";
 	private static final String CHOOSELINEID = "CHOOSELINE";
 	private static final String NAME = "SETANNOTATIONLINEWEIGHT";
-	
-	private ProjectorMediator mediator = null;
-	private ProjectorConfiguration configuration = null;
-	
-	public SetAnnotationLineWeightCommand(ProjectorMediator mediator, ProjectorConfiguration configuration) {
-		this.mediator = mediator;
-		this.configuration = configuration;
-	}
 	
 	@Override
 	public void execute() {

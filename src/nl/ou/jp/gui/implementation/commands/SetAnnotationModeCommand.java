@@ -1,17 +1,8 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import nl.ou.jp.gui.model.*;
-
-public class SetAnnotationModeCommand  implements ProjectorCommand, GetMessageMixin {
+public class SetAnnotationModeCommand  extends ProjectorCommandTemplate implements GetMessageMixin {
 	private static final String NAME = "SETANNOTATIONMODE";
-	private ProjectorMediator mediator = null;
-	private ProjectorConfiguration configuration = null;
-	
-	public SetAnnotationModeCommand(ProjectorMediator mediator, ProjectorConfiguration configuration) {
-		this.mediator = mediator;
-		this.configuration = configuration;
-	}
-	
+
 	@Override
 	public void execute() {
 		boolean canAnnotate = this.mediator.canAnnotate();		

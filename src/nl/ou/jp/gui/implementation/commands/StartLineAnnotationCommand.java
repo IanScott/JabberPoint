@@ -1,14 +1,7 @@
 package nl.ou.jp.gui.implementation.commands;
 
-import nl.ou.jp.gui.model.*;
-
-public class StartLineAnnotationCommand implements ProjectorCommand {
+public class StartLineAnnotationCommand extends ProjectorCommandTemplate implements GetMessageMixin {
 	private static final String NAME = "STARTLINEANNOTATION";
-	private ProjectorMediator mediator = null;
-	
-	public StartLineAnnotationCommand(ProjectorMediator mediator) {
-		this.mediator = mediator;
-	}
 	
 	@Override
 	public void execute() {

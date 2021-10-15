@@ -11,7 +11,6 @@ import nl.ou.jp.gui.implementation.drawstrategies.*;
 import nl.ou.jp.gui.implementation.uicontrollers.*;
 import nl.ou.jp.gui.model.*;
 
-
 public class DefaultVariant implements ProjectorVariant {
 	private Map<String,ProjectorCommand> commands = null;
 	private ProjectorConfiguration configuration = null;
@@ -51,20 +50,25 @@ public class DefaultVariant implements ProjectorVariant {
 	
 	private Map<String,ProjectorCommand> intializeCommands(ProjectorMediator projectorMediator, ProjectorConfiguration configuration) {
 		ProjectorCommand[] commandlist = new ProjectorCommand[] {
-				new GotoSlideCommand(projectorMediator, configuration),
-				new NextSlideCommand(projectorMediator),
-				new PreviousSlideCommand(projectorMediator),
-				new OpenCommand(projectorMediator,configuration),
-				new ExitCommand(projectorMediator),
-				new SaveCommand(projectorMediator,configuration),
-				new AboutCommand(projectorMediator,configuration),
-				new ResetCommand(projectorMediator),
-				new AddDataToLineAnnotationCommand(projectorMediator),
-				new StartLineAnnotationCommand(projectorMediator),
-				new SetAnnotationLineColorCommand(projectorMediator,configuration),
-				new SetAnnotationLineWeightCommand(projectorMediator,configuration),
-				new SetAnnotationModeCommand(projectorMediator, configuration)
+				new GotoSlideCommand(),
+				new NextSlideCommand(),
+				new PreviousSlideCommand(),
+				new OpenCommand(),
+				new ExitCommand(),
+				new SaveCommand(),
+				new AboutCommand(),
+				new ResetCommand(),
+				new AddDataToLineAnnotationCommand(),
+				new StartLineAnnotationCommand(),
+				new SetAnnotationLineColorCommand(),
+				new SetAnnotationLineWeightCommand(),
+				new SetAnnotationModeCommand()
 		};
+		
+		for(ProjectorCommand com: commandlist) {
+			com.setProjectorMediator(projectorMediator);
+			com.setProjectorConfiguration(configuration);
+		}
 		
 		Map<String,ProjectorCommand>  projectorCommands = new HashMap<>();
 		for(ProjectorCommand pc: commandlist) {

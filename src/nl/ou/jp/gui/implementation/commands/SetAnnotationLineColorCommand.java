@@ -4,21 +4,12 @@ import java.awt.Color;
 import java.util.Collection;
 import java.util.Iterator;
 
-import nl.ou.jp.gui.model.*;
-
-public class SetAnnotationLineColorCommand implements ProjectorCommand, GetMessageMixin {
+public class SetAnnotationLineColorCommand extends ProjectorCommandTemplate implements GetMessageMixin{
 
 	private static final String LINECOLORTITLEID = "COLORTITLE";
 	private static final String CURRENTVALUEID = "CURRENTVALUE";
 	private static final String CHOOSECOLORID = "CHOOSECOLOR";
 	private static final String NAME = "SETANNOTATIONLINECOLOR";
-	private ProjectorMediator mediator = null;
-	private ProjectorConfiguration configuration = null;
-	
-	public SetAnnotationLineColorCommand(ProjectorMediator mediator, ProjectorConfiguration configuration) {
-		this.mediator = mediator;
-		this.configuration = configuration;
-	}
 	
 	@Override
 	public void execute() {
