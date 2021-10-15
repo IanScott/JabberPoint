@@ -9,7 +9,7 @@ import javax.swing.event.MouseInputAdapter;
 import nl.ou.jp.gui.model.ProjectorCommand;
 import nl.ou.jp.gui.model.ProjectorMediator;
 
-public class ProjectorGUIMouseInputListener extends MouseInputAdapter{
+public class ProjectorGUIMouseInputListener extends MouseInputAdapter {
 	private Map<String, ProjectorCommand> projectorCommands = null; 
 	private ProjectorMediator context = null;
 	

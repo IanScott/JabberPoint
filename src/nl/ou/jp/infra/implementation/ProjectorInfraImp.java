@@ -16,7 +16,16 @@ public class ProjectorInfraImp implements ProjectorInfra {
 	private Accessor[] accessors;
 	private Path directory;
 	
+	public ProjectorInfraImp() {
+		super();
+	}
+	
 	public ProjectorInfraImp(Accessor ... accessors) {
+		this.accessors = accessors;
+	}
+	
+	@Override
+	public void setAccessors(Accessor[] accessors) {
 		this.accessors = accessors;
 	}
 	

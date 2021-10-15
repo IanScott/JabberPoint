@@ -5,6 +5,13 @@ import nl.ou.jp.util.EventDispatcher;
 
 public interface SlideShowService {
 
+	//setters
+	void setSlideShowBuilder(SlideShowBuilder slideShowBuilder);
+	void setSlideShowController(SlideShowController slideShowController);
+	
+	void setSlideShowEventDispatcher(EventDispatcher eventDispatcher);
+	void setSlideEventDispatcher(EventDispatcher eventDispatcher);
+	
 	String getSlideShowTitle();
 
 	int getSlideShowSize();

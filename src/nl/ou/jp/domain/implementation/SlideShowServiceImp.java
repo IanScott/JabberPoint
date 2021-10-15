@@ -18,6 +18,10 @@ public class SlideShowServiceImp implements SlideShowService {
 	
 	private SlideShowController slideShowController = null;
 	
+	public SlideShowServiceImp() {
+		super();
+	}
+	
 	public SlideShowServiceImp(SlideShowBuilder slideShowBuilder, SlideShowEventDispatcher slideShowDispatcher, SlideEventDispatcher slideDispatcher, SlideShowController slideShowController) {
 		this.slideShowBuilder= slideShowBuilder;
 		this.slideShowEventDispatcher = slideShowDispatcher;
@@ -152,5 +156,25 @@ public class SlideShowServiceImp implements SlideShowService {
 	@Override
 	public boolean canAnnotate() {
 		return this.slideShowController.canAnnotate();
+	}
+
+	@Override
+	public void setSlideShowBuilder(SlideShowBuilder slideShowBuilder) {
+		this.slideShowBuilder = slideShowBuilder;
+	}
+
+	@Override
+	public void setSlideShowController(SlideShowController slideShowController) {
+		this.slideShowController = slideShowController;
+	}
+
+	@Override
+	public void setSlideShowEventDispatcher(EventDispatcher eventDispatcher) {
+		this.slideShowEventDispatcher = eventDispatcher;
+	}
+
+	@Override
+	public void setSlideEventDispatcher(EventDispatcher eventDispatcher) {
+		this.slideEventDispatcher = eventDispatcher;
 	}
 }

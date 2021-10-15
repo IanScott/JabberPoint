@@ -28,26 +28,15 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 
 	private transient SlideShowComponant currentSlide;
 
-	public SwingProjectorGUI(DrawStrategy strategy, ProjectorController projectorController, ProjectorConfiguration configurationDefault, ProjectorMediator context) {
-		
+	public SwingProjectorGUI() {
+		super();
+	}
+	
+	public SwingProjectorGUI(DrawStrategy strategy, ProjectorController projectorController, ProjectorConfiguration configurationDefault, ProjectorMediator mediator) {	
 		this.strategy = strategy;
 		this.projectorController = projectorController;
 		this.configurationDefault = configurationDefault;
-
-		if (this.configurationDefault == null) {
-			throw new ProjectorGUIException("Configuration cannot be NULL.");
-		}
-
-		if (this.strategy == null) {
-			throw new ProjectorGUIException("Strategy cannot be NULL.");
-		}
-
-		setTitle(configurationDefault.getDefaultTitle());
-		setSize(configurationDefault.getDefaultSlideDimensions());
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setResizable(false);
-		
-		initialize(context);
+		this.projectorMediator = mediator;
 	}
 
 	private void initialize(ProjectorMediator projectorMediator) {
@@ -61,12 +50,35 @@ public class SwingProjectorGUI extends JFrame implements ProjectorGUI {
 
 		initializeContentPane();
 	}
+	@Override
+	public void setProjectorController(ProjectorController projectorController) {
+		this.projectorController = projectorController;
+	}
 
 	@Override
+	public void setProjectorConfiguration(ProjectorConfiguration configurationDefault) {
+		this.configurationDefault = configurationDefault;
+	}
+
+	@Override
+	public void setProjectorMediator(ProjectorMediator mediator) {
+		this.projectorMediator = mediator;
+	}
+
+	@Override
+	public void setDrawStrategy(DrawStrategy strategy) {
+		this.strategy = strategy;
+	}
+	
+	@Override
 	public void start(String path) {
-		if(this.projectorMediator == null || this.projectorController == null) {
-			throw new ProjectorGUIException("Context has not been intialized yet.");
-		}
+		setTitle(configurationDefault.getDefaultTitle());
+		setSize(configurationDefault.getDefaultSlideDimensions());
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setResizable(false);
+		
+		initialize(this.projectorMediator);
+		
 		if(path != null) {
 			this.projectorController.openSlideShow(Path.of(path));			
 		}

@@ -8,9 +8,18 @@ import java.awt.event.WindowListener;
 
 import javax.swing.event.MouseInputListener;
 
+import nl.ou.jp.controller.ProjectorController;
 import nl.ou.jp.domain.*;
+import nl.ou.jp.gui.model.DrawStrategy;
+import nl.ou.jp.gui.model.ProjectorConfiguration;
+import nl.ou.jp.gui.model.ProjectorMediator;
 
 public interface ProjectorGUI extends SlideShowEventListener, SlideEventListener {
+	void setProjectorController(ProjectorController projectorController);
+	void setProjectorConfiguration(ProjectorConfiguration configuration); 
+	void setProjectorMediator(ProjectorMediator mediator);
+	void setDrawStrategy(DrawStrategy strategy);
+	
 	void start(String path);	
 	void exit();
 	

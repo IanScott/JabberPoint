@@ -78,7 +78,7 @@ public class DefaultVariant implements ProjectorVariant {
 	}
 
 	@Override
-	public ProjectorMediator getContext() {
+	public ProjectorMediator getMediator() {
 		return this.projectorMediator;
 	}
 
